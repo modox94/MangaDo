@@ -30,15 +30,12 @@ router.get('/:path', async (req, res) => {
       'dispose',
       'Background',
       '-coalesce',
-      outputPath + file.name + '.jpg',
+      outputPath + '/' + file.name + '.png',
     ];
 
     imagemagick.convert(args, function (err, stdout, stderr) {
       console.log('write ', new Date());
-
       if (err) console.log(err);
-
-      fs.writeFileSync(outputPath + file.name + '.jpg', stdout, 'binary');
       resolve();
     });
   });
