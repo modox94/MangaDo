@@ -29,79 +29,65 @@ router.get('/:path', async (req, res) => {
 
   let additionalPath = req.params.path.split('|');
 
-  let currentPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
-
-  let dir = fs.readdirSync(currentPath);
-
-  dir = dir.filter((element) => {
-    if (element === '.DS_Store') return false;
-    let pathParse = path.parse(element);
-
-    if (pathParse.ext === '.psd') {
-      return true;
-    } else if (pathParse.ext === '') {
-      return true;
-    }
-
-    return false;
-  });
-
-  console.log('after filter: ', dir, new Date());
-
-  fs.mkdirSync(`${path.resolve('./')}/public/preview/${req.params.path}`, {
-    recursive: true,
-  });
-
-  let psd = {};
-  let folders = [];
-
-  await Promise.all(
-    dir.map((element) => {
-      let pathParse = path.parse(element);
-
-      if (pathParse.ext === '.psd') {
-        psd[pathParse.name] = {
-          preview: `/static/preview/${req.params.path}/${pathParse.name}.jpg`,
-          url: `/psd/${req.params.path}|${element}`,
-        };
-
-        return new Promise((resolve, reject) => {
-          imagemagick.resize(
-            {
-              srcData: fs.readFileSync(
-                `${currentPath + '/' + element}`,
-                'binary'
-              ),
-              quality: 0.8,
-              format: 'jpg',
-              height: 400,
-            },
-            function (err, stdout, stderr) {
-              console.log('write ', element, new Date());
-
-              if (err) console.log(err);
-
-              fs.writeFileSync(
-                `${path.resolve('./')}/public/preview/${req.params.path}/${
-                  pathParse.name
-                }.jpg`,
-                stdout,
-                'binary'
-              );
-
-              resolve();
-            }
-          );
-        });
-      } else {
-        folders.push(element);
-      }
-    })
+  let inputPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
+  let outputPath = path.join(
+    path.resolve('./'),
+    'public',
+    'preview',
+    ...additionalPath
   );
 
-  console.log('router /:path GET', dir);
+  let dir = fs.readdirSync(inputPath);
 
-  res.json({ folders, psd });
+  let files = {};
+  let folders = [];
+
+  for (let element of dir) {
+    let elementParse = path.parse(element);
+
+    if (elementParse.ext === '.psd') {
+      files[elementParse.name] = {
+        preview:
+          path.join('static', 'preview', ...additionalPath, elementParse.name) +
+          '.jpg',
+        url: '/psd/' + req.params.path + '|' + element,
+      };
+    } else if (elementParse.ext === '' && element !== '.DS_Store') {
+      folders.push(element);
+    }
+  }
+
+  if (Object.keys(files).length) {
+    fs.mkdirSync(outputPath, { recursive: true });
+
+    await Promise.all(
+      Object.keys(files).map((file) => {
+        return new Promise((resolve, reject) => {
+          let args = [
+            path.join(inputPath, file) + '.psd[0]',
+            '-background',
+            'white',
+            '-flatten',
+            '-resize',
+            'x400',
+            '-quality',
+            '90',
+            path.join(outputPath, file) + '.jpg',
+          ];
+
+          imagemagick.convert(args, function (err, stdout, stderr) {
+            console.log('write ', new Date());
+            if (err) console.log(err);
+            resolve();
+          });
+        });
+      })
+    );
+  }
+
+  console.log('calalog/ - end', new Date());
+
+  res.json({ folders, files });
 });
 
 // // мы в /Kuneru Maruta/
