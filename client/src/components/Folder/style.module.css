@@ -1,0 +1,10 @@
+.folder{
+  display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+  align-items: center;
+  width: 20vmin;
+  height: 20vmin;
+  background-color: bisque;
+  background-image: url("../../images/icons/usiiik_Folder_Icon.svg");
+}
