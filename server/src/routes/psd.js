@@ -8,87 +8,89 @@ const router = express.Router();
 router.get('/:path', async (req, res) => {
   console.log('start', new Date());
 
-  let currentPath = path.join(process.env.YANDEX_ROOT, req.params.path);
+  let additionalPath = req.params.path.split('|');
 
-  let dir = fs.readdirSync(currentPath);
+  let inputPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
+  console.log('additionalPath', additionalPath);
+  console.log('inputPath', inputPath);
 
-  dir = dir.filter((element) => {
-    if (element === '.DS_Store') return false;
-    let pathParse = path.parse(element);
-
-    if (pathParse.ext === '.psd') {
-      return true;
-    } else if (pathParse.ext === '') {
-      return true;
-    }
-
-    return false;
-  });
-
-  console.log('after filter: ', dir, new Date());
-
-  fs.mkdirSync(`${path.resolve('./')}/public/preview/${req.params.path}`, {
-    recursive: true,
-  });
-
-  let psd = {};
-  let folders = [];
-
-  await Promise.all(
-    dir.map((element) => {
-      let pathParse = path.parse(element);
-
-      if (pathParse.ext === '.psd') {
-        psd[
-          pathParse.name
-        ] = `/static/preview/${req.params.path}/${pathParse.name}.jpg`;
-
-        return new Promise((resolve, reject) => {
-          imagemagick.resize(
-            {
-              srcData: fs.readFileSync(
-                `${currentPath + '/' + element}`,
-                'binary'
-              ),
-              quality: 0.8,
-              format: 'jpg',
-              height: 400,
-            },
-            function (err, stdout, stderr) {
-              console.log('write ', element, new Date());
-
-              if (err) console.log(err);
-
-              fs.writeFileSync(
-                `${path.resolve('./')}/public/preview/${req.params.path}/${
-                  pathParse.name
-                }.jpg`,
-                stdout,
-                'binary'
-              );
-
-              resolve();
-            }
-          );
-        });
-      } else {
-        folders.push(element);
-      }
-    })
+  let file = path.parse(inputPath);
+  let outputPath = path.join(
+    path.resolve('./'),
+    'public',
+    'layers',
+    ...additionalPath
   );
+  fs.mkdirSync(outputPath, { recursive: true });
 
-  console.log('router /:path GET', dir);
+  await new Promise((resolve, reject) => {
+    let args = [
+      inputPath,
+      '-set',
+      'dispose',
+      'Background',
+      '-coalesce',
+      outputPath + file.name + '.jpg',
+    ];
 
-  res.json({ folders, psd });
+    imagemagick.convert(args, function (err, stdout, stderr) {
+      console.log('write ', new Date());
+
+      if (err) console.log(err);
+
+      fs.writeFileSync(outputPath + file.name + '.jpg', stdout, 'binary');
+      resolve();
+    });
+  });
+
+  // await Promise.all(
+  //   dir.map((element) => {
+  //     let pathParse = path.parse(element);
+
+  //     if (pathParse.ext === '.psd') {
+  //       psd[
+  //         pathParse.name
+  //       ] = `/static/preview/${req.params.path}/${pathParse.name}.jpg`;
+
+  //       return new Promise((resolve, reject) => {
+  //         imagemagick.resize(
+  //           {
+  //             srcData: fs.readFileSync(
+  //               `${inputPath + '/' + element}`,
+  //               'binary'
+  //             ),
+  //             quality: 0.8,
+  //             format: 'jpg',
+  //             height: 400,
+  //           },
+  //           function (err, stdout, stderr) {
+  //             console.log('write ', element, new Date());
+
+  //             if (err) console.log(err);
+
+  //             fs.writeFileSync(
+  //               `${path.resolve('./')}/public/preview/${req.params.path}/${
+  //                 pathParse.name
+  //               }.jpg`,
+  //               stdout,
+  //               'binary'
+  //             );
+
+  //             resolve();
+  //           }
+  //         );
+  //       });
+  //     } else {
+  //       folders.push(element);
+  //     }
+  //   })
+  // );
+
+  // console.log('router /:path GET', dir);
+
+  // res.json({ folders, psd });
+
+  res.end();
 });
-
-// // мы в /Kuneru Maruta/
-// {
-//   folders: ['test'],
-//   psd: {
-//     113: {preview: 'static/preview/Kuneru Maruta/113.jpg', },
-//     114: 'static/preview/Kuneru Maruta/114.jpg',
-//   },
-// }
 
 module.exports = router;

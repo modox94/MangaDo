@@ -25,9 +25,11 @@ router.get('/', (req, res) => {
 // }
 
 router.get('/:path', async (req, res) => {
-  console.log('start', new Date());
+  console.log('calalog/ - start', new Date());
 
-  let currentPath = path.join(process.env.YANDEX_ROOT, req.params.path);
+  let additionalPath = req.params.path.split('|');
+
+  let currentPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
 
   let dir = fs.readdirSync(currentPath);
 
@@ -60,7 +62,7 @@ router.get('/:path', async (req, res) => {
       if (pathParse.ext === '.psd') {
         psd[pathParse.name] = {
           preview: `/static/preview/${req.params.path}/${pathParse.name}.jpg`,
-          url: `/psd/${req.params.path}/${element}`,
+          url: `/psd/${req.params.path}|${element}`,
         };
 
         return new Promise((resolve, reject) => {
