@@ -5,25 +5,6 @@ const imagemagick = require('imagemagick');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  let dir = fs.readdirSync(process.env.YANDEX_ROOT);
-
-  dir = dir.filter((element) => {
-    //  if (element !== '.DS_Store') return false
-    let chunks = element.split('.');
-    if (chunks.length === 1) return true;
-  });
-
-  console.log('router / GET', dir);
-
-  res.json({ folders: dir });
-});
-
-// // мы в /
-// {
-//   folders: ['Kuneru Maruta', 'Yama to Shokuyoku to Watashi'],
-// }
-
 router.get('/:path', async (req, res) => {
   console.log('start', new Date());
 
@@ -58,10 +39,9 @@ router.get('/:path', async (req, res) => {
       let pathParse = path.parse(element);
 
       if (pathParse.ext === '.psd') {
-        psd[pathParse.name] = {
-          preview: `/static/preview/${req.params.path}/${pathParse.name}.jpg`,
-          url: `/psd/${req.params.path}/${element}`,
-        };
+        psd[
+          pathParse.name
+        ] = `/static/preview/${req.params.path}/${pathParse.name}.jpg`;
 
         return new Promise((resolve, reject) => {
           imagemagick.resize(
@@ -106,14 +86,8 @@ router.get('/:path', async (req, res) => {
 // {
 //   folders: ['test'],
 //   psd: {
-//     113: {
-//       preview: 'static/preview/Kuneru Maruta/113.jpg',
-//       url: '/psd/Kuneru Maruta/113.psd',
-//     },
-//     114: {
-//       preview: 'static/preview/Kuneru Maruta/114.jpg',
-//       url: '/psd/Kuneru Maruta/114.psd',
-//     },
+//     113: {preview: 'static/preview/Kuneru Maruta/113.jpg', },
+//     114: 'static/preview/Kuneru Maruta/114.jpg',
 //   },
 // }
 
