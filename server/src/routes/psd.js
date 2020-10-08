@@ -6,13 +6,12 @@ const imagemagick = require('imagemagick');
 const router = express.Router();
 
 router.get('/:path', async (req, res) => {
-  console.log('start', new Date());
+  let start = new Date();
+  console.log('start - /psd/:path', start);
 
   let additionalPath = req.params.path.split('|');
 
   let inputPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
-  console.log('additionalPath', additionalPath);
-  console.log('inputPath', inputPath);
 
   let file = path.parse(inputPath);
   let outputPath = path.join(
@@ -21,6 +20,9 @@ router.get('/:path', async (req, res) => {
     'layers',
     ...additionalPath
   );
+
+  fs.rmdirSync(outputPath, { recursive: true });
+
   fs.mkdirSync(outputPath, { recursive: true });
 
   await new Promise((resolve, reject) => {
@@ -40,54 +42,24 @@ router.get('/:path', async (req, res) => {
     });
   });
 
-  // await Promise.all(
-  //   dir.map((element) => {
-  //     let pathParse = path.parse(element);
+  let layers = fs.readdirSync(outputPath);
+  let regular = new RegExp(`^${file.name}-(\\d+)\\.png`);
+  layers.sort((a, b) => {
+    if (Number(a.replace(regular, '$1')) > Number(b.replace(regular, '$1'))) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
 
-  //     if (pathParse.ext === '.psd') {
-  //       psd[
-  //         pathParse.name
-  //       ] = `/static/preview/${req.params.path}/${pathParse.name}.jpg`;
+  layers = layers.map((element) =>
+    path.join('static', 'layers', ...additionalPath, element)
+  );
 
-  //       return new Promise((resolve, reject) => {
-  //         imagemagick.resize(
-  //           {
-  //             srcData: fs.readFileSync(
-  //               `${inputPath + '/' + element}`,
-  //               'binary'
-  //             ),
-  //             quality: 0.8,
-  //             format: 'jpg',
-  //             height: 400,
-  //           },
-  //           function (err, stdout, stderr) {
-  //             console.log('write ', element, new Date());
+  let end = new Date();
+  console.log('end - /psd/:path', end - start, 'ms');
 
-  //             if (err) console.log(err);
-
-  //             fs.writeFileSync(
-  //               `${path.resolve('./')}/public/preview/${req.params.path}/${
-  //                 pathParse.name
-  //               }.jpg`,
-  //               stdout,
-  //               'binary'
-  //             );
-
-  //             resolve();
-  //           }
-  //         );
-  //       });
-  //     } else {
-  //       folders.push(element);
-  //     }
-  //   })
-  // );
-
-  // console.log('router /:path GET', dir);
-
-  // res.json({ folders, psd });
-
-  res.end();
+  res.json({ layers });
 });
 
 module.exports = router;
