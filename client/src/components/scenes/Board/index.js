@@ -10,25 +10,36 @@ export default () => {
   const [data, setData] = useState({ folders: [] });
 
   useEffect(() => {
-   ( async () =>{
-    let response;
-     if(params) {
-      response = await fetch(`http://localhost:3005/catalog/${params}`);
-     } else response = await fetch(`http://localhost:3005/catalog/`);
-    const result = await response.json();
-    setData(result);
-    console.log('result = ', result);
+    (async () => {
+      let response;
+      if (params) {
+        response = await fetch(
+          new URL('catalog/' + params, process.env.REACT_APP_SERVER_PATH)
+        );
+      } else
+        response = await fetch(
+          new URL('catalog/', process.env.REACT_APP_SERVER_PATH)
+        );
+      const result = await response.json();
+      setData(result);
+      console.log('result = ', result);
     })();
   }, [params]);
 
-  console.log('board data = ',data);
+  console.log('board data = ', data);
   return (
     <>
-    <div>{params}</div>
-    <div className={styles.board}>
-      {data.files && Object.keys(data.files).map(key => <File key={key} data={data.files[key]}/>)}
-      {data.folders?.length && data.folders.map(el => <Folder key={el} name={el} preUrl={params}/>)}
-    </div>
+      <div>{params}</div>
+      <div className={styles.board}>
+        {data.files &&
+          Object.keys(data.files).map((key) => (
+            <File key={key} data={data.files[key]} />
+          ))}
+        {data.folders?.length &&
+          data.folders.map((el) => (
+            <Folder key={el} name={el} preUrl={params} />
+          ))}
+      </div>
     </>
-  )
-}
+  );
+};
