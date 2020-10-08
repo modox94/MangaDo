@@ -24,7 +24,7 @@ export default () => {
 
   return (
     <div className={styles.board}>
-      {folders?.length && folders.map(el => <Folder key={el} name={el}/>)}
+      {folders?.length && folders.map(el => <Folder key={el} name={el} preUrl={params}/>)}
       {files?.length && Object.keys(files).map(key => <File key={key} data={files[key]}/>)}
     </div>
   )
