@@ -4,19 +4,19 @@ import styles from './style.module.css';
 
 export default ({name, preUrl}) => {
   const { params } = useParams();
-  console.log('folder params =', params);
-  return (
+  // console.log('folder params =', params);
+
+  return preUrl ?  (
+  <Link to={`/catalog/${preUrl}|${name}`}>
     <div className={styles.folder}>
-      {preUrl ?  (
-      <Link to={`/catalog/${preUrl}|${name}`}>
-        {name}
-      </Link>
-      ) : (
-        <Link to={`/catalog/${name}`}>
-          {name}
-        </Link>
-        )
-      }
+    {name}
     </div>
+  </Link>
+  ) : (
+  <Link to={`/catalog/${name}`}>
+     <div className={styles.folder}>
+    {name}
+    </div>
+  </Link>
   )
 }
