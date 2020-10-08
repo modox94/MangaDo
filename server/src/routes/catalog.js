@@ -5,29 +5,13 @@ const imagemagick = require('imagemagick');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  let dir = fs.readdirSync(process.env.YANDEX_ROOT);
+router.get('/', getCatalog);
+router.get('/:path', getCatalog);
 
-  dir = dir.filter((element) => {
-    //  if (element !== '.DS_Store') return false
-    let chunks = element.split('.');
-    if (chunks.length === 1) return true;
-  });
-
-  console.log('router / GET', dir);
-
-  res.json({ folders: dir });
-});
-
-// // мы в /
-// {
-//   folders: ['Kuneru Maruta', 'Yama to Shokuyoku to Watashi'],
-// }
-
-router.get('/:path', async (req, res) => {
+async function getCatalog(req, res) {
   console.log('calalog/ - start', new Date());
 
-  let additionalPath = req.params.path.split('|');
+  let additionalPath = req.params.path ? req.params.path.split('|') : [''];
 
   let inputPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
   let outputPath = path.join(
@@ -62,6 +46,20 @@ router.get('/:path', async (req, res) => {
 
     await Promise.all(
       Object.keys(files).map((file) => {
+        let inputStat, outputStat;
+        try {
+          inputStat = fs.statSync(path.join(inputPath, file) + '.psd').mtimeMs;
+          outputStat = fs.statSync(path.join(outputPath, file) + '.jpg')
+            .mtimeMs;
+          console.log('stats', inputStat, outputStat);
+        } catch (err) {
+          if (err.code === 'ENOENT') {
+            console.log('file or directory does not exist');
+          }
+        }
+
+        if (inputStat && outputStat && inputStat < outputStat) return;
+
         return new Promise((resolve, reject) => {
           let args = [
             path.join(inputPath, file) + '.psd[0]',
@@ -88,21 +86,6 @@ router.get('/:path', async (req, res) => {
   console.log('calalog/ - end', new Date());
 
   res.json({ folders, files });
-});
-
-// // мы в /Kuneru Maruta/
-// {
-//   folders: ['test'],
-//   psd: {
-//     113: {
-//       preview: 'static/preview/Kuneru Maruta/113.jpg',
-//       url: '/psd/Kuneru Maruta/113.psd',
-//     },
-//     114: {
-//       preview: 'static/preview/Kuneru Maruta/114.jpg',
-//       url: '/psd/Kuneru Maruta/114.psd',
-//     },
-//   },
-// }
+}
 
 module.exports = router;

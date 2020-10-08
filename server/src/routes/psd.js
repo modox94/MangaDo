@@ -21,6 +21,38 @@ router.get('/:path', async (req, res) => {
     ...additionalPath
   );
 
+  let oldLayers, inputStat, outputStat;
+  let regular = new RegExp(`^${file.name}-(\\d+)\\.png`);
+
+  try {
+    oldLayers = fs.readdirSync(outputPath);
+    inputStat = fs.statSync(inputPath).mtimeMs;
+    outputStat = fs.statSync(path.join(outputPath, oldLayers[0])).mtimeMs;
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log('file or directory does not exist');
+    }
+  }
+
+  if (inputStat && outputStat && inputStat < outputStat) {
+    oldLayers.sort((a, b) => {
+      if (Number(a.replace(regular, '$1')) > Number(b.replace(regular, '$1'))) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+
+    oldLayers = oldLayers.map((element) =>
+      path.join('static', 'layers', ...additionalPath, element)
+    );
+
+    let end = new Date();
+    console.log('end - /psd/:path', end - start, 'ms');
+
+    return res.json({ layers: oldLayers });
+  }
+
   fs.rmdirSync(outputPath, { recursive: true });
 
   fs.mkdirSync(outputPath, { recursive: true });
@@ -43,7 +75,7 @@ router.get('/:path', async (req, res) => {
   });
 
   let layers = fs.readdirSync(outputPath);
-  let regular = new RegExp(`^${file.name}-(\\d+)\\.png`);
+
   layers.sort((a, b) => {
     if (Number(a.replace(regular, '$1')) > Number(b.replace(regular, '$1'))) {
       return 1;
