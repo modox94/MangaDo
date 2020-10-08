@@ -9,7 +9,9 @@ router.get('/', getCatalog);
 router.get('/:path', getCatalog);
 
 async function getCatalog(req, res) {
-  console.log('calalog/ - start', new Date());
+  let start, end;
+  start = new Date();
+  console.log('calalog/ - start');
 
   let additionalPath = req.params.path ? req.params.path.split('|') : [''];
 
@@ -51,14 +53,19 @@ async function getCatalog(req, res) {
           inputStat = fs.statSync(path.join(inputPath, file) + '.psd').mtimeMs;
           outputStat = fs.statSync(path.join(outputPath, file) + '.jpg')
             .mtimeMs;
-          console.log('stats', inputStat, outputStat);
         } catch (err) {
           if (err.code === 'ENOENT') {
             console.log('file or directory does not exist');
           }
         }
 
-        if (inputStat && outputStat && inputStat < outputStat) return;
+        if (inputStat && outputStat) {
+          if (inputStat < outputStat) {
+            return;
+          } else {
+            fs.unlinkSync(path.join(outputPath, file) + '.jpg');
+          }
+        }
 
         return new Promise((resolve, reject) => {
           let args = [
@@ -74,7 +81,7 @@ async function getCatalog(req, res) {
           ];
 
           imagemagick.convert(args, function (err, stdout, stderr) {
-            console.log('write ', new Date());
+            console.log('write ', new Date() - start, 'ms');
             if (err) console.log(err);
             resolve();
           });
@@ -82,8 +89,8 @@ async function getCatalog(req, res) {
       })
     );
   }
-
-  console.log('calalog/ - end', new Date());
+  end = new Date();
+  console.log('calalog/ - end', end - start, 'ms');
 
   res.json({ folders, files });
 }
