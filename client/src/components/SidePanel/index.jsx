@@ -89,8 +89,7 @@ const SidePanel = () => {
           value={translateMarkTitle}
         />
         <button onClick={() => handlerAddMark('translate', translateMarkTitle)}>
-          {' '}
-          Добавить{' '}
+          Добавить
         </button>
         {translateMarkArr.map((mark) => {
           return (
@@ -122,8 +121,7 @@ const SidePanel = () => {
           value={decorteMarkTitle}
         />
         <button onClick={() => handlerAddMark('decor', decorteMarkTitle)}>
-          {' '}
-          Добавить{' '}
+          Добавить
         </button>
         {decorMarkArr.map((mark) => {
           return (
@@ -151,8 +149,7 @@ const SidePanel = () => {
         <summary>РЕДАКТУРА</summary>
         <input onChange={handlerTitleEdit} type='text' value={editMarkTitle} />
         <button onClick={() => handlerAddMark('edit', editMarkTitle)}>
-          {' '}
-          Добавить{' '}
+          Добавить
         </button>
         {editMarkArr.map((mark) => {
           return (
@@ -198,4 +195,5 @@ const SidePanel = () => {
     </div>
   );
 };
+
 export default SidePanel;
