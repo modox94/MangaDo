@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import ImagesContainer from './components/ImagesContainer';
 import SidePanel from './components/SidePanel';
+
 import './App.css'
 import Board from './components/scenes/Board';
 import {
@@ -11,9 +12,10 @@ import {
   Link,
 } from 'react-router-dom';
 
-function App() {
 
+function App() {
   return (
+
     // <div>
     //   <Header />
     //   <div className="wrapper">
@@ -40,10 +42,7 @@ function App() {
           </Route>
         </Switch>
     </Router>
-
   )
 }
 
 export default App;
-
-
