@@ -1,4 +1,4 @@
-.markTranslate{
+.markTranslate {
   background-color: red;
   width: 50px;
   height: 50px;
@@ -9,7 +9,7 @@
   position: absolute;
   z-index: 2;
 }
-.markDecor{
+.markDecor {
   background-color: blue;
   width: 50px;
   height: 50px;
@@ -21,7 +21,7 @@
   z-index: 2;
 }
 
-.markDecor div{
+.markDecor div {
   position: absolute;
   content: attr(data-text);
   top: 50%;
@@ -29,7 +29,7 @@
   transform: translate(-50%, -50%);
 }
 
-.markEdit{
+.markEdit {
   background-color: green;
   width: 50px;
   height: 50px;
@@ -41,7 +41,7 @@
   z-index: 2;
 }
 
-.markEdit div{
+.markEdit div {
   position: absolute;
   content: attr(data-text);
   top: 50%;
@@ -49,20 +49,17 @@
   transform: translate(-50%, -50%);
 }
 
-
-
-.markTranslate div{
-position: absolute;
-content: attr(data-text);
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+.markTranslate div {
+  position: absolute;
+  content: attr(data-text);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.container{
+.container {
   position: relative;
 }
 
-.disableMark{
+.disableMark {
   display: none;
-
 }

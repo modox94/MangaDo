@@ -1,8 +1,8 @@
-.sideContainer{
+.sideContainer {
   background-color: blanchedalmond;
   width: 20%;
 }
 
-.task{
+.task {
   display: flex;
 }
