@@ -5,87 +5,94 @@ const imagemagick = require('imagemagick');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  let dir = fs.readdirSync(process.env.YANDEX_ROOT);
+router.get('/', getCatalog);
+router.get('/:path', getCatalog);
 
-  dir = dir.filter((element) => {
-    //  if (element !== '.DS_Store') return false
-    let chunks = element.split('.');
-    if (chunks.length === 1) return true;
-  });
+async function getCatalog(req, res) {
+  let start, end;
+  start = new Date();
+  console.log('calalog/ - start');
 
-  console.log('router / GET', dir);
+  let additionalPath = req.params.path ? req.params.path.split('|') : [''];
 
-  res.json(dir);
-});
-
-router.get('/:path', async (req, res) => {
-  console.log('start', new Date());
-
-  let currentPath = path.join(process.env.YANDEX_ROOT, req.params.path);
-
-  let dir = fs.readdirSync(currentPath);
-
-  dir = dir.filter((element) => {
-    if (element === '.DS_Store') return false;
-    let pathParse = path.parse(element);
-
-    if (pathParse.ext === '.psd') {
-      return true;
-    } else if (pathParse.ext === '') {
-      return true;
-    }
-
-    return false;
-  });
-
-  console.log('after filter: ', dir, new Date());
-
-  fs.mkdirSync(`${path.resolve('./')}/public/preview/${req.params.path}`, {
-    recursive: true,
-  });
-
-  await Promise.all(
-    dir.map((element) => {
-      let pathParse = path.parse(element);
-
-      if (pathParse.ext === '.psd') {
-        return new Promise((resolve, reject) => {
-          imagemagick.resize(
-            {
-              srcData: fs.readFileSync(
-                `${currentPath + '/' + element}`,
-                'binary'
-              ),
-              quality: 0.8,
-              format: 'jpg',
-              height: 400,
-            },
-            function (err, stdout, stderr) {
-              console.log('write ', element, new Date());
-
-              if (err) console.log(err);
-
-              fs.writeFileSync(
-                `${path.resolve('./')}/public/preview/${req.params.path}/${
-                  pathParse.name
-                }.jpg`,
-                stdout,
-                'binary'
-              );
-
-              resolve();
-            }
-          );
-        });
-      }
-    })
+  let inputPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
+  let outputPath = path.join(
+    path.resolve('./'),
+    'public',
+    'preview',
+    ...additionalPath
   );
 
-  dir.push(new Date());
-  console.log('router /:path GET', dir);
+  let dir = fs.readdirSync(inputPath);
 
-  res.json(dir);
-});
+  let files = {};
+  let folders = [];
+
+  for (let element of dir) {
+    let elementParse = path.parse(element);
+
+    if (elementParse.ext === '.psd') {
+      files[elementParse.name] = {
+        preview:
+          path.join('static', 'preview', ...additionalPath, elementParse.name) +
+          '.jpg',
+        url: '/psd/' + req.params.path + '|' + element,
+      };
+    } else if (elementParse.ext === '' && element !== '.DS_Store') {
+      folders.push(element);
+    }
+  }
+
+  if (Object.keys(files).length) {
+    fs.mkdirSync(outputPath, { recursive: true });
+
+    await Promise.all(
+      Object.keys(files).map((file) => {
+        let inputStat, outputStat;
+        try {
+          inputStat = fs.statSync(path.join(inputPath, file) + '.psd').mtimeMs;
+          outputStat = fs.statSync(path.join(outputPath, file) + '.jpg')
+            .mtimeMs;
+        } catch (err) {
+          if (err.code === 'ENOENT') {
+            console.log('file or directory does not exist');
+          }
+        }
+
+        if (inputStat && outputStat) {
+          if (inputStat < outputStat) {
+            return;
+          } else {
+            fs.unlinkSync(path.join(outputPath, file) + '.jpg');
+          }
+        }
+
+        return new Promise((resolve, reject) => {
+          let args = [
+            path.join(inputPath, file) + '.psd[0]',
+            '-background',
+            'white',
+            '-flatten',
+            '-resize',
+            'x400',
+            '-quality',
+            '90',
+            path.join(outputPath, file) + '.jpg',
+          ];
+
+          imagemagick.convert(args, function (err, stdout, stderr) {
+            console.log('write ', new Date() - start, 'ms');
+            if (err) console.log(err);
+            resolve();
+          });
+        });
+      })
+    );
+  }
+  end = new Date();
+  console.log('calalog/ - end', end - start, 'ms');
+
+  res.json({ folders, files });
+}
 
 module.exports = router;
