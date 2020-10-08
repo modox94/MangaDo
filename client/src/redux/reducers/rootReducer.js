@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import translateReducer from './translateReducer/translateReducer'
+import markReducer from './markReducer/markReducer'
 
 const rootReducer = combineReducers({
-  translateMark: translateReducer,
- 
+  mark: markReducer,
+
 })
 
 export default rootReducer

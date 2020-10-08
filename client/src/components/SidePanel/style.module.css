@@ -1,23 +1,8 @@
 .sideContainer{
   background-color: blanchedalmond;
-  width: 100%;
+  width: 20%;
 }
-.markTranslate{
-  background-color: red;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  text-align: center;
-  position: relative;
-  cursor: grab;
-}
-.markTranslate div{
-position: absolute;
-content: attr(data-text);
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-}
+
 .task{
   display: flex;
 }

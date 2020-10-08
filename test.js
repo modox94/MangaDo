@@ -1,5 +1,6 @@
 [{
   _id: ID,
+  type: 
   title: String,
   position: {x,y},
   visible: true,

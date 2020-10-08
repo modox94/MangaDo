@@ -8,6 +8,7 @@ function App() {
 
   return (
     <div>
+      
       <Header />
       <div className="wrapper">
         <ImagesContainer />
