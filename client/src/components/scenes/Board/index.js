@@ -7,25 +7,25 @@ import File from '../../File';
 export default () => {
   const { params } = useParams();
   console.log('params = ', params);
-  const [data, setData] = useState({folders: [], files: []});
-  const {folders, files} = data;
+  const [data, setData] = useState({ folders: [] });
+
   useEffect(() => {
    ( async () =>{
     let response;
      if(params) {
       response = await fetch(`http://localhost:3005/catalog/${params}`);
      } else response = await fetch(`http://localhost:3005/catalog/`);
-     
     const result = await response.json();
     setData(result);
     console.log('result = ', result);
     })();
-  }, [params])
+  }, [params]);
 
+  console.log('board data = ',data);
   return (
     <div className={styles.board}>
-      {folders?.length && folders.map(el => <Folder key={el} name={el} preUrl={params}/>)}
-      {files?.length && Object.keys(files).map(key => <File key={key} data={files[key]}/>)}
+      {data.files && Object.keys(data.files).map(key => <File key={key} data={data.files[key]}/>)}
+      {data.folders?.length && data.folders.map(el => <Folder key={el} name={el} preUrl={params}/>)}
     </div>
   )
 }
