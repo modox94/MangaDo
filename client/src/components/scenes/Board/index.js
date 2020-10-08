@@ -23,9 +23,12 @@ export default () => {
 
   console.log('board data = ',data);
   return (
+    <>
+    <div>{params}</div>
     <div className={styles.board}>
       {data.files && Object.keys(data.files).map(key => <File key={key} data={data.files[key]}/>)}
       {data.folders?.length && data.folders.map(el => <Folder key={el} name={el} preUrl={params}/>)}
     </div>
+    </>
   )
 }
