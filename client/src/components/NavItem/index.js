@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styles from './style.module.css';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-
-export default ({name}) => {
- 
+export default ({ name, url }) => {
   return (
-    <span>name</span>
-  )
-}
+    <span className={styles.link}>
+      <Link to={`/catalog/${url}`}>
+        <div>{name}</div>
+      </Link>
+    </span>
+  );
+};
