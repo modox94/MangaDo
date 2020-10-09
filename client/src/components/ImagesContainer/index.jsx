@@ -29,7 +29,9 @@ const ImagesContainer = () => {
   useEffect(() => {
     if (path) {
       (async () => {
-        let response = await fetch(new URL(path, 'http://localhost:3005/psd/'));
+        let response = await fetch(
+          new URL('psd/' + path, process.env.REACT_APP_SERVER_PATH)
+        );
         let data = await response.json();
         setLayers(data.layers);
       })();
@@ -41,7 +43,7 @@ const ImagesContainer = () => {
       {layers.map((image, index) => {
         return (
           <img
-            src={'http://localhost:3005/' + image}
+            src={process.env.REACT_APP_SERVER_PATH + image}
             style={{ position: 'absolute' }}
             alt='pic'
           ></img>
