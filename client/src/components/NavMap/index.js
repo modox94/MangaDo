@@ -16,7 +16,11 @@ export default ({ params }) => {
       <NavItem name='/catalog' url={''} />
       {names &&
         names.map((name, index) => (
-          <NavItem name={name} url={names.slice(0, index + 1).join('|')} />
+          <NavItem
+            key={name}
+            name={name}
+            url={names.slice(0, index + 1).join('|')}
+          />
         ))}
     </div>
   );
