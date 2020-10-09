@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styles from './style.module.css';
 import Folder from '../../Folder';
 import File from '../../File';
+import NavMap from '../../NavMap';
 
 export default () => {
   const { params } = useParams();
@@ -20,6 +21,7 @@ export default () => {
         response = await fetch(
           new URL('catalog/', process.env.REACT_APP_SERVER_PATH)
         );
+
       const result = await response.json();
       setData(result);
       console.log('result = ', result);
@@ -29,7 +31,7 @@ export default () => {
   console.log('board data = ', data);
   return (
     <>
-      <div>{params}</div>
+      <NavMap params={params} />
       <div className={styles.board}>
         {data.files &&
           Object.keys(data.files).map((key) => (

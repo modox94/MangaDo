@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import styles from './style.module.css';
-import {Link} from 'react-router-dom';
 
+import NavItem from '../NavItem';
 
-export default ({params}) => {
-  const names = (params.lastindexOf('|') === -1) ?  [params] : params.split('|');
+export default ({ params }) => {
+  let names = '';
+  if (params) {
+    names = params?.lastIndexOf('|') === -1 ? [params] : params.split('|');
+  }
+
+  // console.log('params in NavMap =', params);
+  // console.log(names);
   return (
     <div className={styles.navbar}>
-        {names.map(name => )}
+      {names &&
+        names.map((name, index) => (
+          <NavItem name={name} url={names.slice(0, index + 1).join('|')} />
+        ))}
     </div>
-  )
-}
+  );
+};
