@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as WEBSOCKET_ACTIONS from './redux/actions/websocket/websocket';
@@ -13,7 +13,6 @@ function App() {
   useEffect(() => {
     let ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_PATH);
     ws.onopen = () => {
-      console.log('ws', ws);
       console.log('ws opened');
       dispatch(WEBSOCKET_ACTIONS.RECORD_WEBSOCKET(ws));
     };
@@ -21,6 +20,13 @@ function App() {
 
     ws.onmessage = function (event) {
       console.log('onmessage', event.data);
+      switch (event.data.type) {
+        case 'value':
+          break;
+
+        default:
+          break;
+      }
     };
 
     return () => {

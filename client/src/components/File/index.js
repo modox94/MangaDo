@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default ({ data }) => {
-  console.log('data from file', data);
+  // console.log('data from file', data);
 
   return (
     <Link to={data.url}>

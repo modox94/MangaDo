@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from './style.module.css';
 import cn from 'classnames';
+
+import styles from './style.module.css';
 
 const Modal = ({ active, setActive, children }) => {
   return (
