@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import m116o from '../../images/116.jpg';
-import m116t from '../../images/116.png';
-import k003o from '../../images/003.jpg';
-import k003t from '../../images/003.png';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './style.module.css';
 import Draggable from 'react-draggable';
@@ -14,8 +10,6 @@ const ImagesContainer = () => {
   const translateMarkArr = markArr.filter((el) => el.type === 'translate');
   const decorMarkArr = markArr.filter((el) => el.type === 'decor');
   const editMarkArr = markArr.filter((el) => el.type === 'edit');
-  const [img1, setImg1] = useState(false);
-  const [img2, setImg2] = useState(false);
   const [layers, setLayers] = useState([]);
   const dispatch = useDispatch();
 
@@ -43,8 +37,9 @@ const ImagesContainer = () => {
       {layers.map((image, index) => {
         return (
           <img
+          key={image}
             src={process.env.REACT_APP_SERVER_PATH + image}
-            style={{ position: 'absolute' }}
+            className={styles.images}
             alt='pic'
           ></img>
         );
@@ -53,6 +48,8 @@ const ImagesContainer = () => {
       {translateMarkArr.map((mark) => {
         return (
           <Draggable
+          bounds='img'
+          key={mark.id}
             onStop={(e, position) => {
               onControlledDragStop(e, position, mark._id);
             }}
@@ -72,6 +69,8 @@ const ImagesContainer = () => {
       {decorMarkArr.map((mark) => {
         return (
           <Draggable
+          bounds='img'
+          key={mark.id}
             onStop={(e, position) => {
               onControlledDragStop(e, position, mark._id);
             }}
@@ -91,6 +90,8 @@ const ImagesContainer = () => {
       {editMarkArr.map((mark) => {
         return (
           <Draggable
+          bounds='img'
+          key={mark.id}
             onStop={(e, position) => {
               onControlledDragStop(e, position, mark._id);
             }}
@@ -106,24 +107,6 @@ const ImagesContainer = () => {
           </Draggable>
         );
       })}
-      {/* <div className='form-check'>
-        <input
-          onChange={(event) => setImg1(!event.target.checked)}
-          className='form-check-input'
-          type='checkbox'
-          defaultChecked
-        />
-        <label className='form-check-label'>Image 1</label>
-      </div>
-      <div className='form-check'>
-        <input
-          onChange={(event) => setImg2(!event.target.checked)}
-          className='form-check-input'
-          type='checkbox'
-          defaultChecked
-        />
-        <label className='form-check-label'>Image 2</label>
-      </div> */}
     </div>
   );
 };

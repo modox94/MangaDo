@@ -7,6 +7,7 @@ import PSD from './components/PSD/Main';
 import WSBord from './components/scenes/WSBord';
 
 function App() {
+
   const [isPaused, setPause] = useState(false);
   const ws = useRef(null);
 
@@ -32,6 +33,8 @@ function App() {
   return (
     <>
       <Router>
+    <main>
+      <Header />
         <Switch>
           <Route exact path='/WS'>
             <WSBord />
@@ -46,6 +49,9 @@ function App() {
             <Board />
           </Route>
         </Switch>
+
+      </main>
+ 
       </Router>
       <div>
         <button onClick={() => setPause(!isPaused)}>
@@ -53,6 +59,7 @@ function App() {
         </button>
       </div>
     </>
+
   );
 }
 

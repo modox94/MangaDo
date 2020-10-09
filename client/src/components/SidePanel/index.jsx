@@ -81,14 +81,17 @@ const SidePanel = () => {
 
   return (
     <div className={styles.sideContainer}>
-      <details>
-        <summary>ПЕРЕВОД</summary>
-        <input
+      <details className={styles.accordion}>
+        <summary style={{ color: '#dc3545' }}>ПЕРЕВОД</summary>
+        <textarea
+          rows='4'
           onChange={handlerTitleTranslate}
-          type='text'
           value={translateMarkTitle}
-        />
-        <button onClick={() => handlerAddMark('translate', translateMarkTitle)}>
+        ></textarea>
+        <button
+          className={styles.buttonAdd}
+          onClick={() => handlerAddMark('translate', translateMarkTitle)}
+        >
           Добавить
         </button>
         {translateMarkArr.map((mark) => {
@@ -113,14 +116,17 @@ const SidePanel = () => {
         })}
       </details>
 
-      <details>
-        <summary>ОФОРМЛЕНИЕ</summary>
-        <input
+      <details className={styles.accordion}>
+        <summary style={{ color: '#007bff' }}>ОФОРМЛЕНИЕ</summary>
+        <textarea
+          rows='4'
           onChange={handlerTitleDecor}
-          type='text'
           value={decorteMarkTitle}
-        />
-        <button onClick={() => handlerAddMark('decor', decorteMarkTitle)}>
+        ></textarea>
+        <button
+          className={styles.buttonAdd}
+          onClick={() => handlerAddMark('decor', decorteMarkTitle)}
+        >
           Добавить
         </button>
         {decorMarkArr.map((mark) => {
@@ -145,10 +151,17 @@ const SidePanel = () => {
         })}
       </details>
 
-      <details>
-        <summary>РЕДАКТУРА</summary>
-        <input onChange={handlerTitleEdit} type='text' value={editMarkTitle} />
-        <button onClick={() => handlerAddMark('edit', editMarkTitle)}>
+      <details className={styles.accordion}>
+        <summary style={{ color: '#28a745' }}>РЕДАКТУРА</summary>
+        <textarea
+          rows='4'
+          onChange={handlerTitleEdit}
+          value={editMarkTitle}
+        ></textarea>
+        <button
+          className={styles.buttonAdd}
+          onClick={() => handlerAddMark('edit', editMarkTitle)}
+        >
           Добавить
         </button>
         {editMarkArr.map((mark) => {
@@ -174,23 +187,34 @@ const SidePanel = () => {
       </details>
 
       <Modal active={modalActive} setActive={setModalActive}>
-        <input
-          onChange={handlerCurentMessage}
-          type='text'
-          value={curentMessage}
-        />
-        <button onClick={handlerAddMessage}> Добавить </button>
         {markArr
           .find((el) => el._id === curentOpenId)
           ?.messages.map((message) => {
             return (
-              <div>
-                <span>{message.data}</span>
-                <span>{message.user}</span>
-                <span>{message.value}</span>
+              <div className={styles.messageModal} key={message.data}>
+                <p>
+                  <span className={styles.userSpan}>{message.user}</span>
+                  <span style={{color:'#6c757d'}} className={styles.timeSpan}>
+                    {new Date(message.data).toLocaleDateString()}
+                  </span>
+                </p>
+
+                <span className={styles.messageSpan}>{message.value}</span>
               </div>
             );
           })}
+        <div className={styles.modalInput}>
+          <textarea
+          style={{ resize:'none'}}
+            rows='4'
+            onChange={handlerCurentMessage}
+            value={curentMessage}
+          ></textarea>
+          <button className={styles.buttonAdd} onClick={handlerAddMessage}>
+            {' '}
+            Добавить{' '}
+          </button>
+        </div>
       </Modal>
     </div>
   );
