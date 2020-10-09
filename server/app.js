@@ -27,3 +27,12 @@ const expressServer = app.listen(PORT, () => {
 const wsServer = new ws.Server({
   server: expressServer,
 });
+
+wsServer.on('connection', function connection(ws) {
+  ws.on('message', function incoming(data) {
+    wsServer.clients.forEach(function each(client) {
+      console.log(data);
+      client.send(data);
+    });
+  });
+});
