@@ -15,18 +15,14 @@ function App() {
     ws.onopen = () => {
       console.log('ws', ws);
       console.log('ws opened');
+      dispatch(WEBSOCKET_ACTIONS.RECORD_WEBSOCKET(ws));
     };
     ws.onclose = () => console.log('ws closed');
 
     ws.onmessage = function (event) {
-      console.log(event.data);
+      console.log('onmessage', event.data);
     };
 
-    ws.onmessage = function (event) {
-      console.log('new onmessage', event.data);
-    };
-
-    dispatch(WEBSOCKET_ACTIONS.RECORD_WEBSOCKET(ws));
     return () => {
       ws.close();
     };

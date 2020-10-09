@@ -31,6 +31,7 @@ const wsServer = new ws.Server({
 wsServer.on('connection', function connection(ws) {
   ws.on('message', function incoming(data) {
     wsServer.clients.forEach(function each(client) {
+      // console.log(client);
       console.log(data);
       client.send(data);
     });
