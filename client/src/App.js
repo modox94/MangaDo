@@ -10,13 +10,6 @@ import PSD from './components/PSD/Main';
 
 function App() {
   return (
-    // <div>
-    //   <Header />
-    //   <div className="wrapper">
-    //     <ImagesContainer />
-    //     <SidePanel />
-    //   </div>
-    // </div>
     <Router>
       <Switch>
         <Route exact path='/psd/:path'>
