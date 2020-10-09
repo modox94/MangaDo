@@ -2,12 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const ws = require('ws');
 const cors = require('cors');
-
+const dbConnect = require('./dbConnect.js');
 const catalogRouter = require('./src/routes/catalog');
 const psdRouter = require('./src/routes/psd');
 
 const PORT = process.env.PORT ?? 3000;
 
+dbConnect();
 const app = express();
 
 app.use(cors());
