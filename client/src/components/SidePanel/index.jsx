@@ -4,7 +4,9 @@ import styles from './style.module.css';
 import * as MARK_ACTIONS from '../../redux/actions/mark/mark';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from '../Modal';
-
+import iconEye from '../../images/icons/eye.png';
+import iconEyeClose from '../../images/icons/eyeclose.png';
+import iconDelete from '../../images/icons/delete.png';
 const SidePanel = () => {
   const dispatch = useDispatch();
   const [translateMarkTitle, setTranslateMarkTitle] = useState('');
@@ -97,8 +99,24 @@ const SidePanel = () => {
         {translateMarkArr.map((mark) => {
           return (
             <div key={mark._id} className={styles.task}>
-              <button onClick={handlerVisible} id={mark._id}>
-                Status
+              <button>
+                {mark.visible ? (
+                  <img
+                    onClick={handlerVisible}
+                    id={mark._id}
+                    style={{ width: '14px', verticalAlign: 'middle' }}
+                    src={iconEye}
+                    alt=''
+                  />
+                ) : (
+                  <img
+                    onClick={handlerVisible}
+                    id={mark._id}
+                    style={{ width: '14px', verticalAlign: 'middle' }}
+                    src={iconEyeClose}
+                    alt=''
+                  />
+                )}
               </button>
               <p
                 onClick={() => {
@@ -108,8 +126,14 @@ const SidePanel = () => {
               >
                 {mark.messages[0].value}
               </p>
-              <button onClick={handlerDelete} id={mark._id}>
-                Delete
+              <button>
+                <img
+                  onClick={handlerDelete}
+                  id={mark._id}
+                  style={{ width: '14px', verticalAlign: 'middle' }}
+                  src={iconDelete}
+                  alt=''
+                />
               </button>
             </div>
           );
@@ -132,8 +156,24 @@ const SidePanel = () => {
         {decorMarkArr.map((mark) => {
           return (
             <div key={mark._id} className={styles.task}>
-              <button onClick={handlerVisible} id={mark._id}>
-                Status
+              <button>
+                {mark.visible ? (
+                  <img
+                    onClick={handlerVisible}
+                    id={mark._id}
+                    style={{ width: '14px', verticalAlign: 'middle' }}
+                    src={iconEye}
+                    alt=''
+                  />
+                ) : (
+                  <img
+                    onClick={handlerVisible}
+                    id={mark._id}
+                    style={{ width: '14px', verticalAlign: 'middle' }}
+                    src={iconEyeClose}
+                    alt=''
+                  />
+                )}
               </button>
               <p
                 onClick={() => {
@@ -143,8 +183,14 @@ const SidePanel = () => {
               >
                 {mark.messages[0].value}
               </p>
-              <button onClick={handlerDelete} id={mark._id}>
-                Delete
+              <button>
+                <img
+                  onClick={handlerDelete}
+                  id={mark._id}
+                  style={{ width: '14px', verticalAlign: 'middle' }}
+                  src={iconDelete}
+                  alt=''
+                />
               </button>
             </div>
           );
@@ -167,8 +213,24 @@ const SidePanel = () => {
         {editMarkArr.map((mark) => {
           return (
             <div key={mark._id} className={styles.task}>
-              <button onClick={handlerVisible} id={mark._id}>
-                Status
+              <button>
+                {mark.visible ? (
+                  <img
+                    onClick={handlerVisible}
+                    id={mark._id}
+                    style={{ width: '14px', verticalAlign: 'middle' }}
+                    src={iconEye}
+                    alt=''
+                  />
+                ) : (
+                  <img
+                    onClick={handlerVisible}
+                    id={mark._id}
+                    style={{ width: '14px', verticalAlign: 'middle' }}
+                    src={iconEyeClose}
+                    alt=''
+                  />
+                )}
               </button>
               <p
                 onClick={() => {
@@ -178,8 +240,14 @@ const SidePanel = () => {
               >
                 {mark.messages[0].value}
               </p>
-              <button onClick={handlerDelete} id={mark._id}>
-                Delete
+              <button>
+                <img
+                  onClick={handlerDelete}
+                  id={mark._id}
+                  style={{ width: '14px', verticalAlign: 'middle' }}
+                  src={iconDelete}
+                  alt=''
+                />
               </button>
             </div>
           );
@@ -194,7 +262,10 @@ const SidePanel = () => {
               <div className={styles.messageModal} key={message.data}>
                 <p>
                   <span className={styles.userSpan}>{message.user}</span>
-                  <span style={{color:'#6c757d'}} className={styles.timeSpan}>
+                  <span
+                    style={{ color: '#6c757d' }}
+                    className={styles.timeSpan}
+                  >
                     {new Date(message.data).toLocaleDateString()}
                   </span>
                 </p>
@@ -205,7 +276,7 @@ const SidePanel = () => {
           })}
         <div className={styles.modalInput}>
           <textarea
-          style={{ resize:'none'}}
+            style={{ resize: 'none' }}
             rows='4'
             onChange={handlerCurentMessage}
             value={curentMessage}

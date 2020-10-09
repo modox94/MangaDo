@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import Header from './components/Header';
 import './App.css';
 import Board from './components/scenes/Board';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PSD from './components/PSD/Main';
 import WSBord from './components/scenes/WSBord';
 
