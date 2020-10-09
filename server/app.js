@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const ws = require('ws');
 const cors = require('cors');
 
 const catalogRouter = require('./src/routes/catalog');
@@ -18,6 +19,10 @@ app.use('/static', express.static('public'));
 app.use('/catalog', catalogRouter);
 app.use('/psd', psdRouter);
 
-app.listen(PORT, () => {
+const expressServer = app.listen(PORT, () => {
   console.log('Server has been started on port ', PORT);
+});
+
+const wsServer = new ws.Server({
+  server: expressServer,
 });
