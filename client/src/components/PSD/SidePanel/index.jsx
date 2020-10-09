@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import styles from './style.module.css';
-import * as MARK_ACTIONS from '../../redux/actions/mark/mark';
 import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import Modal from '../Modal';
+import * as ACTIONS_TYPES from '../../../redux/action-types';
+import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
 
-import iconEye from '../../images/icons/eye.png';
-import iconEyeClose from '../../images/icons/eyeclose.png';
-import iconDelete from '../../images/icons/delete.png';
-
-import { useParams } from 'react-router-dom';
-
+import styles from './style.module.css';
+import iconEye from '../../../icons/eye.png';
+import iconEyeClose from '../../../icons/eyeclose.png';
+import iconDelete from '../../../icons/delete.png';
 
 const SidePanel = () => {
   const dispatch = useDispatch();
   const [translateMarkTitle, setTranslateMarkTitle] = useState('');
   const [decorteMarkTitle, setDecorMarkTitle] = useState('');
   const [editMarkTitle, setEditMarkTitle] = useState('');
-  const markArr = useSelector((state) => state.mark);
+  const markArr = useSelector((state) => state.marks);
   const translateMarkArr = markArr.filter((el) => el.type === 'translate');
   const decorMarkArr = markArr.filter((el) => el.type === 'decor');
   const editMarkArr = markArr.filter((el) => el.type === 'edit');
@@ -27,8 +25,8 @@ const SidePanel = () => {
   const [curentOpenId, setCurentOpenId] = useState('');
 
   const ws = useSelector((state) => state.websocket);
-
-  const { path } = useParams();
+  const user = useSelector((state) => state.user);
+  const path = useSelector((state) => state.url);
 
   const handlerTitleTranslate = (e) => {
     setTranslateMarkTitle(e.target.value);
@@ -42,8 +40,7 @@ const SidePanel = () => {
 
   const handlerAddMark = (markType, markTitle) => {
     let newMark = {
-      _id: uuidv4(),
-      psd: path,
+      id: uuidv4(),
       type: markType,
       position: {
         x: 0,
@@ -52,12 +49,13 @@ const SidePanel = () => {
       visible: true,
       messages: [
         {
-          user: 'Редактор',
+          user: user.name,
           data: Date.now(),
           value: markTitle,
         },
       ],
     };
+
     if (markType === 'translate') {
       setTranslateMarkTitle('');
     } else if (markType === 'edit') {
@@ -66,10 +64,18 @@ const SidePanel = () => {
       setDecorMarkTitle('');
     }
 
-    dispatch(MARK_ACTIONS.ADD_NEW_MARK(newMark));
+    dispatch(MARK_ACTIONS.ADD_MARK(newMark));
 
     if (ws) {
-      ws.send(JSON.stringify(newMark));
+      ws.send(
+        JSON.stringify({
+          type: ACTIONS_TYPES.WS_ADD_MARK,
+          payload: {
+            mark: newMark,
+            url: path,
+          },
+        })
+      );
     }
   };
 

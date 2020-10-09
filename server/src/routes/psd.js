@@ -43,9 +43,10 @@ router.get('/:path', async (req, res) => {
       }
     });
 
-    oldLayers = oldLayers.map((element) =>
-      path.join('static', 'layers', ...additionalPath, element)
-    );
+    oldLayers = oldLayers.map((element) => [
+      path.join('static', 'layers', ...additionalPath, element),
+      true,
+    ]);
 
     let end = new Date();
     console.log('end - /psd/:path', end - start, 'ms');
@@ -86,9 +87,10 @@ router.get('/:path', async (req, res) => {
     }
   });
 
-  layers = layers.map((element) =>
-    path.join('static', 'layers', ...additionalPath, element)
-  );
+  layers = layers.map((element) => [
+    path.join('static', 'layers', ...additionalPath, element),
+    true,
+  ]);
 
   let end = new Date();
   console.log('end - /psd/:path', end - start, 'ms');

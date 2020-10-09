@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styles from './style.module.css';
 import Draggable from 'react-draggable';
-import * as MARK_ACTIONS from '../../redux/actions/mark/mark';
-import { useParams } from 'react-router-dom';
+import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
+import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
+
+import styles from './style.module.css';
 
 const ImagesContainer = () => {
-  const markArr = useSelector((state) => state.mark);
+  const markArr = useSelector((state) => state.marks);
   const translateMarkArr = markArr.filter((el) => el.type === 'translate');
   const decorMarkArr = markArr.filter((el) => el.type === 'decor');
   const editMarkArr = markArr.filter((el) => el.type === 'edit');
-  const [layers, setLayers] = useState([]);
-  const dispatch = useDispatch();
 
-  const { path } = useParams();
+  const path = useSelector((state) => state.url);
+  const layers = useSelector((state) => state.layers);
+
+  const dispatch = useDispatch();
 
   const onControlledDragStop = (e, position, id) => {
     const { x, y } = position;
@@ -22,23 +24,18 @@ const ImagesContainer = () => {
 
   useEffect(() => {
     if (path) {
-      (async () => {
-        let response = await fetch(
-          new URL('psd/' + path, process.env.REACT_APP_SERVER_PATH)
-        );
-        let data = await response.json();
-        setLayers(data.layers);
-      })();
+      dispatch(LAYERS_ACTIONS.DOWNLOAD_LAYERS(path));
     }
-  }, []);
+  }, [path]);
 
   return (
     <div className={styles.container}>
-      {layers.map((image, index) => {
+      {layers.map((image) => {
         return (
           <img
-          key={image}
-            src={process.env.REACT_APP_SERVER_PATH + image}
+            key={image[0]}
+            src={process.env.REACT_APP_SERVER_PATH + image[0]}
+            style={image[1] ? {} : { display: 'none' }}
             className={styles.images}
             alt='pic'
           ></img>
@@ -48,8 +45,8 @@ const ImagesContainer = () => {
       {translateMarkArr.map((mark) => {
         return (
           <Draggable
-          bounds='img'
-          key={mark.id}
+            bounds='img'
+            key={mark.id}
             onStop={(e, position) => {
               onControlledDragStop(e, position, mark._id);
             }}
@@ -69,8 +66,8 @@ const ImagesContainer = () => {
       {decorMarkArr.map((mark) => {
         return (
           <Draggable
-          bounds='img'
-          key={mark.id}
+            bounds='img'
+            key={mark.id}
             onStop={(e, position) => {
               onControlledDragStop(e, position, mark._id);
             }}
@@ -90,8 +87,8 @@ const ImagesContainer = () => {
       {editMarkArr.map((mark) => {
         return (
           <Draggable
-          bounds='img'
-          key={mark.id}
+            bounds='img'
+            key={mark.id}
             onStop={(e, position) => {
               onControlledDragStop(e, position, mark._id);
             }}

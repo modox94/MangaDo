@@ -1,8 +1,8 @@
 import * as ACTIONS_TYPES from '../../action-types';
 
-const websocketReducer = (state = '', action) => {
+const urlReducer = (state = '', action) => {
   switch (action.type) {
-    case ACTIONS_TYPES.RECORD_WEBSOCKET:
+    case ACTIONS_TYPES.RECORD_PSD_URL:
       return action.payload;
 
     default:
@@ -10,4 +10,4 @@ const websocketReducer = (state = '', action) => {
   }
 };
 
-export default websocketReducer;
+export default urlReducer;

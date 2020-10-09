@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styles from './style.module.css';
 import Folder from '../../Folder';
 import File from '../../File';
 import NavMap from '../../NavMap';
 
+import styles from './style.module.css';
+
 export default () => {
   const { params } = useParams();
-  console.log('params = ', params);
+  // console.log('params = ', params);
   const [data, setData] = useState({ folders: [] });
 
   useEffect(() => {
@@ -24,11 +25,11 @@ export default () => {
 
       const result = await response.json();
       setData(result);
-      console.log('result = ', result);
+      // console.log('result = ', result);
     })();
   }, [params]);
 
-  console.log('board data = ', data);
+  // console.log('board data = ', data);
   return (
     <>
       <NavMap params={params} />

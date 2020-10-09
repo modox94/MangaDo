@@ -1,7 +1,14 @@
 const initialState = () => {
-  const initialValue = { mark: [] };
+  const user = JSON.parse(localStorage.getItem('user')) || { name: 'vasya67' };
 
-  return initialValue; // JSON.parse(localStorage.getItem('redux')) || initialValue; // comment
+  const initialValue = {
+    user,
+    url: '',
+    marks: [],
+    layers: [],
+  };
+
+  return initialValue;
 };
 
 export default initialState;

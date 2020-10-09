@@ -12,7 +12,8 @@ store.subscribe(() => {
     console.log('some data');
     store.getState().websocket.send('some data');
   }
-  localStorage.setItem('redux', JSON.stringify(store.getState()));
+
+  localStorage.setItem('user', JSON.stringify(store.getState().user));
 });
 
 export default store;
