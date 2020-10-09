@@ -6,6 +6,12 @@
   text-align: center;
 }
 
+.sideContainer button {
+  background-color: transparent;
+  border-radius: 3px;
+  padding: 1px;
+}
+
 .task {
   display: flex;
   max-width: 100%;
@@ -16,7 +22,8 @@
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap
+  white-space: nowrap;
+  padding: 0 10px;
 }
 .accordion {
   width: auto;
@@ -54,18 +61,15 @@
 .modalInput textarea {
   width: 100%;
   resize: vertical;
- 
 }
-.modalInput  {
-  
+.modalInput {
   position: absolute;
   bottom: 20px;
   left: 10px;
   right: 10px;
- 
 }
 
-.messageModal{
+.messageModal {
   text-align: start;
   border: 1px solid #343a40;
   border-radius: 5px;
@@ -76,7 +80,7 @@
   word-break: break-word;
 }
 
-.messageModal p{
+.messageModal p {
   font-size: 12px;
   display: flex;
   justify-content: space-between;
