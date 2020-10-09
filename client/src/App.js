@@ -7,6 +7,7 @@ import './App.css';
 import Board from './components/scenes/Board';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import PSD from './components/PSD/Main';
+import WSBord from './components/scenes/WSBord';
 
 function App() {
   return (
@@ -18,7 +19,12 @@ function App() {
     //   </div>
     // </div>
     <Router>
+      <Link to='/WS'> WSsocketsTest</Link>
+
       <Switch>
+        <Route exact path='/WS'>
+          <WSBord />
+        </Route>
         <Route exact path='/psd/:path'>
           <PSD />
         </Route>
