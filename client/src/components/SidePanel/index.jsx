@@ -4,9 +4,14 @@ import styles from './style.module.css';
 import * as MARK_ACTIONS from '../../redux/actions/mark/mark';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from '../Modal';
+
 import iconEye from '../../images/icons/eye.png';
 import iconEyeClose from '../../images/icons/eyeclose.png';
 import iconDelete from '../../images/icons/delete.png';
+
+import { useParams } from 'react-router-dom';
+
+
 const SidePanel = () => {
   const dispatch = useDispatch();
   const [translateMarkTitle, setTranslateMarkTitle] = useState('');
@@ -21,6 +26,10 @@ const SidePanel = () => {
   const [curentMessage, setCurentMessage] = useState('');
   const [curentOpenId, setCurentOpenId] = useState('');
 
+  const ws = useSelector((state) => state.websocket);
+
+  const { path } = useParams();
+
   const handlerTitleTranslate = (e) => {
     setTranslateMarkTitle(e.target.value);
   };
@@ -34,6 +43,7 @@ const SidePanel = () => {
   const handlerAddMark = (markType, markTitle) => {
     let newMark = {
       _id: uuidv4(),
+      psd: path,
       type: markType,
       position: {
         x: 0,
@@ -57,6 +67,10 @@ const SidePanel = () => {
     }
 
     dispatch(MARK_ACTIONS.ADD_NEW_MARK(newMark));
+
+    if (ws) {
+      ws.send(JSON.stringify(newMark));
+    }
   };
 
   const handlerCurentMessage = (e) => {

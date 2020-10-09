@@ -5,6 +5,7 @@ const cors = require('cors');
 const dbConnect = require('./dbConnect.js');
 const catalogRouter = require('./src/routes/catalog');
 const psdRouter = require('./src/routes/psd');
+const userRouter = require('./src/routes/userRouter');
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -19,6 +20,7 @@ app.use('/static', express.static('public'));
 
 app.use('/catalog', catalogRouter);
 app.use('/psd', psdRouter);
+app.use('/user', userRouter);
 
 const expressServer = app.listen(PORT, () => {
   console.log('Server has been started on port ', PORT);
@@ -26,4 +28,14 @@ const expressServer = app.listen(PORT, () => {
 
 const wsServer = new ws.Server({
   server: expressServer,
+});
+
+wsServer.on('connection', function connection(ws) {
+  ws.on('message', function incoming(data) {
+    wsServer.clients.forEach(function each(client) {
+      // console.log(client);
+      console.log(data);
+      client.send(data);
+    });
+  });
 });

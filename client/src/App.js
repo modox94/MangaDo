@@ -1,42 +1,38 @@
 import React, { useRef, useState, useEffect } from 'react';
-import Header from './components/Header';
-import './App.css';
-import Board from './components/scenes/Board';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import * as WEBSOCKET_ACTIONS from './redux/actions/websocket/websocket';
+import './App.css';
+import Header from './components/Header';
+import Board from './components/scenes/Board';
 import PSD from './components/PSD/Main';
-import WSBord from './components/scenes/WSBord';
 
 function App() {
-  const [isPaused, setPause] = useState(false);
-  const ws = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    ws.current = new WebSocket('ws://localhost:3005//');
-    ws.current.onopen = () => console.log('ws opened');
-    ws.current.onclose = () => console.log('ws closed');
+    let ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_PATH);
+    ws.onopen = () => {
+      console.log('ws', ws);
+      console.log('ws opened');
+      dispatch(WEBSOCKET_ACTIONS.RECORD_WEBSOCKET(ws));
+    };
+    ws.onclose = () => console.log('ws closed');
+
+    ws.onmessage = function (event) {
+      console.log('onmessage', event.data);
+    };
 
     return () => {
-      ws.current.close();
+      ws.close();
     };
   }, []);
 
-  useEffect(() => {
-    if (!ws.current) return;
-
-    ws.current.onmessage = (e) => {
-      if (isPaused) return;
-      const message = JSON.parse(e.data);
-      console.log('e', message);
-    };
-  }, [isPaused]);
   return (
     <Router>
       <main>
         <Header />
         <Switch>
-          <Route exact path='/WS'>
-            <WSBord />
-          </Route>
           <Route exact path='/psd/:path'>
             <PSD />
           </Route>

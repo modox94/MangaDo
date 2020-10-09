@@ -1,7 +1,7 @@
 const initialState = () => {
-  const initialValue = {};
+  const initialValue = { mark: [] };
 
-  return JSON.parse(localStorage.getItem('redux')) || initialValue;
+  return initialValue; // JSON.parse(localStorage.getItem('redux')) || initialValue; // comment
 };
 
 export default initialState;
