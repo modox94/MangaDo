@@ -8,6 +8,10 @@ const enhancer = composeWithDevTools(applyMiddleware(thunk));
 const store = createStore(rootReducer, initialState(), enhancer);
 
 store.subscribe(() => {
+  if (store.getState().websocket) {
+    console.log('some data');
+    store.getState().websocket.send('some data');
+  }
   localStorage.setItem('redux', JSON.stringify(store.getState()));
 });
 

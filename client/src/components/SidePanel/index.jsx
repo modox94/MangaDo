@@ -4,6 +4,7 @@ import styles from './style.module.css';
 import * as MARK_ACTIONS from '../../redux/actions/mark/mark';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from '../Modal';
+import { useParams } from 'react-router-dom';
 
 const SidePanel = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,10 @@ const SidePanel = () => {
   const [curentMessage, setCurentMessage] = useState('');
   const [curentOpenId, setCurentOpenId] = useState('');
 
+  const ws = useSelector((state) => state.websocket);
+
+  const { path } = useParams();
+
   const handlerTitleTranslate = (e) => {
     setTranslateMarkTitle(e.target.value);
   };
@@ -32,6 +37,7 @@ const SidePanel = () => {
   const handlerAddMark = (markType, markTitle) => {
     let newMark = {
       _id: uuidv4(),
+      psd: path,
       type: markType,
       position: {
         x: 0,
@@ -55,6 +61,10 @@ const SidePanel = () => {
     }
 
     dispatch(MARK_ACTIONS.ADD_NEW_MARK(newMark));
+
+    if (ws) {
+      ws.send(JSON.stringify(newMark));
+    }
   };
 
   const handlerCurentMessage = (e) => {
@@ -194,7 +204,10 @@ const SidePanel = () => {
               <div className={styles.messageModal} key={message.data}>
                 <p>
                   <span className={styles.userSpan}>{message.user}</span>
-                  <span style={{color:'#6c757d'}} className={styles.timeSpan}>
+                  <span
+                    style={{ color: '#6c757d' }}
+                    className={styles.timeSpan}
+                  >
                     {new Date(message.data).toLocaleDateString()}
                   </span>
                 </p>
@@ -205,7 +218,7 @@ const SidePanel = () => {
           })}
         <div className={styles.modalInput}>
           <textarea
-          style={{ resize:'none'}}
+            style={{ resize: 'none' }}
             rows='4'
             onChange={handlerCurentMessage}
             value={curentMessage}
