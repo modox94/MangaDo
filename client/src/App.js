@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-
+import Header from './components/Header';
 import './App.css';
 import Board from './components/scenes/Board';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
@@ -7,7 +7,6 @@ import PSD from './components/PSD/Main';
 import WSBord from './components/scenes/WSBord';
 
 function App() {
-
   const [isPaused, setPause] = useState(false);
   const ws = useRef(null);
 
@@ -31,10 +30,9 @@ function App() {
     };
   }, [isPaused]);
   return (
-    <>
-      <Router>
-    <main>
-      <Header />
+    <Router>
+      <main>
+        <Header />
         <Switch>
           <Route exact path='/WS'>
             <WSBord />
@@ -49,17 +47,8 @@ function App() {
             <Board />
           </Route>
         </Switch>
-
       </main>
- 
-      </Router>
-      <div>
-        <button onClick={() => setPause(!isPaused)}>
-          {isPaused ? 'Resume' : 'Pause'}
-        </button>
-      </div>
-    </>
-
+    </Router>
   );
 }
 
