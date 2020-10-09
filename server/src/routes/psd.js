@@ -64,6 +64,8 @@ router.get('/:path', async (req, res) => {
       'dispose',
       'Background',
       '-coalesce',
+      '-resize',
+      '900x',
       outputPath + '/' + file.name + '.png',
     ];
 
