@@ -12,22 +12,25 @@ import WSBord from './components/scenes/WSBord';
 function App() {
   return (
     <Router>
-      <Link to='/WS'> WSsocketsTest</Link>
 
-      <Switch>
-        <Route exact path='/WS'>
-          <WSBord />
-        </Route>
-        <Route exact path='/psd/:path'>
-          <PSD />
-        </Route>
-        <Route exact path='/catalog'>
-          <Board />
-        </Route>
-        <Route exact path='/catalog/:params'>
-          <Board />
-        </Route>
-      </Switch>
+      {/* <Link to='/WS'> WSsocketsTest</Link> */}
+      <main>
+      <Header />
+        <Switch>
+          <Route exact path='/WS'>
+            <WSBord />
+          </Route>
+          <Route exact path='/psd/:path'>
+            <PSD />
+          </Route>
+          <Route exact path='/catalog'>
+            <Board />
+          </Route>
+          <Route exact path='/catalog/:params'>
+            <Board />
+          </Route>
+        </Switch>
+      </main>
     </Router>
   );
 }

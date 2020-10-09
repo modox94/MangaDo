@@ -60,9 +60,15 @@
 
 .container {
   position: relative;
-  width: 70vw;
+  width: 900px;
 }
 
 .disableMark {
   display: none;
+}
+
+.images {
+  width: 100%;
+  height: auto;
+  position: absolute;
 }

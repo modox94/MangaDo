@@ -1,9 +1,84 @@
 .sideContainer {
-  background-color: blanchedalmond;
-  width: 20%;
+  width: 300px;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 .task {
   display: flex;
+  max-width: 100%;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.task p {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+.accordion {
+  width: auto;
+  margin: 10px;
+}
+
+.accordion summary {
+  margin-bottom: 10px;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.accordion textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.buttonAdd {
+  cursor: pointer;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  color: #343a40;
+  background-color: transparent;
+  border: 1px solid #343a40;
+  border-radius: 5px;
+  padding: 5px 0;
+  font-weight: 600;
+  width: 100%;
+}
+
+.modalInput textarea {
+  width: 100%;
+  resize: vertical;
+ 
+}
+.modalInput  {
+  
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  right: 10px;
+ 
+}
+
+.messageModal{
+  text-align: start;
+  border: 1px solid #343a40;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+  position: relative;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.messageModal p{
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 7px;
 }
