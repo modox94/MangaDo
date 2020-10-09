@@ -13,6 +13,7 @@ export default ({ params }) => {
   // console.log(names);
   return (
     <div className={styles.navbar}>
+      <NavItem name='/catalog' url={''} />
       {names &&
         names.map((name, index) => (
           <NavItem name={name} url={names.slice(0, index + 1).join('|')} />

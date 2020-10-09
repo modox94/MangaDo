@@ -11,13 +11,6 @@ import WSBord from './components/scenes/WSBord';
 
 function App() {
   return (
-    // <div>
-    //   <Header />
-    //   <div className="wrapper">
-    //     <ImagesContainer />
-    //     <SidePanel />
-    //   </div>
-    // </div>
     <Router>
       <Link to='/WS'> WSsocketsTest</Link>
 
