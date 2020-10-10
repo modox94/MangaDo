@@ -13,19 +13,6 @@ const PORT = process.env.PORT ?? 3000;
 dbConnect();
 const app = express();
 
-////
-
-// const uuid = require('uuid');
-
-// // console.log('uuid.parse()', uuid.parse());
-// // console.log('uuid.stringify()', uuid.stringify());
-// console.log('uuid.v1()', uuid.v1());
-// // console.log('uuid.v3()', uuid.v3());
-// console.log('uuid.v4()', uuid.v4());
-// // console.log('uuid.v5()', uuid.v5());
-// // console.log('uuid.validate()', uuid.validate());
-
-////
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

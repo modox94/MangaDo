@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import Draggable from 'react-draggable';
+
+import * as URL_ACTIONS from '../../../redux/actions/url/url';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
 import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
 import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
@@ -14,8 +17,9 @@ const ImagesContainer = () => {
   const editMarkArr = markArr.filter((el) => el.type === 'edit');
 
   const ws = useSelector((state) => state.websocket);
-  const path = useSelector((state) => state.url);
   const layers = useSelector((state) => state.layers);
+
+  const { path } = useParams();
 
   const dispatch = useDispatch();
 
@@ -29,6 +33,7 @@ const ImagesContainer = () => {
 
   useEffect(() => {
     if (path) {
+      dispatch(URL_ACTIONS.RECORD_PSD_URL(path));
       dispatch(LAYERS_ACTIONS.DOWNLOAD_LAYERS(path));
     }
   }, [path]);

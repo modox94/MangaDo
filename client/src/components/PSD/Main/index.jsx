@@ -8,13 +8,6 @@ import * as URL_ACTIONS from '../../../redux/actions/url/url';
 import styles from './style.module.css';
 
 const PSD = () => {
-  const { path } = useParams();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(URL_ACTIONS.RECORD_PSD_URL(path));
-  }, [path]);
-
   return (
     <div className={styles.wrapper}>
       <ImagesContainer />
