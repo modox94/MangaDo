@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Modal from '../Modal';
 import * as ACTIONS_TYPES from '../../../redux/action-types';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
+import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
 
 import styles from './style.module.css';
 import iconEye from '../../../icons/eye.png';
@@ -67,15 +68,7 @@ const SidePanel = () => {
     dispatch(MARK_ACTIONS.ADD_MARK(newMark));
 
     if (ws) {
-      ws.send(
-        JSON.stringify({
-          type: ACTIONS_TYPES.WS_ADD_MARK,
-          payload: {
-            mark: newMark,
-            url: path,
-          },
-        })
-      );
+      ws.send(WS_ACTIONS.WS_ADD_MARK(path, newMark));
     }
   };
 
@@ -118,12 +111,12 @@ const SidePanel = () => {
         </button>
         {translateMarkArr.map((mark) => {
           return (
-            <div key={mark._id} className={styles.task}>
+            <div key={mark.id} className={styles.task}>
               <button>
                 {mark.visible ? (
                   <img
                     onClick={handlerVisible}
-                    id={mark._id}
+                    id={mark.id}
                     style={{ width: '14px', verticalAlign: 'middle' }}
                     src={iconEye}
                     alt=''
@@ -131,7 +124,7 @@ const SidePanel = () => {
                 ) : (
                   <img
                     onClick={handlerVisible}
-                    id={mark._id}
+                    id={mark.id}
                     style={{ width: '14px', verticalAlign: 'middle' }}
                     src={iconEyeClose}
                     alt=''
@@ -141,7 +134,7 @@ const SidePanel = () => {
               <p
                 onClick={() => {
                   setModalActive(true);
-                  setCurentOpenId(mark._id);
+                  setCurentOpenId(mark.id);
                 }}
               >
                 {mark.messages[0].value}
@@ -149,7 +142,7 @@ const SidePanel = () => {
               <button>
                 <img
                   onClick={handlerDelete}
-                  id={mark._id}
+                  id={mark.id}
                   style={{ width: '14px', verticalAlign: 'middle' }}
                   src={iconDelete}
                   alt=''
@@ -175,12 +168,12 @@ const SidePanel = () => {
         </button>
         {decorMarkArr.map((mark) => {
           return (
-            <div key={mark._id} className={styles.task}>
+            <div key={mark.id} className={styles.task}>
               <button>
                 {mark.visible ? (
                   <img
                     onClick={handlerVisible}
-                    id={mark._id}
+                    id={mark.id}
                     style={{ width: '14px', verticalAlign: 'middle' }}
                     src={iconEye}
                     alt=''
@@ -188,7 +181,7 @@ const SidePanel = () => {
                 ) : (
                   <img
                     onClick={handlerVisible}
-                    id={mark._id}
+                    id={mark.id}
                     style={{ width: '14px', verticalAlign: 'middle' }}
                     src={iconEyeClose}
                     alt=''
@@ -198,7 +191,7 @@ const SidePanel = () => {
               <p
                 onClick={() => {
                   setModalActive(true);
-                  setCurentOpenId(mark._id);
+                  setCurentOpenId(mark.id);
                 }}
               >
                 {mark.messages[0].value}
@@ -206,7 +199,7 @@ const SidePanel = () => {
               <button>
                 <img
                   onClick={handlerDelete}
-                  id={mark._id}
+                  id={mark.id}
                   style={{ width: '14px', verticalAlign: 'middle' }}
                   src={iconDelete}
                   alt=''
@@ -232,12 +225,12 @@ const SidePanel = () => {
         </button>
         {editMarkArr.map((mark) => {
           return (
-            <div key={mark._id} className={styles.task}>
+            <div key={mark.id} className={styles.task}>
               <button>
                 {mark.visible ? (
                   <img
                     onClick={handlerVisible}
-                    id={mark._id}
+                    id={mark.id}
                     style={{ width: '14px', verticalAlign: 'middle' }}
                     src={iconEye}
                     alt=''
@@ -245,7 +238,7 @@ const SidePanel = () => {
                 ) : (
                   <img
                     onClick={handlerVisible}
-                    id={mark._id}
+                    id={mark.id}
                     style={{ width: '14px', verticalAlign: 'middle' }}
                     src={iconEyeClose}
                     alt=''
@@ -255,7 +248,7 @@ const SidePanel = () => {
               <p
                 onClick={() => {
                   setModalActive(true);
-                  setCurentOpenId(mark._id);
+                  setCurentOpenId(mark.id);
                 }}
               >
                 {mark.messages[0].value}
@@ -263,7 +256,7 @@ const SidePanel = () => {
               <button>
                 <img
                   onClick={handlerDelete}
-                  id={mark._id}
+                  id={mark.id}
                   style={{ width: '14px', verticalAlign: 'middle' }}
                   src={iconDelete}
                   alt=''
@@ -276,7 +269,7 @@ const SidePanel = () => {
 
       <Modal active={modalActive} setActive={setModalActive}>
         {markArr
-          .find((el) => el._id === curentOpenId)
+          .find((el) => el.id === curentOpenId)
           ?.messages.map((message) => {
             return (
               <div className={styles.messageModal} key={message.data}>

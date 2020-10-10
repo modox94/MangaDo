@@ -19,7 +19,8 @@ function App() {
     ws.onclose = () => console.log('ws closed');
 
     ws.onmessage = function (event) {
-      console.log('onmessage', event.data);
+      console.log('onmessage', JSON.parse(event.data));
+
       switch (event.data.type) {
         case 'value':
           break;

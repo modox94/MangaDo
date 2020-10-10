@@ -6,25 +6,24 @@ const translateReducer = (state = [], action) => {
       return [...state, action.payload.newMark];
 
     case ACTIONS_TYPES.DELETE_MARK:
-      return state.filter((el) => el._id !== action.payload._id);
+      return state.filter((el) => el.id !== action.payload.id);
 
     case ACTIONS_TYPES.CHANGE_VISIBLE_MARK:
       return state.map((el) => {
-        if (el._id === action.payload._id)
-          return { ...el, visible: !el.visible };
+        if (el.id === action.payload.id) return { ...el, visible: !el.visible };
         return el;
       });
 
     case ACTIONS_TYPES.CHANGE_COORDS_MARK:
       return state.map((el) => {
-        if (el._id === action.payload._id)
+        if (el.id === action.payload.id)
           return { ...el, position: action.payload.position };
         return el;
       });
 
     case ACTIONS_TYPES.ADD_MESSAGE_MARK:
       return state.map((el) => {
-        if (el._id === action.payload._id)
+        if (el.id === action.payload.id)
           return {
             ...el,
             messages: [...el.messages, action.payload.newMessage],

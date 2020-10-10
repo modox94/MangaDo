@@ -9,39 +9,39 @@ const ADD_MARK = (newMark) => {
   };
 };
 
-const DELETE_MARK = (_id) => {
+const DELETE_MARK = (id) => {
   return {
     type: ACTIONS_TYPES.DELETE_MARK,
     payload: {
-      _id,
+      id,
     },
   };
 };
 
-const CHANGE_VISIBLE_MARK = (_id) => {
+const CHANGE_VISIBLE_MARK = (id) => {
   return {
     type: ACTIONS_TYPES.CHANGE_VISIBLE_MARK,
     payload: {
-      _id,
+      id,
     },
   };
 };
 
-const CHANGE_COORDS_MARK = (_id, position) => {
+const CHANGE_COORDS_MARK = (id, position) => {
   return {
     type: ACTIONS_TYPES.CHANGE_COORDS_MARK,
     payload: {
-      _id,
+      id,
       position,
     },
   };
 };
 
-const ADD_MESSAGE_MARK = (_id, newMessage) => {
+const ADD_MESSAGE_MARK = (id, newMessage) => {
   return {
     type: ACTIONS_TYPES.ADD_MESSAGE_MARK,
     payload: {
-      _id,
+      id,
       newMessage,
     },
   };
