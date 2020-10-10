@@ -3,11 +3,18 @@ const fs = require('fs');
 const path = require('path');
 const imagemagick = require('imagemagick');
 
+const Psd = require('../models/psd.modele');
+const Mark = require('../models/mark.modele');
+
 const router = express.Router();
 
 router.get('/:path', async (req, res) => {
   let start = new Date();
   console.log('start - /psd/:path', start);
+
+  let psdObj = await Psd.findOne({ url: req.params.path }).populate('marks');
+  if (!psdObj) psdObj = new Psd({ url: req.params.path });
+  psdObj.save();
 
   let additionalPath = req.params.path.split('|');
 
@@ -51,7 +58,7 @@ router.get('/:path', async (req, res) => {
     let end = new Date();
     console.log('end - /psd/:path', end - start, 'ms');
 
-    return res.json({ layers: oldLayers });
+    return res.json({ layers: oldLayers, psdObj });
   }
 
   fs.rmdirSync(outputPath, { recursive: true });
@@ -95,7 +102,7 @@ router.get('/:path', async (req, res) => {
   let end = new Date();
   console.log('end - /psd/:path', end - start, 'ms');
 
-  res.json({ layers });
+  res.json({ layers, psdObj });
 });
 
 module.exports = router;

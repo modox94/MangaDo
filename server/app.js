@@ -1,17 +1,31 @@
 require('dotenv').config();
 const express = require('express');
-const ws = require('ws');
+const WebSocket = require('ws');
 const cors = require('cors');
 const dbConnect = require('./dbConnect.js');
 const catalogRouter = require('./src/routes/catalog');
 const psdRouter = require('./src/routes/psd');
 const userRouter = require('./src/routes/userRouter');
+const websocketRequest = require('./src/helpers/websocketRequest');
 
 const PORT = process.env.PORT ?? 3000;
 
 dbConnect();
 const app = express();
 
+////
+
+// const uuid = require('uuid');
+
+// // console.log('uuid.parse()', uuid.parse());
+// // console.log('uuid.stringify()', uuid.stringify());
+// console.log('uuid.v1()', uuid.v1());
+// // console.log('uuid.v3()', uuid.v3());
+// console.log('uuid.v4()', uuid.v4());
+// // console.log('uuid.v5()', uuid.v5());
+// // console.log('uuid.validate()', uuid.validate());
+
+////
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,25 +40,19 @@ const expressServer = app.listen(PORT, () => {
   console.log('Server has been started on port ', PORT);
 });
 
-const wsServer = new ws.Server({
+const WebSocketServer = new WebSocket.Server({
   server: expressServer,
 });
 
-wsServer.on('connection', function connection(ws) {
+WebSocketServer.on('connection', function connection(ws) {
   ws.on('message', function incoming(data) {
-    switch (data.type) {
-      case 'value':
-        break;
+    websocketRequest(JSON.parse(data));
 
-      default:
-        break;
-    }
-
-    console.log('==========');
-    wsServer.clients.forEach(function each(client) {
-      console.log('client');
-      console.log(data);
-      client.send(data);
+    WebSocketServer.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        console.log('response', data);
+        client.send(data);
+      }
     });
   });
 });

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Draggable from 'react-draggable';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
 import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
+import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
 
 import styles from './style.module.css';
 
@@ -12,14 +13,18 @@ const ImagesContainer = () => {
   const decorMarkArr = markArr.filter((el) => el.type === 'decor');
   const editMarkArr = markArr.filter((el) => el.type === 'edit');
 
+  const ws = useSelector((state) => state.websocket);
   const path = useSelector((state) => state.url);
   const layers = useSelector((state) => state.layers);
 
   const dispatch = useDispatch();
 
-  const onControlledDragStop = (e, position, id) => {
+  const onControlledDragStop = (event, position, id) => {
     const { x, y } = position;
     dispatch(MARK_ACTIONS.CHANGE_COORDS_MARK(id, { x, y }));
+    if (ws) {
+      ws.send(WS_ACTIONS.WS_CHANGE_COORDS_MARK(path, id, { x, y }));
+    }
   };
 
   useEffect(() => {
@@ -48,7 +53,7 @@ const ImagesContainer = () => {
             bounds='img'
             key={mark.id}
             onStop={(e, position) => {
-              onControlledDragStop(e, position, mark._id);
+              onControlledDragStop(e, position, mark.id);
             }}
             position={mark.position}
           >
@@ -69,7 +74,7 @@ const ImagesContainer = () => {
             bounds='img'
             key={mark.id}
             onStop={(e, position) => {
-              onControlledDragStop(e, position, mark._id);
+              onControlledDragStop(e, position, mark.id);
             }}
             position={mark.position}
           >
@@ -90,7 +95,7 @@ const ImagesContainer = () => {
             bounds='img'
             key={mark.id}
             onStop={(e, position) => {
-              onControlledDragStop(e, position, mark._id);
+              onControlledDragStop(e, position, mark.id);
             }}
             position={mark.position}
           >
