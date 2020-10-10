@@ -9,18 +9,16 @@ const RECORD_LAYERS = (layers) => {
 };
 
 const DOWNLOAD_LAYERS = (path) => async (dispatch) => {
-  console.log('DOWNLOAD_LAYERS');
-
   let response = await fetch(
     new URL('psd/' + path, process.env.REACT_APP_SERVER_PATH)
   );
   let data = await response.json();
 
+  console.log('DOWNLOAD_LAYERS', data);
+
   dispatch(RECORD_LAYERS(data.layers));
-  // написать новый редусер для точек, который будет заменять их во всем стейте
-  for (let mark of data.psdObj.marks) {
-    dispatch(MARK_ACTIONS.ADD_MARK(mark));
-  }
+
+  dispatch(MARK_ACTIONS.RECORD_MARKS(data.psdObj.marks));
 };
 
 export { RECORD_LAYERS, DOWNLOAD_LAYERS };

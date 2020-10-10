@@ -78,20 +78,40 @@ const SidePanel = () => {
 
   const handlerAddMessage = () => {
     let newMessage = {
-      user: 'Редактор',
+      user: user.name,
       data: Date.now(),
       value: curentMessage,
     };
     setCurentMessage('');
     dispatch(MARK_ACTIONS.ADD_MESSAGE_MARK(curentOpenId, newMessage));
+
+    if (ws) {
+      ws.send(WS_ACTIONS.WS_ADD_MESSAGE_MARK(path, curentOpenId, newMessage));
+    }
   };
 
   const handlerDelete = (e) => {
     dispatch(MARK_ACTIONS.DELETE_MARK(e.target.id));
+
+    if (ws) {
+      ws.send(WS_ACTIONS.WS_DELETE_MARK(path, e.target.id));
+    }
   };
 
   const handlerVisible = (e) => {
     dispatch(MARK_ACTIONS.CHANGE_VISIBLE_MARK(e.target.id));
+
+    if (ws) {
+      let mark = markArr.find(function (mark) {
+        if (mark.id === e.target.id) return true;
+      });
+
+      console.log('visible', mark.visible);
+
+      ws.send(
+        WS_ACTIONS.WS_CHANGE_VISIBLE_MARK(path, e.target.id, !mark.visible)
+      );
+    }
   };
 
   return (

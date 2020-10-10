@@ -1,5 +1,14 @@
 import * as ACTIONS_TYPES from '../../action-types';
 
+const RECORD_MARKS = (marks) => {
+  return {
+    type: ACTIONS_TYPES.RECORD_MARKS,
+    payload: {
+      marks,
+    },
+  };
+};
+
 const ADD_MARK = (newMark) => {
   return {
     type: ACTIONS_TYPES.ADD_MARK,
@@ -48,6 +57,7 @@ const ADD_MESSAGE_MARK = (id, newMessage) => {
 };
 
 export {
+  RECORD_MARKS,
   ADD_MARK,
   DELETE_MARK,
   CHANGE_VISIBLE_MARK,

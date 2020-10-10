@@ -17,7 +17,16 @@ const WS_ADD_MARK = (url, mark) => {
   });
 };
 
-const WS_ADD_MESSAGE_MARK = () => {};
+const WS_ADD_MESSAGE_MARK = (url, id, message) => {
+  return JSON.stringify({
+    type: ACTIONS_TYPES.WS_ADD_MESSAGE_MARK,
+    payload: {
+      url,
+      id,
+      message,
+    },
+  });
+};
 
 const WS_CHANGE_COORDS_MARK = (url, id, position) => {
   return JSON.stringify({
@@ -30,9 +39,26 @@ const WS_CHANGE_COORDS_MARK = (url, id, position) => {
   });
 };
 
-const WS_CHANGE_VISIBLE_MARK = () => {};
+const WS_CHANGE_VISIBLE_MARK = (url, id, visible) => {
+  return JSON.stringify({
+    type: ACTIONS_TYPES.WS_CHANGE_VISIBLE_MARK,
+    payload: {
+      url,
+      id,
+      visible,
+    },
+  });
+};
 
-const WS_DELETE_MARK = () => {};
+const WS_DELETE_MARK = (url, id) => {
+  return JSON.stringify({
+    type: ACTIONS_TYPES.WS_DELETE_MARK,
+    payload: {
+      url,
+      id,
+    },
+  });
+};
 
 export {
   RECORD_WEBSOCKET,

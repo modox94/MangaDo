@@ -2,6 +2,9 @@ import * as ACTIONS_TYPES from '../../action-types';
 
 const translateReducer = (state = [], action) => {
   switch (action.type) {
+    case ACTIONS_TYPES.RECORD_MARKS:
+      return action.payload.marks;
+
     case ACTIONS_TYPES.ADD_MARK:
       return [...state, action.payload.newMark];
 
