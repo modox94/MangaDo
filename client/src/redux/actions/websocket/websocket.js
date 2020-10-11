@@ -1,4 +1,5 @@
 import * as ACTIONS_TYPES from '../../action-types';
+import * as MARK_ACTIONS from '../mark/mark';
 
 const RECORD_WEBSOCKET = (websocket) => {
   return {
@@ -60,6 +61,37 @@ const WS_DELETE_MARK = (url, id) => {
   });
 };
 
+const WS_DISPATCH = (data) => async (dispatch, state) => {
+  if (data.payload.url === state().url) {
+    switch (data.type) {
+      case ACTIONS_TYPES.WS_ADD_MARK:
+        return dispatch(MARK_ACTIONS.ADD_MARK(data.payload.mark));
+
+      case ACTIONS_TYPES.WS_ADD_MESSAGE_MARK:
+        return dispatch(
+          MARK_ACTIONS.ADD_MESSAGE_MARK(data.payload.id, data.payload.message)
+        );
+
+      case ACTIONS_TYPES.WS_CHANGE_COORDS_MARK:
+        return dispatch(
+          MARK_ACTIONS.CHANGE_COORDS_MARK(
+            data.payload.id,
+            data.payload.position
+          )
+        );
+
+      case ACTIONS_TYPES.WS_CHANGE_VISIBLE_MARK:
+        return dispatch(MARK_ACTIONS.CHANGE_VISIBLE_MARK(data.payload.id));
+
+      case ACTIONS_TYPES.WS_DELETE_MARK:
+        return dispatch(MARK_ACTIONS.DELETE_MARK(data.payload.id));
+
+      default:
+        return;
+    }
+  }
+};
+
 export {
   RECORD_WEBSOCKET,
   WS_ADD_MARK,
@@ -67,4 +99,5 @@ export {
   WS_CHANGE_COORDS_MARK,
   WS_CHANGE_VISIBLE_MARK,
   WS_DELETE_MARK,
+  WS_DISPATCH,
 };

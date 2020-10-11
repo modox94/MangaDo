@@ -8,13 +8,11 @@ const RECORD_LAYERS = (layers) => {
   };
 };
 
-const DOWNLOAD_LAYERS = (path) => async (dispatch) => {
+const DOWNLOAD_LAYERS = (path) => async (dispatch, state) => {
   let response = await fetch(
     new URL('psd/' + path, process.env.REACT_APP_SERVER_PATH)
   );
   let data = await response.json();
-
-  console.log('DOWNLOAD_LAYERS', data);
 
   dispatch(RECORD_LAYERS(data.layers));
 
