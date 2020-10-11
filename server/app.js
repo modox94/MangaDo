@@ -37,7 +37,6 @@ WebSocketServer.on('connection', function connection(ws) {
 
     WebSocketServer.clients.forEach(function each(client) {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
-        console.log('response', data);
         client.send(data);
       }
     });

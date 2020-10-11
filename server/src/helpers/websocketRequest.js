@@ -40,7 +40,6 @@ async function websocketRequest(data) {
 
       psdToEdit.marks = psdToEdit.marks.filter((markId) => {
         if (String(markId) === String(markToDel._id)) {
-          console.log('deleted');
           return false;
         } else {
           return true;

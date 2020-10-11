@@ -8,6 +8,7 @@ const RECORD_LAYERS = (layers) => {
   };
 };
 
+
 const CHANGE_VISIBLE_LAYER = (layer) => {
   return {
     type: ACTIONS_TYPES.CHANGE_VISIBLE_LAYER,
@@ -20,8 +21,6 @@ const DOWNLOAD_LAYERS = (path) => async (dispatch) => {
     new URL('psd/' + path, process.env.REACT_APP_SERVER_PATH)
   );
   let data = await response.json();
-
-  console.log('DOWNLOAD_LAYERS', data);
 
   dispatch(RECORD_LAYERS(data.layers));
 
