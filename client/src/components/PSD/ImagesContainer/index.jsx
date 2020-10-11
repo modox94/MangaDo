@@ -45,7 +45,7 @@ const ImagesContainer = () => {
           <img
             key={image[0]}
             src={process.env.REACT_APP_SERVER_PATH + image[0]}
-            style={image[1] ? {} : { display: 'none' }}
+            style={image[1] ? {} : {  visibility: 'hidden' }}
             className={styles.images}
             alt='pic'
           ></img>

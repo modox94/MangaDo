@@ -8,6 +8,13 @@ const RECORD_LAYERS = (layers) => {
   };
 };
 
+const CHANGE_VISIBLE_LAYER = (layer) => {
+  return {
+    type: ACTIONS_TYPES.CHANGE_VISIBLE_LAYER,
+    payload: layer
+  };
+};
+
 const DOWNLOAD_LAYERS = (path) => async (dispatch) => {
   let response = await fetch(
     new URL('psd/' + path, process.env.REACT_APP_SERVER_PATH)
@@ -21,4 +28,4 @@ const DOWNLOAD_LAYERS = (path) => async (dispatch) => {
   dispatch(MARK_ACTIONS.RECORD_MARKS(data.psdObj.marks));
 };
 
-export { RECORD_LAYERS, DOWNLOAD_LAYERS };
+export { RECORD_LAYERS, DOWNLOAD_LAYERS, CHANGE_VISIBLE_LAYER };

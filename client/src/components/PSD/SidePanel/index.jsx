@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Modal from '../Modal';
 import * as ACTIONS_TYPES from '../../../redux/action-types';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
+import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
 import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
 
 import styles from './style.module.css';
@@ -17,6 +18,7 @@ const SidePanel = () => {
   const [decorteMarkTitle, setDecorMarkTitle] = useState('');
   const [editMarkTitle, setEditMarkTitle] = useState('');
   const markArr = useSelector((state) => state.marks);
+  const layers = useSelector((state) => state.layers);
   const translateMarkArr = markArr.filter((el) => el.type === 'translate');
   const decorMarkArr = markArr.filter((el) => el.type === 'decor');
   const editMarkArr = markArr.filter((el) => el.type === 'edit');
@@ -112,6 +114,10 @@ const SidePanel = () => {
         WS_ACTIONS.WS_CHANGE_VISIBLE_MARK(path, e.target.id, !mark.visible)
       );
     }
+  };
+
+  const handlerVisibleLayer = (e) => {
+    dispatch(LAYERS_ACTIONS.CHANGE_VISIBLE_LAYER(e.target.id));
   };
 
   return (
@@ -282,6 +288,35 @@ const SidePanel = () => {
                   alt=''
                 />
               </button>
+            </div>
+          );
+        })}
+      </details>
+
+      <details className={styles.accordion}>
+        <summary style={{ color: '#000' }}>СЛОИ</summary>
+
+        {layers.map((layer, index) => {
+          return (
+            <div key={layer[0]} className={styles.task}>
+              <button>
+                {layer[1] ? (
+                  <img
+                    onClick={handlerVisibleLayer}
+                    id={layer[0]}
+                    style={{ width: '14px', verticalAlign: 'middle' }}
+                    src={iconEye}
+                  />
+                ) : (
+                  <img
+                    onClick={handlerVisibleLayer}
+                    id={layer[0]}
+                    style={{ width: '14px', verticalAlign: 'middle' }}
+                    src={iconEyeClose}
+                  />
+                )}
+              </button>
+              <p>{`Layer ${index}`}</p>
             </div>
           );
         })}
