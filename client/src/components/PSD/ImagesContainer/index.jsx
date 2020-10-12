@@ -12,12 +12,10 @@ import styles from './style.module.css';
 
 const ImagesContainer = () => {
   const markArr = useSelector((state) => state.marks);
-  const translateMarkArr = markArr.filter((el) => el.type === 'translate');
-  const decorMarkArr = markArr.filter((el) => el.type === 'decor');
-  const editMarkArr = markArr.filter((el) => el.type === 'edit');
 
   const ws = useSelector((state) => state.websocket);
   const layers = useSelector((state) => state.layers);
+  const user = useSelector((state) => state.user);
 
   const { path } = useParams();
 
@@ -45,71 +43,50 @@ const ImagesContainer = () => {
           <img
             key={image[0]}
             src={process.env.REACT_APP_SERVER_PATH + image[0]}
-            style={image[1] ? {} : {  visibility: 'hidden' }}
+            style={image[1] ? {} : { visibility: 'hidden' }}
             className={styles.images}
             alt='pic'
           ></img>
         );
       })}
 
-      {translateMarkArr.map((mark) => {
+      {markArr.map((mark) => {
         return (
           <Draggable
             bounds='img'
             key={mark.id}
-            onStop={(e, position) => {
-              onControlledDragStop(e, position, mark.id);
-            }}
+            {...(user.role === 'admin' ||
+            (user.role === 'worker' && user.name === mark.creator)
+              ? {
+                  onStop: (e, position) => {
+                    onControlledDragStop(e, position, mark.id);
+                  },
+                }
+              : { onStart: () => false })}
             position={mark.position}
           >
             <div
               className={`${
-                mark.visible ? styles.markTranslate : styles.disableMark
+                mark.visible
+                  ? mark.type === 'translate'
+                    ? styles.markTranslate
+                    : mark.type === 'decor'
+                    ? styles.markDecor
+                    : mark.type === 'edit'
+                    ? styles.markEdit
+                    : null
+                  : styles.disableMark
               }`}
             >
-              <div>П</div>
-            </div>
-          </Draggable>
-        );
-      })}
-
-      {decorMarkArr.map((mark) => {
-        return (
-          <Draggable
-            bounds='img'
-            key={mark.id}
-            onStop={(e, position) => {
-              onControlledDragStop(e, position, mark.id);
-            }}
-            position={mark.position}
-          >
-            <div
-              className={`${
-                mark.visible ? styles.markDecor : styles.disableMark
-              }`}
-            >
-              <div>О</div>
-            </div>
-          </Draggable>
-        );
-      })}
-
-      {editMarkArr.map((mark) => {
-        return (
-          <Draggable
-            bounds='img'
-            key={mark.id}
-            onStop={(e, position) => {
-              onControlledDragStop(e, position, mark.id);
-            }}
-            position={mark.position}
-          >
-            <div
-              className={`${
-                mark.visible ? styles.markEdit : styles.disableMark
-              }`}
-            >
-              <div>Р</div>
+              <div>
+                {mark.type === 'translate'
+                  ? 'П'
+                  : mark.type === 'decor'
+                  ? 'О'
+                  : mark.type === 'edit'
+                  ? 'Р'
+                  : null}
+              </div>
             </div>
           </Draggable>
         );

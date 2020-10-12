@@ -56,6 +56,7 @@ const SidePanel = () => {
           value: markTitle,
         },
       ],
+      creator: user.name,
     };
 
     if (markType === 'translate') {

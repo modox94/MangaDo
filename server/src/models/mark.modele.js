@@ -10,6 +10,7 @@ const markSchema = mongoose.Schema({
   position: Object,
   visible: Boolean,
   messages: Array,
+  creator: String,
 });
 
 module.exports = mongoose.model('Mark', markSchema);
