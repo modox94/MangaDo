@@ -48,6 +48,13 @@ async function websocketRequest(data) {
 
       return await psdToEdit.save();
 
+    case ACTION_TYPES.WS_DELETE_MESSAGE_MARK:
+      let markToEdit = await Mark.findOne({ id: data.payload.idMark });
+      markToEdit.messages = markToEdit.messages.filter(
+        (message) => message.data !== data.payload.idMessage
+      );
+      return markToEdit.save();
+
     default:
       break;
   }

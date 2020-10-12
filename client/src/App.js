@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as WEBSOCKET_ACTIONS from './redux/actions/websocket/websocket';
@@ -12,6 +12,7 @@ import RegistrationForm from './components/RegistrationForm';
 function App() {
   const dispatch = useDispatch();
   const url = useSelector((state) => state.url);
+  const [wsStatus, setWsStatus] = useState(0);
 
   useEffect(() => {
     let ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_PATH);
@@ -19,7 +20,10 @@ function App() {
       console.log('ws opened');
       dispatch(WEBSOCKET_ACTIONS.RECORD_WEBSOCKET(ws));
     };
-    ws.onclose = () => (window.location = '/');
+    ws.onclose = () => {
+      dispatch(WEBSOCKET_ACTIONS.RECORD_WEBSOCKET(''));
+      setWsStatus(wsStatus + 1);
+    };
 
     ws.onmessage = function (event) {
       const data = JSON.parse(event.data);
@@ -29,7 +33,7 @@ function App() {
     return () => {
       ws.close(); // переписать тут на обновление соединения
     };
-  }, []);
+  }, [wsStatus]);
 
   return (
     <Router>
