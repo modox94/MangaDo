@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Draggable from 'react-draggable';
-
+import ModalSpinner from '../ModalSpinner';
 import * as URL_ACTIONS from '../../../redux/actions/url/url';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
 import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
@@ -37,61 +37,69 @@ const ImagesContainer = () => {
   }, [path]);
 
   return (
-    <div className={styles.container}>
-      {layers.map((image) => {
-        return (
-          <img
-            key={image[0]}
-            src={process.env.REACT_APP_SERVER_PATH + image[0]}
-            style={image[1] ? {} : { visibility: 'hidden' }}
-            className={styles.images}
-            alt='pic'
-          ></img>
-        );
-      })}
+    <>
+      {layers.length ? (
+        <div className={styles.container}>
+          {layers.map((image) => {
+            return (
+              <img
+                key={image[0]}
+                src={process.env.REACT_APP_SERVER_PATH + image[0]}
+                style={image[1] ? {} : { visibility: 'hidden' }}
+                className={styles.images}
+                alt='pic'
+              ></img>
+            );
+          })}
 
-      {markArr.map((mark) => {
-        return (
-          <Draggable
-            bounds='img'
-            key={mark.id}
-            {...(user.role === 'admin' ||
-            (user.role === 'worker' && user.name === mark.creator)
-              ? {
-                  onStop: (e, position) => {
-                    onControlledDragStop(e, position, mark.id);
-                  },
-                }
-              : { onStart: () => false })}
-            position={mark.position}
-          >
-            <div
-              className={`${
-                mark.visible
-                  ? mark.type === 'translate'
-                    ? styles.markTranslate
-                    : mark.type === 'decor'
-                    ? styles.markDecor
-                    : mark.type === 'edit'
-                    ? styles.markEdit
-                    : null
-                  : styles.disableMark
-              }`}
-            >
-              <div>
-                {mark.type === 'translate'
-                  ? 'П'
-                  : mark.type === 'decor'
-                  ? 'О'
-                  : mark.type === 'edit'
-                  ? 'Р'
-                  : null}
-              </div>
-            </div>
-          </Draggable>
-        );
-      })}
-    </div>
+          {markArr.map((mark) => {
+            return (
+              <Draggable
+                bounds='img'
+                key={mark.id}
+                {...(user.role === 'admin' ||
+                (user.role === 'worker' && user.name === mark.creator)
+                  ? {
+                      onStop: (e, position) => {
+                        onControlledDragStop(e, position, mark.id);
+                      },
+                    }
+                  : { onStart: () => false })}
+                position={mark.position}
+              >
+                <div
+                  className={`${
+                    mark.visible
+                      ? mark.type === 'translate'
+                        ? styles.markTranslate
+                        : mark.type === 'decor'
+                        ? styles.markDecor
+                        : mark.type === 'edit'
+                        ? styles.markEdit
+                        : null
+                      : styles.disableMark
+                  }`}
+                >
+                  <div>
+                    {mark.type === 'translate'
+                      ? 'П'
+                      : mark.type === 'decor'
+                      ? 'О'
+                      : mark.type === 'edit'
+                      ? 'Р'
+                      : null}
+                  </div>
+                </div>
+              </Draggable>
+            );
+          })}
+        </div>
+      ) : (
+        <ModalSpinner>
+          <div className={styles.loader}>Loading...</div>
+        </ModalSpinner>
+      )}
+    </>
   );
 };
 
