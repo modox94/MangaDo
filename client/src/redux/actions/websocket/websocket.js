@@ -61,6 +61,17 @@ const WS_DELETE_MARK = (url, id) => {
   });
 };
 
+const WS_DELETE_MESSAGE_MARK = (url, idMark, idMessage) => {
+  return JSON.stringify({
+    type: ACTIONS_TYPES.WS_DELETE_MESSAGE_MARK,
+    payload: {
+      url,
+      idMark,
+      idMessage,
+    },
+  });
+};
+
 const WS_DISPATCH = (data) => async (dispatch, state) => {
   if (data.payload.url === state().url) {
     switch (data.type) {
@@ -86,6 +97,14 @@ const WS_DISPATCH = (data) => async (dispatch, state) => {
       case ACTIONS_TYPES.WS_DELETE_MARK:
         return dispatch(MARK_ACTIONS.DELETE_MARK(data.payload.id));
 
+      case ACTIONS_TYPES.WS_DELETE_MESSAGE_MARK:
+        return dispatch(
+          MARK_ACTIONS.DELETE_MESSAGE_MARK(
+            data.payload.idMark,
+            data.payload.idMessage
+          )
+        );
+
       default:
         return;
     }
@@ -99,5 +118,6 @@ export {
   WS_CHANGE_COORDS_MARK,
   WS_CHANGE_VISIBLE_MARK,
   WS_DELETE_MARK,
+  WS_DELETE_MESSAGE_MARK,
   WS_DISPATCH,
 };

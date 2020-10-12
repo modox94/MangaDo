@@ -105,7 +105,13 @@ const SidePanel = () => {
   };
 
   const handlerDeleteMessage = (e) => {
-    dispatch(MARK_ACTIONS.DELETE_MESSAGE(e.target.id));
+    dispatch(MARK_ACTIONS.DELETE_MESSAGE_MARK(curentOpenId, e.target.id));
+
+    if (ws) {
+      ws.send(
+        WS_ACTIONS.WS_DELETE_MESSAGE_MARK(path, curentOpenId, e.target.id)
+      );
+    }
   };
 
   const handlerVisible = (e) => {
@@ -205,7 +211,7 @@ const SidePanel = () => {
         <div className={styles.messageContainer}>
           {markArr
             .find((el) => el.id === curentOpenId)
-            ?.messages.map((message) => {
+            ?.messages.map((message, index) => {
               return (
                 <div className={styles.messageModal} key={message.data}>
                   <p>
@@ -220,15 +226,17 @@ const SidePanel = () => {
 
                   <span className={styles.messageSpan}>{message.value}</span>
                   <div className={styles.deleteMessageBtn}>
-                    <button>
-                      <img
-                        onClick={handlerDeleteMessage}
-                        id={message.data}
-                        style={{ width: '14px', verticalAlign: 'middle' }}
-                        src={iconDelete}
-                        alt=''
-                      />
-                    </button>
+                    {index > 0 && user.name === message.user ? (
+                      <button>
+                        <img
+                          onClick={handlerDeleteMessage}
+                          id={message.data}
+                          style={{ width: '14px', verticalAlign: 'middle' }}
+                          src={iconDelete}
+                          alt='del'
+                        />
+                      </button>
+                    ) : null}
                   </div>
                 </div>
               );
