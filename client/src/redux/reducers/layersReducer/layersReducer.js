@@ -18,6 +18,9 @@ const layersReducer = (state = [], action) => {
 
       return newState;
 
+    case ACTIONS_TYPES.CLEAR_LAYERS:
+      return [];
+
     default:
       return state;
   }

@@ -8,11 +8,16 @@ const RECORD_LAYERS = (layers) => {
   };
 };
 
-
 const CHANGE_VISIBLE_LAYER = (layer) => {
   return {
     type: ACTIONS_TYPES.CHANGE_VISIBLE_LAYER,
-    payload: layer
+    payload: layer,
+  };
+};
+
+const CLEAR_LAYERS = () => {
+  return {
+    type: ACTIONS_TYPES.CLEAR_LAYERS,
   };
 };
 
@@ -27,4 +32,4 @@ const DOWNLOAD_LAYERS = (path) => async (dispatch) => {
   dispatch(MARK_ACTIONS.RECORD_MARKS(data.psdObj.marks));
 };
 
-export { RECORD_LAYERS, DOWNLOAD_LAYERS, CHANGE_VISIBLE_LAYER };
+export { RECORD_LAYERS, CHANGE_VISIBLE_LAYER, CLEAR_LAYERS, DOWNLOAD_LAYERS };
