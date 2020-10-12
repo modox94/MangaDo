@@ -5,7 +5,7 @@ import Modal from '../Modal';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
 import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
 import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
-
+import iconDelete from '../../../icons/delete.png';
 import styles from './style.module.css';
 import iconEye from '../../../icons/eye.png';
 import iconEyeClose from '../../../icons/eyeclose.png';
@@ -40,7 +40,9 @@ const SidePanel = () => {
     setEditMarkTitle(e.target.value);
   };
 
-  const handlerAddMark = (markType, markTitle) => {
+  const handlerAddMark = (e, markType, markTitle) => {
+    e.preventDefault();
+    if (!markTitle.trim()) return;
     let newMark = {
       id: uuidv4(),
       type: markType,
@@ -53,7 +55,7 @@ const SidePanel = () => {
         {
           user: user.name,
           data: Date.now(),
-          value: markTitle,
+          value: markTitle.trim(),
         },
       ],
       creator: user.name,
@@ -78,11 +80,13 @@ const SidePanel = () => {
     setCurentMessage(e.target.value);
   };
 
-  const handlerAddMessage = () => {
+  const handlerAddMessage = (e) => {
+    e.preventDefault();
+    if (!curentMessage.trim()) return;
     let newMessage = {
       user: user.name,
       data: Date.now(),
-      value: curentMessage,
+      value: curentMessage.trim(),
     };
     setCurentMessage('');
     dispatch(MARK_ACTIONS.ADD_MESSAGE_MARK(curentOpenId, newMessage));
@@ -98,6 +102,10 @@ const SidePanel = () => {
     if (ws) {
       ws.send(WS_ACTIONS.WS_DELETE_MARK(path, e.target.id));
     }
+  };
+
+  const handlerDeleteMessage = (e) => {
+    dispatch(MARK_ACTIONS.DELETE_MESSAGE(e.target.id));
   };
 
   const handlerVisible = (e) => {
@@ -119,9 +127,6 @@ const SidePanel = () => {
   const handlerVisibleLayer = (e) => {
     dispatch(LAYERS_ACTIONS.CHANGE_VISIBLE_LAYER(e.target.id));
   };
-
-  console.log('markArr', markArr);
-  console.log('translateMarkArr', translateMarkArr);
 
   return (
     <div className={styles.sideContainer}>
@@ -197,36 +202,49 @@ const SidePanel = () => {
       </details>
 
       <Modal active={modalActive} setActive={setModalActive}>
-        {markArr
-          .find((el) => el.id === curentOpenId)
-          ?.messages.map((message) => {
-            return (
-              <div className={styles.messageModal} key={message.data}>
-                <p>
-                  <span className={styles.userSpan}>{message.user}</span>
-                  <span
-                    style={{ color: '#6c757d' }}
-                    className={styles.timeSpan}
-                  >
-                    {new Date(message.data).toLocaleDateString()}
-                  </span>
-                </p>
+        <div className={styles.messageContainer}>
+          {markArr
+            .find((el) => el.id === curentOpenId)
+            ?.messages.map((message) => {
+              return (
+                <div className={styles.messageModal} key={message.data}>
+                  <p>
+                    <span className={styles.userSpan}>{message.user}</span>
+                    <span
+                      style={{ color: '#6c757d' }}
+                      className={styles.timeSpan}
+                    >
+                      {new Date(message.data).toLocaleDateString()}
+                    </span>
+                  </p>
 
-                <span className={styles.messageSpan}>{message.value}</span>
-              </div>
-            );
-          })}
+                  <span className={styles.messageSpan}>{message.value}</span>
+                  <div className={styles.deleteMessageBtn}>
+                    <button>
+                      <img
+                        onClick={handlerDeleteMessage}
+                        id={message.data}
+                        style={{ width: '14px', verticalAlign: 'middle' }}
+                        src={iconDelete}
+                        alt=''
+                      />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
         <div className={styles.modalInput}>
-          <textarea
-            style={{ resize: 'none' }}
-            rows='4'
-            onChange={handlerCurentMessage}
-            value={curentMessage}
-          ></textarea>
-          <button className={styles.buttonAdd} onClick={handlerAddMessage}>
-            {' '}
-            Добавить{' '}
-          </button>
+          <form onSubmit={handlerAddMessage} action=''>
+            <textarea
+              required
+              style={{ resize: 'none' }}
+              rows='4'
+              onChange={handlerCurentMessage}
+              value={curentMessage}
+            ></textarea>
+            <button className={styles.buttonAdd}> Добавить </button>
+          </form>
         </div>
       </Modal>
     </div>

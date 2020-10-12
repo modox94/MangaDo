@@ -56,6 +56,15 @@ const ADD_MESSAGE_MARK = (id, newMessage) => {
   };
 };
 
+const DELETE_MESSAGE = (data) => {
+  return {
+    type: ACTIONS_TYPES.DELETE_MESSAGE,
+    payload: {
+      data,
+    },
+  };
+};
+
 export {
   RECORD_MARKS,
   ADD_MARK,
@@ -63,4 +72,5 @@ export {
   CHANGE_VISIBLE_MARK,
   CHANGE_COORDS_MARK,
   ADD_MESSAGE_MARK,
+  DELETE_MESSAGE
 };

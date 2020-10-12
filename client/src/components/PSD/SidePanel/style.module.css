@@ -86,3 +86,14 @@
   justify-content: space-between;
   margin-bottom: 7px;
 }
+
+.messageContainer {
+  height: 85%;
+  overflow-y: scroll;
+}
+
+.deleteMessageBtn {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+}
