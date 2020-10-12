@@ -1,13 +1,14 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user.modele');
 const createToken = require('../helpers/token');
+const roles = require('../helpers/roles');
 
 const saltRounds = process.env.saltRounds ?? 10;
 
 const registration = async (req, res) => {
   const { name, psw, invite } = req.body;
-  console.log(req.body);
-  if (name && psw && invite) {
+  console.log(roles[invite]);
+  if (name && psw && roles[invite]) {
     try {
       const userPass = await bcrypt.hash(psw, Number(saltRounds));
 
@@ -20,6 +21,8 @@ const registration = async (req, res) => {
 
       newUser.accessToken = createToken('access', payload);
       newUser.refreshToken = createToken('refresh', payload);
+
+      newUser.role = roles[invite];
 
       await newUser.save();
 
@@ -34,7 +37,7 @@ const registration = async (req, res) => {
       return res.status(422).json({ message: 'Name already exists in system' });
     }
   }
-  return res.sendStatus(204);
+  return res.status(401).json({ message: 'bad invite' });
 };
 
 module.exports = registration;
