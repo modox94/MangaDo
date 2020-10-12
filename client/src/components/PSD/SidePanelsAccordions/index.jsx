@@ -19,17 +19,15 @@ const SidePanelsAccordions = ({
   return (
     <details className={styles.accordion}>
       <summary style={{ color: color }}>{title}</summary>
-      <textarea
-        rows='4'
-        onChange={inputTitle}
-        value={inputTitleValue}
-      ></textarea>
-      <button
-        className={styles.buttonAdd}
-        onClick={() => handlerAddMark(type, inputTitleValue)}
-      >
-        Добавить
-      </button>
+      <form onSubmit={(e) => handlerAddMark(e, type, inputTitleValue)}>
+        <textarea
+          required
+          rows='4'
+          onChange={inputTitle}
+          value={inputTitleValue}
+        ></textarea>
+        <button className={styles.buttonAdd}>Добавить</button>
+      </form>
       {markArr.map((mark) => {
         return (
           <div key={mark.id} className={styles.task}>

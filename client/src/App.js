@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as WEBSOCKET_ACTIONS from './redux/actions/websocket/websocket';
-
+// import createGlobalStyle from './fonts/fonts';
 import './App.css';
 import Header from './components/Header';
 import Board from './components/scenes/Board';

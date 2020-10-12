@@ -11,6 +11,16 @@ const translateReducer = (state = [], action) => {
     case ACTIONS_TYPES.DELETE_MARK:
       return state.filter((el) => el.id !== action.payload.id);
 
+    case ACTIONS_TYPES.DELETE_MESSAGE:
+      return state.map((mark) => {
+        return {
+          ...mark,
+          messages: mark.messages.filter((message) => {
+            return String(message.data) !== action.payload.data;
+          }),
+        };
+      });
+
     case ACTIONS_TYPES.CHANGE_VISIBLE_MARK:
       return state.map((el) => {
         if (el.id === action.payload.id) return { ...el, visible: !el.visible };
