@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Board from './components/scenes/Board';
 import PSD from './components/PSD/Main';
 import RegistrationForm from './components/RegistrationForm';
+import LogInForm from './components/LogInForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,9 @@ function App() {
       <main>
         <Header />
         <Switch>
+          <Route exact path='/signIn'>
+            <LogInForm />
+          </Route>
           <Route exact path='/signUp'>
             <RegistrationForm />
           </Route>

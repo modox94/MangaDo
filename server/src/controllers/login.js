@@ -5,7 +5,7 @@ const createToken = require('../helpers/token');
 const login = async (req, res) => {
   const { name, psw } = req.body;
 
-  if (name && pass) {
+  if (name && psw) {
     try {
       const user = await User.findOne({ name }).exec();
       const isValidPass = await bcrypt.compare(psw, user.password);
