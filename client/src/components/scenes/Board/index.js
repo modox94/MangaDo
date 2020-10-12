@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ModalSpinner from '../../ModalSpinner';
 import Folder from '../../Folder';
 import File from '../../File';
 import NavMap from '../../NavMap';
 
 import styles from './style.module.css';
+import stylesPSD from '../../PSD/ImagesContainer/style.module.css';
 
 export default () => {
   const { params } = useParams();
-  // console.log('params = ', params);
+
   const [data, setData] = useState({ folders: [] });
+  const [spinner, setSpinner] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -25,24 +28,31 @@ export default () => {
 
       const result = await response.json();
       setData(result);
-      // console.log('result = ', result);
+      setSpinner(false);
     })();
   }, [params]);
 
-  // console.log('board data = ', data);
   return (
     <>
-      <NavMap params={params} />
-      <div className={styles.board}>
-        {data.files &&
-          Object.keys(data.files).map((key) => (
-            <File key={key} data={data.files[key]} />
-          ))}
-        {data.folders?.length &&
-          data.folders.map((el) => (
-            <Folder key={el} name={el} preUrl={params} />
-          ))}
-      </div>
+      {spinner ? (
+        <ModalSpinner>
+          <div className={stylesPSD.loader}>Loading...</div>
+        </ModalSpinner>
+      ) : (
+        <>
+          <NavMap params={params} />
+          <div className={styles.board}>
+            {data.files &&
+              Object.keys(data.files).map((key) => (
+                <File key={key} data={data.files[key]} />
+              ))}
+            {data.folders?.length &&
+              data.folders.map((el) => (
+                <Folder key={el} name={el} preUrl={params} />
+              ))}
+          </div>
+        </>
+      )}
     </>
   );
 };

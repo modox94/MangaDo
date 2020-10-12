@@ -66,6 +66,10 @@ const DELETE_MESSAGE_MARK = (idMark, idMessage) => {
   };
 };
 
+const CLEAR_MARKS = () => {
+  return { type: ACTIONS_TYPES.CLEAR_MARKS };
+};
+
 export {
   RECORD_MARKS,
   ADD_MARK,
@@ -74,4 +78,5 @@ export {
   CHANGE_COORDS_MARK,
   ADD_MESSAGE_MARK,
   DELETE_MESSAGE_MARK,
+  CLEAR_MARKS,
 };
