@@ -5,11 +5,11 @@ const createToken = require('../helpers/token');
 const saltRounds = process.env.saltRounds ?? 10;
 
 const registration = async (req, res) => {
-  const { name, pass } = req.body;
-
-  if (name && password) {
+  const { name, psw, invite } = req.body;
+  console.log(req.body);
+  if (name && psw && invite) {
     try {
-      const userPass = await bcrypt.hash(pass, Number(saltRounds));
+      const userPass = await bcrypt.hash(psw, Number(saltRounds));
 
       const newUser = new User({
         name,
@@ -23,7 +23,12 @@ const registration = async (req, res) => {
 
       await newUser.save();
 
-      return res.json(newUser);
+      return res.json({
+        name: newUser.name,
+        role: newUser.role,
+        accesToken: newUser.accessToken,
+        refreshToken: newUser.refreshToken,
+      });
     } catch (error) {
       console.log(error);
       return res.status(422).json({ message: 'Name already exists in system' });
