@@ -7,6 +7,7 @@ import './App.css';
 import Header from './components/Header';
 import Board from './components/scenes/Board';
 import PSD from './components/PSD/Main';
+import RegistrationForm from './components/RegistrationForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function App() {
       <main>
         <Header />
         <Switch>
+          <Route exact path='/signUp'>
+            <RegistrationForm />
+          </Route>
           <Route exact path='/psd/:path'>
             <PSD />
           </Route>
