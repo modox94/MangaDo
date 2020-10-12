@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../Modal';
-import * as ACTIONS_TYPES from '../../../redux/action-types';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
 import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
 import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
@@ -10,7 +9,7 @@ import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
 import styles from './style.module.css';
 import iconEye from '../../../icons/eye.png';
 import iconEyeClose from '../../../icons/eyeclose.png';
-import iconDelete from '../../../icons/delete.png';
+import SidePanelsAccordions from '../SidePanelsAccordions';
 
 const SidePanel = () => {
   const dispatch = useDispatch();
@@ -120,178 +119,52 @@ const SidePanel = () => {
     dispatch(LAYERS_ACTIONS.CHANGE_VISIBLE_LAYER(e.target.id));
   };
 
+  console.log('markArr', markArr);
+  console.log('translateMarkArr', translateMarkArr);
+
   return (
     <div className={styles.sideContainer}>
-      <details className={styles.accordion}>
-        <summary style={{ color: '#dc3545' }}>ПЕРЕВОД</summary>
-        <textarea
-          rows='4'
-          onChange={handlerTitleTranslate}
-          value={translateMarkTitle}
-        ></textarea>
-        <button
-          className={styles.buttonAdd}
-          onClick={() => handlerAddMark('translate', translateMarkTitle)}
-        >
-          Добавить
-        </button>
-        {translateMarkArr.map((mark) => {
-          return (
-            <div key={mark.id} className={styles.task}>
-              <button>
-                {mark.visible ? (
-                  <img
-                    onClick={handlerVisible}
-                    id={mark.id}
-                    style={{ width: '14px', verticalAlign: 'middle' }}
-                    src={iconEye}
-                    alt=''
-                  />
-                ) : (
-                  <img
-                    onClick={handlerVisible}
-                    id={mark.id}
-                    style={{ width: '14px', verticalAlign: 'middle' }}
-                    src={iconEyeClose}
-                    alt=''
-                  />
-                )}
-              </button>
-              <p
-                onClick={() => {
-                  setModalActive(true);
-                  setCurentOpenId(mark.id);
-                }}
-              >
-                {mark.messages[0].value}
-              </p>
-              <button>
-                <img
-                  onClick={handlerDelete}
-                  id={mark.id}
-                  style={{ width: '14px', verticalAlign: 'middle' }}
-                  src={iconDelete}
-                  alt=''
-                />
-              </button>
-            </div>
-          );
-        })}
-      </details>
+      <SidePanelsAccordions
+        color='#dc3545'
+        title='ПЕРЕВОД'
+        inputTitle={handlerTitleTranslate}
+        inputTitleValue={translateMarkTitle}
+        type={'translate'}
+        handlerAddMark={handlerAddMark}
+        markArr={translateMarkArr}
+        handlerVisible={handlerVisible}
+        setModalActive={setModalActive}
+        setCurentOpenId={setCurentOpenId}
+        handlerDelete={handlerDelete}
+      />
 
-      <details className={styles.accordion}>
-        <summary style={{ color: '#007bff' }}>ОФОРМЛЕНИЕ</summary>
-        <textarea
-          rows='4'
-          onChange={handlerTitleDecor}
-          value={decorteMarkTitle}
-        ></textarea>
-        <button
-          className={styles.buttonAdd}
-          onClick={() => handlerAddMark('decor', decorteMarkTitle)}
-        >
-          Добавить
-        </button>
-        {decorMarkArr.map((mark) => {
-          return (
-            <div key={mark.id} className={styles.task}>
-              <button>
-                {mark.visible ? (
-                  <img
-                    onClick={handlerVisible}
-                    id={mark.id}
-                    style={{ width: '14px', verticalAlign: 'middle' }}
-                    src={iconEye}
-                    alt=''
-                  />
-                ) : (
-                  <img
-                    onClick={handlerVisible}
-                    id={mark.id}
-                    style={{ width: '14px', verticalAlign: 'middle' }}
-                    src={iconEyeClose}
-                    alt=''
-                  />
-                )}
-              </button>
-              <p
-                onClick={() => {
-                  setModalActive(true);
-                  setCurentOpenId(mark.id);
-                }}
-              >
-                {mark.messages[0].value}
-              </p>
-              <button>
-                <img
-                  onClick={handlerDelete}
-                  id={mark.id}
-                  style={{ width: '14px', verticalAlign: 'middle' }}
-                  src={iconDelete}
-                  alt=''
-                />
-              </button>
-            </div>
-          );
-        })}
-      </details>
+      <SidePanelsAccordions
+        color='#007bff'
+        title='ОФОРМЛЕНИЕ'
+        inputTitle={handlerTitleDecor}
+        inputTitleValue={decorteMarkTitle}
+        type={'decor'}
+        handlerAddMark={handlerAddMark}
+        markArr={decorMarkArr}
+        handlerVisible={handlerVisible}
+        setModalActive={setModalActive}
+        setCurentOpenId={setCurentOpenId}
+        handlerDelete={handlerDelete}
+      />
 
-      <details className={styles.accordion}>
-        <summary style={{ color: '#28a745' }}>РЕДАКТУРА</summary>
-        <textarea
-          rows='4'
-          onChange={handlerTitleEdit}
-          value={editMarkTitle}
-        ></textarea>
-        <button
-          className={styles.buttonAdd}
-          onClick={() => handlerAddMark('edit', editMarkTitle)}
-        >
-          Добавить
-        </button>
-        {editMarkArr.map((mark) => {
-          return (
-            <div key={mark.id} className={styles.task}>
-              <button>
-                {mark.visible ? (
-                  <img
-                    onClick={handlerVisible}
-                    id={mark.id}
-                    style={{ width: '14px', verticalAlign: 'middle' }}
-                    src={iconEye}
-                    alt=''
-                  />
-                ) : (
-                  <img
-                    onClick={handlerVisible}
-                    id={mark.id}
-                    style={{ width: '14px', verticalAlign: 'middle' }}
-                    src={iconEyeClose}
-                    alt=''
-                  />
-                )}
-              </button>
-              <p
-                onClick={() => {
-                  setModalActive(true);
-                  setCurentOpenId(mark.id);
-                }}
-              >
-                {mark.messages[0].value}
-              </p>
-              <button>
-                <img
-                  onClick={handlerDelete}
-                  id={mark.id}
-                  style={{ width: '14px', verticalAlign: 'middle' }}
-                  src={iconDelete}
-                  alt=''
-                />
-              </button>
-            </div>
-          );
-        })}
-      </details>
+      <SidePanelsAccordions
+        color='#28a745'
+        title='РЕДАКТУРА'
+        inputTitle={handlerTitleEdit}
+        inputTitleValue={editMarkTitle}
+        type={'edit'}
+        handlerAddMark={handlerAddMark}
+        markArr={editMarkArr}
+        handlerVisible={handlerVisible}
+        setModalActive={setModalActive}
+        setCurentOpenId={setCurentOpenId}
+        handlerDelete={handlerDelete}
+      />
 
       <details className={styles.accordion}>
         <summary style={{ color: '#000' }}>СЛОИ</summary>
