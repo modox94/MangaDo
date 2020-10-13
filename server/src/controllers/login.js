@@ -24,8 +24,7 @@ const login = async (req, res) => {
           accesToken: user.accessToken,
           refreshToken: user.refreshToken,
         });
-      }
-      return res.sendStatus(401);
+      } else return res.status(401).json({ message: 'invalid password' });
     } catch (error) {
       console.log(error);
       return res.sendStatus(500);

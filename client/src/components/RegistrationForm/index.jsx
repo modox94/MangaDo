@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './style.module.css';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as ACTIONS_TYPES from '../../redux/action-types';
 
 export default () => {
+  const [err, setErr] = useState();
   const inputName = useRef();
   const inputInvite = useRef();
   const inputPsw = useRef();
@@ -38,6 +39,10 @@ export default () => {
         payload: result,
       });
       history.push('/catalog');
+    } else {
+      const err = await response.json();
+
+      setErr(err.message);
     }
   };
 
@@ -51,7 +56,12 @@ export default () => {
         <label htmlFor='invite'>
           <b>Приглашение</b>
         </label>
-        <input type='text' ref={inputInvite} placeholder='Введите приглашение' required />
+        <input
+          type='text'
+          ref={inputInvite}
+          placeholder='Введите приглашение'
+          required
+        />
         <label htmlFor='name'>
           <b>Имя</b>
         </label>
@@ -73,8 +83,10 @@ export default () => {
           required
         />
 
+        {err && <p>{err}</p>}
+
         <button type='submit' className='registerbtn'>
-        Зарегистрироваться
+          Зарегистрироваться
         </button>
       </form>
     </div>
