@@ -10,7 +10,7 @@ import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
 
 import styles from './style.module.css';
 
-const ImagesContainer = () => {
+const ImagesContainer = ({ setModalActive, setCurentOpenId }) => {
   const markArr = useSelector((state) => state.marks);
 
   const ws = useSelector((state) => state.websocket);
@@ -68,6 +68,10 @@ const ImagesContainer = () => {
                 position={mark.position}
               >
                 <div
+                  onDoubleClick={() => {
+                    setCurentOpenId(mark.id)
+                    setModalActive(true) 
+                  }}
                   className={`${
                     mark.visible
                       ? mark.type === 'translate'

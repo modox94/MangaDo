@@ -11,7 +11,7 @@ import iconEye from '../../../icons/eye.png';
 import iconEyeClose from '../../../icons/eyeclose.png';
 import SidePanelsAccordions from '../SidePanelsAccordions';
 
-const SidePanel = () => {
+const SidePanel = ({setModalActive, setCurentOpenId, curentOpenId, modalActive}) => {
   const dispatch = useDispatch();
   const [translateMarkTitle, setTranslateMarkTitle] = useState('');
   const [decorteMarkTitle, setDecorMarkTitle] = useState('');
@@ -22,9 +22,9 @@ const SidePanel = () => {
   const decorMarkArr = markArr.filter((el) => el.type === 'decor');
   const editMarkArr = markArr.filter((el) => el.type === 'edit');
 
-  const [modalActive, setModalActive] = useState();
+ 
   const [curentMessage, setCurentMessage] = useState('');
-  const [curentOpenId, setCurentOpenId] = useState('');
+ 
 
   const ws = useSelector((state) => state.websocket);
   const user = useSelector((state) => state.user);
