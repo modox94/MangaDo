@@ -11,7 +11,12 @@ import iconEye from '../../../icons/eye.png';
 import iconEyeClose from '../../../icons/eyeclose.png';
 import SidePanelsAccordions from '../SidePanelsAccordions';
 
-const SidePanel = ({setModalActive, setCurentOpenId, curentOpenId, modalActive}) => {
+const SidePanel = ({
+  setModalActive,
+  setCurentOpenId,
+  curentOpenId,
+  modalActive,
+}) => {
   const dispatch = useDispatch();
   const [translateMarkTitle, setTranslateMarkTitle] = useState('');
   const [decorteMarkTitle, setDecorMarkTitle] = useState('');
@@ -22,9 +27,7 @@ const SidePanel = ({setModalActive, setCurentOpenId, curentOpenId, modalActive})
   const decorMarkArr = markArr.filter((el) => el.type === 'decor');
   const editMarkArr = markArr.filter((el) => el.type === 'edit');
 
- 
   const [curentMessage, setCurentMessage] = useState('');
- 
 
   const ws = useSelector((state) => state.websocket);
   const user = useSelector((state) => state.user);
@@ -180,7 +183,7 @@ const SidePanel = ({setModalActive, setCurentOpenId, curentOpenId, modalActive})
       />
 
       <details className={styles.accordion}>
-        <summary style={{ color: '#000' }}>СЛОИ</summary>
+        <summary style={{ color: '#000', outline: 'none' }}>СЛОИ</summary>
 
         {layers.map((empty, index, layers) => {
           // тут произошел обратный перебор массива
