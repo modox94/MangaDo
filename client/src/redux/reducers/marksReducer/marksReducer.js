@@ -48,6 +48,9 @@ const translateReducer = (state = [], action) => {
         }
       });
 
+    case ACTIONS_TYPES.CLEAR_MARKS:
+      return [];
+
     default:
       return state;
   }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as WEBSOCKET_ACTIONS from './redux/actions/websocket/websocket';
-// import createGlobalStyle from './fonts/fonts';
+
 import './App.css';
 import Header from './components/Header';
 import Board from './components/scenes/Board';
@@ -12,7 +12,7 @@ import LogInForm from './components/LogInForm';
 
 function App() {
   const dispatch = useDispatch();
-  const url = useSelector((state) => state.url);
+
   const [wsStatus, setWsStatus] = useState(0);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ function App() {
     };
 
     return () => {
-      ws.close(); // переписать тут на обновление соединения
+      ws.close();
     };
   }, [wsStatus]);
 

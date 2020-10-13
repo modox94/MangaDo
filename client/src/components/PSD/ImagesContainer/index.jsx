@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Draggable from 'react-draggable';
-import ModalSpinner from '../ModalSpinner';
+import ModalSpinner from '../../ModalSpinner';
 import * as URL_ACTIONS from '../../../redux/actions/url/url';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
 import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
@@ -34,11 +34,16 @@ const ImagesContainer = ({ setModalActive, setCurentOpenId }) => {
       dispatch(URL_ACTIONS.RECORD_PSD_URL(path));
       dispatch(LAYERS_ACTIONS.DOWNLOAD_LAYERS(path));
     }
+
+    return () => {
+      dispatch(LAYERS_ACTIONS.CLEAR_LAYERS());
+      dispatch(MARK_ACTIONS.CLEAR_MARKS());
+    };
   }, [path]);
 
   return (
     <>
-      {layers.length ? (
+      {layers.length && ws ? (
         <div className={styles.container}>
           {layers.map((image) => {
             return (
@@ -99,9 +104,7 @@ const ImagesContainer = ({ setModalActive, setCurentOpenId }) => {
           })}
         </div>
       ) : (
-        <ModalSpinner>
-          <div className={styles.loader}>Loading...</div>
-        </ModalSpinner>
+        <ModalSpinner />
       )}
     </>
   );

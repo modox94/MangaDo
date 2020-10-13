@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ImagesContainer from '../ImagesContainer';
 import SidePanel from '../SidePanel';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import * as URL_ACTIONS from '../../../redux/actions/url/url';
 
 import styles from './style.module.css';
 
