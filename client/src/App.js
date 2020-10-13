@@ -7,8 +7,9 @@ import './App.css';
 import Header from './components/Header';
 import Board from './components/scenes/Board';
 import PSD from './components/PSD/Main';
-import RegistrationForm from './components/Header/RegistrationForm';
-import LogInForm from './components/Header/LogInForm';
+import RegistrationForm from './components/RegistrationForm/index';
+import LogInForm from './components/LogInForm/index';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,15 +48,18 @@ function App() {
           <Route exact path='/signUp'>
             <RegistrationForm />
           </Route>
-          <Route exact path='/psd/:path'>
+
+          <PrivateRoute exact path='/psd/:path'>
             <PSD />
-          </Route>
-          <Route exact path='/catalog'>
+          </PrivateRoute>
+
+          <PrivateRoute exact path='/catalog'>
             <Board />
-          </Route>
-          <Route exact path='/catalog/:params'>
+          </PrivateRoute>
+
+          <PrivateRoute exact path='/catalog/:params'>
             <Board />
-          </Route>
+          </PrivateRoute>
         </Switch>
       </main>
     </Router>

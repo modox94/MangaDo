@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import * as ACTIONS_TYPES from '../../../redux/action-types';
-
+import * as ACTIONS_TYPES from '../../redux/action-types';
+import styles from './style.module.css';
 export default () => {
   const inputName = useRef();
   const inputPsw = useRef();
@@ -39,35 +39,37 @@ export default () => {
   };
 
   return (
-    <form onSubmit={login}>
-      <h1>Login</h1>
-      <br />
-      <p>Please fill in this form to login.</p>
-      <br />
+    <div className={styles.container}>
+        <h1>Войти</h1>
+        
+        <p>Пожалуйста, заполните эту форму, чтобы войти.</p>
+        
+      <form className={styles.formcontainer} onSubmit={login}>
 
-      <label htmlFor='name'>
-        <b>Name</b>
-      </label>
-      <input
-        type='text'
-        ref={inputName}
-        placeholder='Enter your Name'
-        required
-      />
+        <label htmlFor='name'>
+          <b>Имя</b>
+        </label>
+        <input
+          type='text'
+          ref={inputName}
+          placeholder='Введите своё имя'
+          required
+        />
 
-      <label htmlFor='psw'>
-        <b>Password</b>
-      </label>
-      <input
-        type='password'
-        ref={inputPsw}
-        placeholder='Enter Password'
-        required
-      />
+        <label htmlFor='psw'>
+          <b>Пароль</b>
+        </label>
+        <input
+          type='password'
+          ref={inputPsw}
+          placeholder='Введите пароль'
+          required
+        />
 
-      <button type='submit' className='registerbtn'>
-        Register
-      </button>
-    </form>
+        <button type='submit' className='registerbtn'>
+          Войти
+        </button>
+      </form>
+    </div>
   );
 };

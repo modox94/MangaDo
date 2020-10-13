@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import './style.module.css';
+import styles from './style.module.css';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import * as ACTIONS_TYPES from '../../../redux/action-types';
+import * as ACTIONS_TYPES from '../../redux/action-types';
 
 export default () => {
   const inputName = useRef();
@@ -42,41 +42,41 @@ export default () => {
   };
 
   return (
-    <form onSubmit={registration}>
-      <div className='container'>
-        <h1>Register</h1>
-        <br />
-        <p>Please fill in this form to create an account.</p>
-        <br />
+    <div className={styles.container}>
+      <h1>Регистрация</h1>
+
+      <p>Пожалуйста, заполните эту форму, чтобы создать учетную запись.</p>
+
+      <form className={styles.formcontainer} onSubmit={registration}>
         <label htmlFor='invite'>
-          <b>Invite</b>
+          <b>Приглашение</b>
         </label>
-        <input type='text' ref={inputInvite} placeholder='Invite' required />
+        <input type='text' ref={inputInvite} placeholder='Введите приглашение' required />
         <label htmlFor='name'>
-          <b>Name</b>
+          <b>Имя</b>
         </label>
         <input
           type='text'
           ref={inputName}
-          placeholder='Enter your Name'
+          placeholder='Введите ваше имя'
           name='name'
           required
         />
 
         <label htmlFor='psw'>
-          <b>Password</b>
+          <b>Пароль</b>
         </label>
         <input
           type='password'
           ref={inputPsw}
-          placeholder='Enter Password'
+          placeholder='Введите пароль'
           required
         />
 
         <button type='submit' className='registerbtn'>
-          Register
+        Зарегистрироваться
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
