@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import './style.module.css';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import * as ACTIONS_TYPES from '../../redux/action-types';
 
 export default () => {
@@ -9,6 +10,8 @@ export default () => {
   const inputPsw = useRef();
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const registration = async (e) => {
     e.preventDefault();
@@ -34,6 +37,7 @@ export default () => {
         type: ACTIONS_TYPES.USER_LOGIN,
         payload: result,
       });
+      history.push('/catalog');
     }
   };
 
