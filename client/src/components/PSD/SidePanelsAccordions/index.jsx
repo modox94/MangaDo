@@ -24,18 +24,19 @@ const SidePanelsAccordions = ({
   return (
     <details className={styles.accordion}>
       <summary style={{ color: color }}>{title}</summary>
-         {user.role === 'admin' || user.role === 'worker' ? (
-        
-      <form onSubmit={(e) => handlerAddMark(e, type, inputTitleValue)}>
-        <textarea
-          required
-          rows='4'
-          onChange={inputTitle}
-          value={inputTitleValue}
-        ></textarea>
-        <button className={styles.buttonAdd}>Добавить</button>
-      </form>
-              ) : null}
+      {user.role === 'admin' || user.role === 'worker' ? (
+        <form onSubmit={(e) => handlerAddMark(e, type, inputTitleValue)}>
+          <textarea
+            required
+            rows='4'
+            onChange={inputTitle}
+            value={inputTitleValue}
+          ></textarea>
+          <button  type='submit' className={styles.buttonAdd}>
+            Добавить
+          </button>
+        </form>
+      ) : null}
       {markArr.map((mark) => {
         return (
           <div key={mark.id} className={styles.task}>

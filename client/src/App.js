@@ -10,6 +10,7 @@ import PSD from './components/PSD/Main';
 import RegistrationForm from './components/RegistrationForm/index';
 import LogInForm from './components/LogInForm/index';
 import PrivateRoute from './components/PrivateRoute';
+import MainPage from './components/MainPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,9 @@ function App() {
       <main>
         <Header />
         <Switch>
+          <Route exact path='/'>
+            <MainPage />
+          </Route>
           <Route exact path='/signIn'>
             <LogInForm />
           </Route>
