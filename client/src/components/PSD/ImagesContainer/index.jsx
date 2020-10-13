@@ -100,9 +100,7 @@ const ImagesContainer = () => {
           })}
         </div>
       ) : (
-        <ModalSpinner>
-          <div className={styles.loader}>Loading...</div>
-        </ModalSpinner>
+        <ModalSpinner />
       )}
     </>
   );
