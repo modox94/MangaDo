@@ -18,6 +18,11 @@ const layersReducer = (state = [], action) => {
 
       return newState;
 
+    case ACTIONS_TYPES.CHANGE_VISIBLE_ALL_LAYERS:
+      return state.map((layer) => {
+        return [layer[0], action.payload];
+      });
+
     case ACTIONS_TYPES.CLEAR_LAYERS:
       return [];
 

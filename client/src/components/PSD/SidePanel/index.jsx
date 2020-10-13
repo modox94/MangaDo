@@ -21,6 +21,8 @@ const SidePanel = ({
   const [translateMarkTitle, setTranslateMarkTitle] = useState('');
   const [decorteMarkTitle, setDecorMarkTitle] = useState('');
   const [editMarkTitle, setEditMarkTitle] = useState('');
+  const [visibleAllLayer, setVisibleAllLayer] = useState(true);
+
   const markArr = useSelector((state) => state.marks);
   const layers = useSelector((state) => state.layers);
   const translateMarkArr = markArr.filter((el) => el.type === 'translate');
@@ -126,8 +128,6 @@ const SidePanel = ({
         return false;
       });
 
-      console.log('visible', mark.visible);
-
       ws.send(
         WS_ACTIONS.WS_CHANGE_VISIBLE_MARK(path, e.target.id, !mark.visible)
       );
@@ -136,6 +136,12 @@ const SidePanel = ({
 
   const handlerVisibleLayer = (e) => {
     dispatch(LAYERS_ACTIONS.CHANGE_VISIBLE_LAYER(e.target.id));
+  };
+
+  const handlerVisibleAllLayer = () => {
+    dispatch(LAYERS_ACTIONS.CHANGE_VISIBLE_ALL_LAYERS(!visibleAllLayer));
+
+    setVisibleAllLayer(!visibleAllLayer);
   };
 
   return (
@@ -183,7 +189,21 @@ const SidePanel = ({
       />
 
       <details className={styles.accordion}>
-        <summary style={{ color: '#000', outline: 'none' }}>СЛОИ</summary>
+        <summary
+          style={{ position: 'relative', color: '#000', outline: 'none' }}
+        >
+          <button
+            style={{ position: 'absolute', left: 0 }}
+            onClick={handlerVisibleAllLayer}
+          >
+            <img
+              style={{ width: '14px', verticalAlign: 'middle', align: 'left' }}
+              alt='iconEye'
+              {...(visibleAllLayer ? { src: iconEye } : { src: iconEyeClose })}
+            />
+          </button>
+          СЛОИ
+        </summary>
 
         {layers.map((empty, index, layers) => {
           // тут произошел обратный перебор массива
@@ -196,11 +216,11 @@ const SidePanel = ({
                 <img
                   onClick={handlerVisibleLayer}
                   id={layers[layers.length - 1 - index][0]}
-                  alt={layers[layers.length - 1 - index][0]}
                   style={{ width: '14px', verticalAlign: 'middle' }}
+                  alt='iconEye'
                   {...(layers[layers.length - 1 - index][1]
-                    ? { src: iconEye, alt: 'iconEye' }
-                    : { src: iconEyeClose, alt: 'iconEyeClose' })}
+                    ? { src: iconEye }
+                    : { src: iconEyeClose })}
                 />
               </button>
               <p>{`Слой ${layers.length - 1 - index}`}</p>

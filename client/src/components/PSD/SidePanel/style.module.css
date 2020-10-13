@@ -17,6 +17,7 @@
   max-width: 100%;
   justify-content: space-between;
   margin: 10px 0;
+  font-size: 25px;
 }
 .task p {
   width: 100%;
@@ -81,10 +82,16 @@
 }
 
 .messageModal p {
-  font-size: 12px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 7px;
+}
+
+.messageModal span {
+  font-size: 20px;
+}
+.messageModal p span {
+  font-size: 24px;
 }
 
 .messageContainer {

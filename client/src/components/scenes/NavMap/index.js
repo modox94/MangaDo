@@ -9,8 +9,6 @@ export default ({ params }) => {
     names = params?.lastIndexOf('|') === -1 ? [params] : params.split('|');
   }
 
-  // console.log('params in NavMap =', params);
-  // console.log(names);
   return (
     <div className={styles.navbar}>
       <NavItem name='/catalog' url={''} />
