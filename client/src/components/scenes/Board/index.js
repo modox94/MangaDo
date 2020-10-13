@@ -6,15 +6,19 @@ import File from '../File';
 import NavMap from '../NavMap';
 
 import styles from './style.module.css';
-import stylesPSD from '../../PSD/ImagesContainer/style.module.css';
+
+import { useSelector } from 'react-redux';
 
 export default () => {
+  const ws = useSelector((state) => state.websocket);
+
   const { params } = useParams();
 
-  const [data, setData] = useState({ folders: [] });
-  const [spinner, setSpinner] = useState(true);
+  const [data, setData] = useState({ folders: [], files: {} });
+  const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
+    setSpinner(false);
     (async () => {
       let response;
       if (params) {
@@ -28,30 +32,31 @@ export default () => {
 
       const result = await response.json();
       setData(result);
-      setSpinner(false);
+
+      setSpinner(true);
     })();
   }, [params]);
 
   return (
     <>
-      {spinner ? (
-        <ModalSpinner>
-          <div className={stylesPSD.loader}>Loading...</div>
-        </ModalSpinner>
-      ) : (
+      {spinner && ws ? (
         <>
           <NavMap params={params} />
           <div className={styles.board}>
-            {data.files &&
-              Object.keys(data.files).map((key) => (
-                <File key={key} data={data.files[key]} />
-              ))}
-            {data.folders?.length &&
-              data.folders.map((el) => (
-                <Folder key={el} name={el} preUrl={params} />
-              ))}
+            {Object.keys(data.files).length
+              ? Object.keys(data.files).map((key) => (
+                  <File key={key} data={data.files[key]} />
+                ))
+              : null}
+            {data.folders.length
+              ? data.folders.map((el) => (
+                  <Folder key={el} name={el} preUrl={params} />
+                ))
+              : null}
           </div>
         </>
+      ) : (
+        <ModalSpinner />
       )}
     </>
   );

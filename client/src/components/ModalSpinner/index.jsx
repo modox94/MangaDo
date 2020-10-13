@@ -2,10 +2,10 @@ import React from 'react';
 
 import styles from './style.module.css';
 
-const Modal = ({ children }) => {
+const Modal = () => {
   return (
     <div className={styles.modal}>
-      <div className={styles.modal__content}>{children}</div>
+      <div className={styles.loader}>Loading...</div>
     </div>
   );
 };

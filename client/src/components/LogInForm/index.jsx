@@ -1,28 +1,26 @@
 import React, { useRef, useState } from 'react';
-import './style.module.css';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import * as ACTIONS_TYPES from '../../../redux/action-types';
-
+import * as ACTIONS_TYPES from '../../redux/action-types';
+import styles from './style.module.css';
 export default () => {
-  const [err, setErr] = useState();
   const inputName = useRef();
-  const inputInvite = useRef();
   const inputPsw = useRef();
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const registration = async (e) => {
+  const [err, setErr] = useState();
+
+  const login = async (e) => {
     e.preventDefault();
     let user = {
       name: inputName.current.value,
-      invite: inputInvite.current.value,
       psw: inputPsw.current.value,
     };
     const response = await fetch(
-      new URL('user/registration', process.env.REACT_APP_SERVER_PATH),
+      new URL('user/login', process.env.REACT_APP_SERVER_PATH),
       {
         method: 'POST',
         headers: {
@@ -47,43 +45,38 @@ export default () => {
   };
 
   return (
-    <form onSubmit={registration}>
-      <div className='container'>
-        <h1>Register</h1>
-        <br />
-        <p>Please fill in this form to create an account.</p>
-        <br />
-        <label htmlFor='invite'>
-          <b>Invite</b>
-        </label>
-        <input type='text' ref={inputInvite} placeholder='Invite' required />
+    <div className={styles.container}>
+        <h1>Войти</h1>
+        
+        <p>Пожалуйста, заполните эту форму, чтобы войти.</p>
+        
+      <form className={styles.formcontainer} onSubmit={login}>
+
         <label htmlFor='name'>
-          <b>Name</b>
+          <b>Имя</b>
         </label>
         <input
           type='text'
           ref={inputName}
-          placeholder='Enter your Name'
-          name='name'
+          placeholder='Введите своё имя'
           required
         />
 
+
         <label htmlFor='psw'>
-          <b>Password</b>
+          <b>Пароль</b>
         </label>
         <input
           type='password'
           ref={inputPsw}
-          placeholder='Enter Password'
+          placeholder='Введите пароль'
           required
         />
 
-        {err && <p>{err}</p>}
-
         <button type='submit' className='registerbtn'>
-          Register
+          Войти
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
