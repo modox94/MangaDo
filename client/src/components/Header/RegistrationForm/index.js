@@ -41,7 +41,7 @@ export default () => {
       history.push('/catalog');
     } else {
       const err = await response.json();
-      console.log('>>>>>>', err);
+
       setErr(err.message);
     }
   };
