@@ -9,17 +9,17 @@
 
 .container h1 {
   margin-bottom: 10px;
-  font-size: 25px;
+  font-size: 50px;
 }
 
 .container p {
   margin-bottom: 20px;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .container label {
   margin-bottom: 5px;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .container input {

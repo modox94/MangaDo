@@ -74,31 +74,22 @@ const ImagesContainer = ({ setModalActive, setCurentOpenId }) => {
               >
                 <div
                   onDoubleClick={() => {
-                    setCurentOpenId(mark.id)
-                    setModalActive(true) 
+                    setCurentOpenId(mark.id);
+                    setModalActive(true);
                   }}
                   className={`${
-                    mark.visible
-                      ? mark.type === 'translate'
-                        ? styles.markTranslate
-                        : mark.type === 'decor'
-                        ? styles.markDecor
-                        : mark.type === 'edit'
-                        ? styles.markEdit
-                        : null
-                      : styles.disableMark
+                    mark.visible ? styles.mark : styles.disableMark
                   }`}
-                >
-                  <div>
-                    {mark.type === 'translate'
-                      ? 'П'
+                  style={
+                    mark.type === 'translate'
+                      ? { backgroundColor: 'red' }
                       : mark.type === 'decor'
-                      ? 'О'
+                      ? { backgroundColor: 'blue' }
                       : mark.type === 'edit'
-                      ? 'Р'
-                      : null}
-                  </div>
-                </div>
+                      ? { backgroundColor: 'green' }
+                      : {}
+                  }
+                ></div>
               </Draggable>
             );
           })}
