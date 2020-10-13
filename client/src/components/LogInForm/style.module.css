@@ -31,8 +31,7 @@
   padding: 3px;
 }
 
-
-.container  button{
+.container button {
   cursor: pointer;
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
@@ -50,4 +49,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.err {
+  color: red;
 }

@@ -62,6 +62,7 @@ export default () => {
           required
         />
 
+
         <label htmlFor='psw'>
           <b>Пароль</b>
         </label>
@@ -71,7 +72,7 @@ export default () => {
           placeholder='Введите пароль'
           required
         />
-
+          {err && <p className={styles.err}>{err}</p>}
         <button type='submit' className='registerbtn'>
           Войти
         </button>
