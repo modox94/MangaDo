@@ -70,7 +70,7 @@ export default () => {
         placeholder='Enter Password'
         required
       />
-
+      {err && <p>{err}</p>}
       <button type='submit' className='registerbtn'>
         Register
       </button>
