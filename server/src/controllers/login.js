@@ -10,21 +10,23 @@ const login = async (req, res) => {
   if (name && psw) {
     try {
       const user = await User.findOne({ name }).exec();
-      const isValidPass = await bcrypt.compare(psw, user.password);
+      if (user) {
+        const isValidPass = await bcrypt.compare(psw, user.password);
 
-      if (isValidPass) {
-        const payload = { id: user._id };
-        user.accessToken = createToken('access', payload);
-        user.refreshToken = createToken('refresh', payload);
+        if (isValidPass) {
+          const payload = { id: user._id };
+          user.accessToken = createToken('access', payload);
+          user.refreshToken = createToken('refresh', payload);
 
-        user.save();
-        return res.json({
-          name: user.name,
-          role: user.role,
-          accesToken: user.accessToken,
-          refreshToken: user.refreshToken,
-        });
-      } else return res.status(401).json({ message: 'invalid password' });
+          user.save();
+          return res.json({
+            name: user.name,
+            role: user.role,
+            accesToken: user.accessToken,
+            refreshToken: user.refreshToken,
+          });
+        } else return res.status(401).json({ message: 'invalid password' });
+      } else return res.status(401).json({ message: 'user not registred' });
     } catch (error) {
       console.log(error);
       return res.sendStatus(500);

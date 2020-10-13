@@ -72,7 +72,7 @@ export default () => {
           placeholder='Введите пароль'
           required
         />
-
+          {err && <p className={styles.err}>{err}</p>}
         <button type='submit' className='registerbtn'>
           Войти
         </button>
