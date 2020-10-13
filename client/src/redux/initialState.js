@@ -5,8 +5,8 @@ const initialState = () => {
   // };
 
   const user = {
-    name: 'vasya',
-    role: 'worker',
+    name: '',
+    role: '',
   };
 
   const initialValue = {
