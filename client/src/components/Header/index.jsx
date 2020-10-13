@@ -1,7 +1,21 @@
 import React from 'react';
 import styles from './style.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import * as ACTIONS_TYPES from '../../redux/action-types';
+
+
+
 const Header = () => {
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch({ type: ACTIONS_TYPES.USER_LOGOUT, });
+    history.push('/signIn')
+  } 
+
   return (
     <header>
       <nav>
@@ -17,9 +31,9 @@ const Header = () => {
         <Link className={styles.link} to='/catalog'>
           Каталог
         </Link>
-        <Link className={styles.link} to='/logout'>
+        <a onClick={logout} href="#" className={styles.link} >
           Выйти
-        </Link>
+        </a>
       </nav>
     </header>
   );
