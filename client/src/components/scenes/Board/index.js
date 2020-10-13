@@ -14,7 +14,7 @@ export default () => {
 
   const { params } = useParams();
 
-  const [data, setData] = useState({ folders: [] });
+  const [data, setData] = useState({ folders: [], files: {} });
   const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
@@ -43,14 +43,16 @@ export default () => {
         <>
           <NavMap params={params} />
           <div className={styles.board}>
-            {data.files &&
-              Object.keys(data.files).map((key) => (
-                <File key={key} data={data.files[key]} />
-              ))}
-            {data.folders?.length &&
-              data.folders.map((el) => (
-                <Folder key={el} name={el} preUrl={params} />
-              ))}
+            {Object.keys(data.files).length
+              ? Object.keys(data.files).map((key) => (
+                  <File key={key} data={data.files[key]} />
+                ))
+              : null}
+            {data.folders.length
+              ? data.folders.map((el) => (
+                  <Folder key={el} name={el} preUrl={params} />
+                ))
+              : null}
           </div>
         </>
       ) : (
