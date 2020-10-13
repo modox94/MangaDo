@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './style.module.css';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as ACTIONS_TYPES from '../../../redux/action-types';
 
 export default () => {
+  const [err, setErr] = useState();
   const inputName = useRef();
   const inputInvite = useRef();
   const inputPsw = useRef();
@@ -38,6 +39,10 @@ export default () => {
         payload: result,
       });
       history.push('/catalog');
+    } else {
+      const err = await response.json();
+      console.log('>>>>>>', err);
+      setErr(err.message);
     }
   };
 
@@ -72,6 +77,8 @@ export default () => {
           placeholder='Enter Password'
           required
         />
+
+        {err && <p>{err}</p>}
 
         <button type='submit' className='registerbtn'>
           Register
