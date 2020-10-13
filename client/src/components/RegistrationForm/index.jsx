@@ -83,7 +83,7 @@ export default () => {
           required
         />
 
-        {err && <p>{err}</p>}
+        {err && <p className={styles.err}>{err}</p>}
 
         <button type='submit' className='registerbtn'>
           Зарегистрироваться
