@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import * as ACTIONS_TYPES from '../../redux/action-types';
+import * as ACTIONS_TYPES from '../../../redux/action-types';
 
 export default () => {
   const inputName = useRef();

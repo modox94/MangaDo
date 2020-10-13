@@ -9,8 +9,9 @@
   border: 3px ridge bisque;
   border-radius: 10%;
   margin: 2px;
-  background: url('../../icons/usiiik_Folder_Icon.svg') right bottom no-repeat,
-    url('../../icons/xox-Watia-girl.svg') right top no-repeat;
+  background: url('../../../icons/usiiik_Folder_Icon.svg') right bottom
+      no-repeat,
+    url('../../../icons/xox-Watia-girl.svg') right top no-repeat;
   /* background-repeat: no-repeat; */
   padding: 5px;
   color: black;

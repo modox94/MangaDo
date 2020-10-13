@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ModalSpinner from '../../ModalSpinner';
-import Folder from '../../Folder';
-import File from '../../File';
-import NavMap from '../../NavMap';
+import Folder from '../Folder';
+import File from '../File';
+import NavMap from '../NavMap';
 
 import styles from './style.module.css';
 import stylesPSD from '../../PSD/ImagesContainer/style.module.css';

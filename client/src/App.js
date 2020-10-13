@@ -7,8 +7,8 @@ import './App.css';
 import Header from './components/Header';
 import Board from './components/scenes/Board';
 import PSD from './components/PSD/Main';
-import RegistrationForm from './components/RegistrationForm';
-import LogInForm from './components/LogInForm';
+import RegistrationForm from './components/Header/RegistrationForm';
+import LogInForm from './components/Header/LogInForm';
 
 function App() {
   const dispatch = useDispatch();
