@@ -51,7 +51,12 @@ router.get('/:path', async (req, res) => {
     });
 
     oldLayers = oldLayers.map((element) => [
-      path.join('static', 'layers', ...additionalPath, element),
+      path.join(
+        'static',
+        'layers',
+        ...additionalPath,
+        element + `?time=${Date.now()}`
+      ),
       true,
     ]);
 
@@ -95,7 +100,12 @@ router.get('/:path', async (req, res) => {
   });
 
   layers = layers.map((element) => [
-    path.join('static', 'layers', ...additionalPath, element),
+    path.join(
+      'static',
+      'layers',
+      ...additionalPath,
+      element + `?time=${Date.now()}`
+    ),
     true,
   ]);
 

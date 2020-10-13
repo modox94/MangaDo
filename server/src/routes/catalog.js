@@ -35,7 +35,8 @@ async function getCatalog(req, res) {
       files[elementParse.name] = {
         preview:
           path.join('static', 'preview', ...additionalPath, elementParse.name) +
-          '.jpg',
+          '.jpg' +
+          `?time=${Date.now()}`,
         url: '/psd/' + req.params.path + '|' + element,
       };
     } else if (elementParse.ext === '' && element !== '.DS_Store') {
