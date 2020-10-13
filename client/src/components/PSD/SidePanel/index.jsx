@@ -283,8 +283,7 @@ const SidePanel = ({
               value={curentMessage}
             ></textarea>
             <button ref={submitRef} className={styles.buttonAdd}>
-              {' '}
-              Добавить{' '}
+              Добавить
             </button>
           </form>
         </div>

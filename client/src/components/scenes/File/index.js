@@ -16,12 +16,3 @@ export default ({ data, name }) => {
     </figure>
   );
 };
-
-/*
-
-<figure class = "frog">
- <img src = "frog.png">
- <figcaption>Лягушка</figcaption>
-</figure>
-
-*/

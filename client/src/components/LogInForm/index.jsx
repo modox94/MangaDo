@@ -46,12 +46,11 @@ export default () => {
 
   return (
     <div className={styles.container}>
-        <h1>Войти</h1>
-        
-        <p>Пожалуйста, заполните эту форму, чтобы войти.</p>
-        
-      <form className={styles.formcontainer} onSubmit={login}>
+      <h1>Войти</h1>
 
+      <p>Пожалуйста, заполните эту форму, чтобы войти.</p>
+
+      <form className={styles.formcontainer} onSubmit={login}>
         <label htmlFor='name'>
           <b>Имя</b>
         </label>
@@ -62,7 +61,6 @@ export default () => {
           required
         />
 
-
         <label htmlFor='psw'>
           <b>Пароль</b>
         </label>
@@ -72,7 +70,7 @@ export default () => {
           placeholder='Введите пароль'
           required
         />
-          {err && <p className={styles.err}>{err}</p>}
+        {err && <p className={styles.err}>{err}</p>}
         <button type='submit' className='registerbtn'>
           Войти
         </button>
