@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../Modal';
@@ -17,6 +17,8 @@ const SidePanel = ({
   curentOpenId,
   modalActive,
 }) => {
+  const submitRef = useRef();
+
   const dispatch = useDispatch();
   const [translateMarkTitle, setTranslateMarkTitle] = useState('');
   const [decorteMarkTitle, setDecorMarkTitle] = useState('');
@@ -137,6 +139,12 @@ const SidePanel = ({
   const handlerVisibleLayer = (e) => {
     dispatch(LAYERS_ACTIONS.CHANGE_VISIBLE_LAYER(e.target.id));
   };
+  const hendlerSubmit = (e)=>{
+    console.log(e.key);
+    if(e.key === 'Enter'){
+      submitRef.current.click()
+    }
+  }
 
   return (
     <div className={styles.sideContainer}>
@@ -247,13 +255,14 @@ const SidePanel = ({
         <div className={styles.modalInput}>
           <form onSubmit={handlerAddMessage} action=''>
             <textarea
+             onKeyPress={hendlerSubmit}
               required
               style={{ resize: 'none' }}
               rows='4'
               onChange={handlerCurentMessage}
               value={curentMessage}
             ></textarea>
-            <button className={styles.buttonAdd}> Добавить </button>
+            <button ref={submitRef} className={styles.buttonAdd}> Добавить </button>
           </form>
         </div>
       </Modal>
