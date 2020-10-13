@@ -4,12 +4,12 @@ import styles from './style.module.css';
 
 export default ({ name, preUrl }) => {
   return preUrl ? (
-    <Link to={`/catalog/${preUrl}|${name}`}>
-      <div className={styles.folder}>{name}</div>
+    <Link className={styles.folder} to={`/catalog/${preUrl}|${name}`}>
+      <div>{name}</div>
     </Link>
   ) : (
-    <Link to={`/catalog/${name}`}>
-      <div className={styles.folder}>{name}</div>
+    <Link className={styles.folder} to={`/catalog/${name}`}>
+      <div>{name}</div>
     </Link>
   );
 };

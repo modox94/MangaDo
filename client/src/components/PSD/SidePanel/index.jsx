@@ -139,12 +139,12 @@ const SidePanel = ({
   const handlerVisibleLayer = (e) => {
     dispatch(LAYERS_ACTIONS.CHANGE_VISIBLE_LAYER(e.target.id));
   };
-  const hendlerSubmit = (e)=>{
+  const hendlerSubmit = (e) => {
     console.log(e.key);
-    if(e.key === 'Enter'){
-      submitRef.current.click()
+    if (e.key === 'Enter') {
+      submitRef.current.click();
     }
-  }
+  };
 
   const handlerVisibleAllLayer = () => {
     dispatch(LAYERS_ACTIONS.CHANGE_VISIBLE_ALL_LAYERS(!visibleAllLayer));
@@ -275,14 +275,17 @@ const SidePanel = ({
         <div className={styles.modalInput}>
           <form onSubmit={handlerAddMessage} action=''>
             <textarea
-             onKeyPress={hendlerSubmit}
+              onKeyPress={hendlerSubmit}
               required
               style={{ resize: 'none' }}
               rows='4'
               onChange={handlerCurentMessage}
               value={curentMessage}
             ></textarea>
-            <button ref={submitRef} className={styles.buttonAdd}> Добавить </button>
+            <button ref={submitRef} className={styles.buttonAdd}>
+              {' '}
+              Добавить{' '}
+            </button>
           </form>
         </div>
       </Modal>

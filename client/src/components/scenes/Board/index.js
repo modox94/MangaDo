@@ -45,7 +45,7 @@ export default () => {
           <div className={styles.board}>
             {Object.keys(data.files).length
               ? Object.keys(data.files).map((key) => (
-                  <File key={key} data={data.files[key]} />
+                  <File key={key} data={data.files[key]} name={key} />
                 ))
               : null}
             {data.folders.length

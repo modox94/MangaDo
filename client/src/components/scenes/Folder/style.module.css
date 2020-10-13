@@ -4,9 +4,9 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  width: 250px;
-  height: 350px;
-  border: 3px ridge bisque;
+  width: 246px;
+  height: 396px;
+  border: 3px ridge black;
   border-radius: 5%;
   margin: 2px;
   background: url('../../../icons/1211688.svg');
@@ -14,4 +14,6 @@
   color: black;
   background-color: #dee2e6;
   background-size: contain;
+  text-decoration: none;
+  font-size: 36px;
 }
