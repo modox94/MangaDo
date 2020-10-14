@@ -198,14 +198,14 @@ const SidePanel = ({
 
       <details className={styles.accordion}>
         <summary
-          style={{ position: 'relative', color: '#000', outline: 'none' }}
+          style={{ position: 'relative', color: '#000', outline: 'none' , cursor: 'pointer'}}
         >
           <button
             style={{ position: 'absolute', left: 0 }}
             onClick={handlerVisibleAllLayer}
           >
             <img
-              style={{ width: '14px', verticalAlign: 'middle', align: 'left' }}
+              style={{ width: '14px', verticalAlign: 'middle', align: 'left', cursor: 'pointer' }}
               alt='iconEye'
               {...(visibleAllLayer ? { src: iconEye } : { src: iconEyeClose })}
             />
@@ -224,7 +224,7 @@ const SidePanel = ({
                 <img
                   onClick={handlerVisibleLayer}
                   id={layers[layers.length - 1 - index][0]}
-                  style={{ width: '14px', verticalAlign: 'middle' }}
+                  style={{ width: '14px', verticalAlign: 'middle', cursor: 'pointer' }}
                   alt='iconEye'
                   {...(layers[layers.length - 1 - index][1]
                     ? { src: iconEye }
@@ -261,7 +261,7 @@ const SidePanel = ({
                         <img
                           onClick={handlerDeleteMessage}
                           id={message.data}
-                          style={{ width: '14px', verticalAlign: 'middle' }}
+                          style={{ width: '14px', verticalAlign: 'middle', cursor: 'pointer' }}
                           src={iconDelete}
                           alt='del'
                         />

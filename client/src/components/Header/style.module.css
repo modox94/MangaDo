@@ -1,5 +1,5 @@
 header {
-  height: 50px;
+  height: 60px;
   margin-bottom: 30px;
 }
 
@@ -17,4 +17,9 @@ nav {
   color: #343a40;
   margin-left: 50px;
   font-size: 36px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease 0.1s;
+}
+.link:hover{
+  border-bottom: 2px solid #343a40;
 }

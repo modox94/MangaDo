@@ -46,7 +46,7 @@ const SidePanelsAccordions = ({
                   <img
                     onClick={handlerVisible}
                     id={mark.id}
-                    style={{ width: '14px', verticalAlign: 'middle' }}
+                    style={{ width: '14px', verticalAlign: 'middle', cursor: 'pointer'}}
                     src={iconEye}
                     alt=''
                   />
@@ -76,7 +76,7 @@ const SidePanelsAccordions = ({
                 <img
                   onClick={handlerDelete}
                   id={mark.id}
-                  style={{ width: '14px', verticalAlign: 'middle' }}
+                  style={{ width: '14px', verticalAlign: 'middle', cursor: 'pointer' }}
                   src={iconDelete}
                   alt=''
                 />
