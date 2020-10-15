@@ -13,7 +13,7 @@ async function getCatalog(req, res) {
   start = new Date();
   console.log('calalog/ - start');
 
-  let additionalPath = req.params.path ? req.params.path.split('|') : [''];
+  let additionalPath = req.params.path ? req.params.path.split('|') : [];
 
   let inputPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
   let outputPath = path.join(
@@ -37,7 +37,10 @@ async function getCatalog(req, res) {
           path.join('static', 'preview', ...additionalPath, elementParse.name) +
           '.jpg' +
           `?time=${Date.now()}`,
-        url: '/psd/' + req.params.path + '|' + element,
+        url:
+          '/psd/' +
+          (additionalPath.length ? additionalPath.join('|') + '|' : '') +
+          element,
       };
     } else if (elementParse.ext === '' && element !== '.DS_Store') {
       folders.push(element);
