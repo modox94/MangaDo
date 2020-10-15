@@ -33,7 +33,7 @@ export default () => {
     );
     if (response.ok) {
       const result = await response.json();
-      console.log(result);
+
       dispatch({
         type: ACTIONS_TYPES.USER_LOGIN,
         payload: result,
