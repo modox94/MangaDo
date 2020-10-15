@@ -1,9 +1,11 @@
 import React from 'react';
-import styles from './style.module.css';
-
+import { Link } from 'react-router-dom';
 import NavItem from '../NavItem';
 
-export default ({ params }) => {
+import styles from './style.module.css';
+import stylesNavItem from '../NavItem/style.module.css';
+
+export default ({ params, fileName }) => {
   let names = '';
   if (params) {
     names = params?.lastIndexOf('|') === -1 ? [params] : params.split('|');
@@ -20,6 +22,15 @@ export default ({ params }) => {
             url={names.slice(0, index + 1).join('|')}
           />
         ))}
+      <span className={stylesNavItem.link}>
+        <Link
+          to={
+            '/psd/' + (params && fileName ? params + '|' + fileName : fileName)
+          }
+        >
+          <div>{fileName}</div>
+        </Link>
+      </span>
     </div>
   );
 };
