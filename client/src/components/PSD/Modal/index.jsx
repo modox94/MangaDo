@@ -1,6 +1,6 @@
 import React from 'react';
-
 import styles from './style.module.css';
+import closeModalIcon from '../../../icons/closecrosscircularinterfacebutton_105037.png';
 
 const Modal = ({ active, setActive, children }) => {
   return (
@@ -10,6 +10,7 @@ const Modal = ({ active, setActive, children }) => {
         setActive(false);
       }}
     >
+         
       <div
         className={
           active
@@ -18,6 +19,15 @@ const Modal = ({ active, setActive, children }) => {
         }
         onClick={(e) => e.stopPropagation()}
       >
+        <button
+          onClick={() => {
+            setActive(false);
+          }}
+          className={styles.closeModalBtn}
+        >
+          <img src={closeModalIcon} alt='' />
+        </button>
+      
         {children}
       </div>
     </div>

@@ -103,6 +103,7 @@
 .messageContainer {
   height: 85%;
   overflow-y: scroll;
+ 
 }
 
 .deleteMessageBtn {
@@ -111,3 +112,4 @@
   right: 2px;
   cursor: pointer;
 }
+

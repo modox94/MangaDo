@@ -32,3 +32,16 @@
 .modal__content.active {
   transform: scale(1);
 }
+
+.closeModalBtn {
+  position: absolute;
+  left: 217px;
+  top: -13px;
+  border: none;
+  cursor: pointer;
+}
+
+.closeModalBtn img {
+  background-color: rgb(153, 153, 153);
+  border-radius: 50%;
+}
