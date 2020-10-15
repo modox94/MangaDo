@@ -1,5 +1,5 @@
 module.exports = {
-  admin: process.env.INVITE_ADMIN,
-  worker: process.env.INVITE_WORKER,
-  don: process.env.INVITE_DON,
+  [process.env.INVITE_ADMIN]: 'admin',
+  [process.env.INVITE_WORKER]: 'worker',
+  [process.env.INVITE_DON]: 'don',
 };
