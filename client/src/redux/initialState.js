@@ -1,10 +1,5 @@
 const initialState = () => {
-  // const user = JSON.parse(localStorage.getItem('user')) || {
-  //   name: 'vasya67',
-  //   role: 'admin',
-  // };
-
-  const user = {
+  const user = JSON.parse(localStorage.getItem('user')) || {
     name: '',
     role: '',
   };
