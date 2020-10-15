@@ -140,7 +140,6 @@ const SidePanel = ({
     dispatch(LAYERS_ACTIONS.CHANGE_VISIBLE_LAYER(e.target.id));
   };
   const hendlerSubmit = (e) => {
-    console.log(e.key);
     if (e.key === 'Enter') {
       submitRef.current.click();
     }
@@ -252,7 +251,6 @@ const SidePanel = ({
       </details>
 
       <Modal active={modalActive} setActive={setModalActive}>
-       
         <div className={styles.messageContainer}>
           {markArr
             .find((el) => el.id === curentOpenId)

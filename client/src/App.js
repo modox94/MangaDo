@@ -24,6 +24,7 @@ function App() {
       dispatch(WEBSOCKET_ACTIONS.RECORD_WEBSOCKET(ws));
     };
     ws.onclose = () => {
+      console.log('ws closed', wsStatus);
       dispatch(WEBSOCKET_ACTIONS.RECORD_WEBSOCKET(''));
       setWsStatus(wsStatus + 1);
     };
