@@ -289,21 +289,23 @@ const SidePanel = ({
               );
             })}
         </div>
-        <div className={styles.modalInput}>
-          <form onSubmit={handlerAddMessage} action=''>
-            <textarea
-              onKeyPress={hendlerSubmit}
-              required
-              style={{ resize: 'none' }}
-              rows='4'
-              onChange={handlerCurentMessage}
-              value={curentMessage}
-            ></textarea>
-            <button ref={submitRef} className={styles.buttonAdd}>
-              Добавить
-            </button>
-          </form>
-        </div>
+        {user.role === 'admin' || user.role === 'worker' ? (
+          <div className={styles.modalInput}>
+            <form onSubmit={handlerAddMessage} action=''>
+              <textarea
+                onKeyPress={hendlerSubmit}
+                required
+                style={{ resize: 'none' }}
+                rows='4'
+                onChange={handlerCurentMessage}
+                value={curentMessage}
+              ></textarea>
+              <button ref={submitRef} className={styles.buttonAdd}>
+                Добавить
+              </button>
+            </form>
+          </div>
+        ) : null}
       </Modal>
     </div>
   );
