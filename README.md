@@ -4,28 +4,25 @@
 #### https://mangado.site/
 
 ## Для просмотра сайта можете войти под данным аккаунтом с правами спонсора: 
-##### UserName: demo <br/>
-##### Password: demo
+username: demo <br/>
+password: demo
 
-## Так же для просмотра полного функционала приложения пройдите по ссылке, начало презентации 10 минута ролика: 
-#### https://www.youtube.com/watch?v=5hNBXkrXIX0&t=908s
+## [Видеопрезентация проекта](https://youtu.be/5hNBXkrXIX0?t=573) 
 
 ## Список технологий, которые использовались в разработке приложения: 
-* NodeJS
+* Node.js
 * React
 * Redux
 * React Router
-* Websockets
-* Image Magick
-* Яндекс Диск
-* mongoDB
+* WebSocket
+* ImageMagick
+* Яндекс.Диск
+* MongoDB
 * ExpressJS
 * PM2
-* NGINX
+* nginx
 * JWT tokens
-* BCrypt
-
-[Example]: http://example.com/
+* bcrypt
 
 #### Для запуска проекта необходимо:
 1. установить [Node.js](https://nodejs.org/en/download/) (не ниже 14 версии)
