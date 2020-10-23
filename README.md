@@ -1,4 +1,4 @@
-# MangaDo
+# [MangaDo](https://mangado.site/)
 
 ## [Видеопрезентация проекта](https://youtu.be/5hNBXkrXIX0?t=573)
 
