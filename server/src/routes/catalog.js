@@ -35,7 +35,7 @@ async function getCatalog(req, res) {
       files[elementParse.name] = {
         preview:
           path.join('static', 'preview', ...additionalPath, elementParse.name) +
-          '.jpg' +
+          '.webp' +
           `?time=${Date.now()}`,
         url:
           '/psd/' +
@@ -55,7 +55,7 @@ async function getCatalog(req, res) {
         let inputStat, outputStat;
         try {
           inputStat = fs.statSync(path.join(inputPath, file) + '.psd').mtimeMs;
-          outputStat = fs.statSync(path.join(outputPath, file) + '.jpg')
+          outputStat = fs.statSync(path.join(outputPath, file) + '.webp')
             .mtimeMs;
         } catch (err) {
           if (err.code === 'ENOENT') {
@@ -67,7 +67,7 @@ async function getCatalog(req, res) {
           if (inputStat < outputStat) {
             return;
           } else {
-            fs.unlinkSync(path.join(outputPath, file) + '.jpg');
+            fs.unlinkSync(path.join(outputPath, file) + '.webp');
           }
         }
 
@@ -81,7 +81,7 @@ async function getCatalog(req, res) {
             'x400',
             '-quality',
             '90',
-            path.join(outputPath, file) + '.jpg',
+            path.join(outputPath, file) + '.webp',
           ];
 
           imagemagick.convert(args, function (err, stdout, stderr) {
