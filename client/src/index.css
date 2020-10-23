@@ -9,11 +9,13 @@
 @font-face {
   font-family: 'BrushType';
   src: local('BrushType'), url(./fonts/brushtype-normal.woff) format('woff');
+  font-family: 'Blogger-Sans';
+  src: local('Blogger-Sans'), url(./fonts/Blogger-Sans.woff) format('woff');
 }
 
 body {
   margin: 0;
-  font-family: 'BrushType';
+  font-family: 'Blogger-Sans';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
