@@ -44,6 +44,36 @@ export default () => {
     }
   };
 
+  const demo = async (e) => {
+    let user = {
+      name: 'demo',
+      psw: 'demo',
+    };
+    const response = await fetch(
+      new URL('user/login', process.env.REACT_APP_SERVER_PATH),
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(user),
+      }
+    );
+    if (response.ok) {
+      const result = await response.json();
+
+      dispatch({
+        type: ACTIONS_TYPES.USER_LOGIN,
+        payload: result,
+      });
+      history.push('/catalog');
+    } else {
+      const err = await response.json();
+
+      setErr(err.message);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h1>Войти</h1>
@@ -73,6 +103,9 @@ export default () => {
         {err && <p className={styles.err}>{err}</p>}
         <button type='submit' className='registerbtn'>
           Войти
+        </button>
+        <button onClick={demo} type='button' className='registerbtn'>
+          Демонстрация
         </button>
       </form>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Linkify from 'react-linkify';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../Modal';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
@@ -267,7 +268,9 @@ const SidePanel = ({
                     </span>
                   </p>
 
-                  <span className={styles.messageSpan}>{message.value}</span>
+                  <span className={styles.messageSpan}>
+                    <Linkify>{message.value}</Linkify>
+                  </span>
                   <div className={styles.deleteMessageBtn}>
                     {index > 0 && user.name === message.user ? (
                       <button>
