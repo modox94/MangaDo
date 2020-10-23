@@ -9,17 +9,30 @@
   justify-content: space-around;
   align-items: baseline;
   align-content: flex-start;
+  margin-bottom: 20px;
 }
 
 .title {
   font-size: 40px;
   font-weight: normal;
   text-align: center;
-  padding-top: 50px;
+  padding-top: 20px;
 }
 
 .text {
   font-size: 20px;
   font-weight: normal;
   text-align: justify;
+}
+
+.link {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #343a40;
+  font-size: 36px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease 0.1s;
+}
+.link:hover {
+  border-bottom: 2px solid #343a40;
 }
