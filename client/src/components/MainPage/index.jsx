@@ -25,9 +25,7 @@ const MainPage = () => {
         манги (комиксов). В процессе работы участники команды сталкиваются с
         рядом организационных проблем и наш сервис готов их решить.
       </p>
-
       <h1 className={styles.title}>Проблемы, которые мы решаем:</h1>
-
       <h1 className={styles.title}>
         1. Проблема позиционирования перевода отностилельно оригинала.
       </h1>
@@ -43,7 +41,6 @@ const MainPage = () => {
       <div className={styles.container}>
         <img src={present1} alt='' />
       </div>
-
       <h1 className={styles.title}>
         2. Проблема позиционирования редакторских правок и их обсуждения.
       </h1>
@@ -59,7 +56,6 @@ const MainPage = () => {
           return <img key={index} src={chatAni} alt='' />;
         })}
       </div>
-
       <h1 className={styles.title}>
         3. Отслеживание состояния документа без использования Photoshop.
       </h1>
@@ -79,39 +75,37 @@ const MainPage = () => {
         порядок и содержание слоев .psd файла без необходимости запуска сложных
         и требовательных приложений.
       </p>
-
       <h1 className={styles.title}>Использованные технологии:</h1>
       <div className={styles.container}>
         <img src={alllogos} alt='' />
       </div>
-
       <h1 className={styles.title}>
-        Чтобы войти на сайт вы можете перейти на страницу{' '}
-        <Link className={styles.title} to='/signIn'>
+        Вы можете войти на сайт в режиме "только для чтения" для оценки
+        функционала на примере реальных проектов.
+        <br />
+        Перейдите на страницу{' '}
+        <Link className={styles.link} to='/signIn'>
           ВОЙТИ
         </Link>{' '}
-        и, нажав кнопку "Демонстрация", зайти на сайт в режиме "только для
-        чтения".
+        и нажамите кнопку "Демонстрация".
       </h1>
-
       <h1 className={styles.title}>Над проектом работали:</h1>
-
       <div className={styles.chat}>
-        <a href='https://github.com/jrdAlexandr'>
+        <a className={styles.link} href='https://github.com/jrdAlexandr'>
           <figure>
             <img src={avaA} alt='ava' />
             <figcaption>Александр Шкляев</figcaption>
           </figure>
         </a>
 
-        <a href='https://github.com/constantinoPL'>
+        <a className={styles.link} href='https://github.com/constantinoPL'>
           <figure>
             <img src={avaC} alt='ava' />
             <figcaption>Константин Плахетко</figcaption>
           </figure>
         </a>
 
-        <a href='https://github.com/modox94'>
+        <a className={styles.link} href='https://github.com/modox94'>
           <figure>
             <img src={avaN} alt='ava' />
             <figcaption>Никита Новоселов</figcaption>
