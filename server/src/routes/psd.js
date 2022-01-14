@@ -9,19 +9,20 @@ const Mark = require('../models/mark.modele');
 const router = express.Router();
 
 router.get('/:path', async (req, res) => {
-  let start = new Date();
+  const start = new Date();
   console.log('start - /psd/:path', start);
 
   let psdObj = await Psd.findOne({ url: req.params.path }).populate('marks');
-  if (!psdObj) psdObj = new Psd({ url: req.params.path });
+  if (!psdObj) {
+    psdObj = new Psd({ url: req.params.path });
+  }
   psdObj.save();
 
-  let additionalPath = req.params.path.split('|');
+  const additionalPath = req.params.path.split('|') || [];
+  const inputPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
 
-  let inputPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
-
-  let file = path.parse(inputPath);
-  let outputPath = path.join(
+  const file = path.parse(inputPath);
+  const outputPath = path.join(
     path.resolve('./'),
     'public',
     'layers',
@@ -29,7 +30,7 @@ router.get('/:path', async (req, res) => {
   );
 
   let oldLayers, inputStat, outputStat;
-  let regular = new RegExp(`^${file.name}-(\\d+)\\.png`);
+  const regular = new RegExp(`^${file.name}-(\\d+)\\.png`);
 
   try {
     oldLayers = fs.readdirSync(outputPath);
@@ -60,13 +61,19 @@ router.get('/:path', async (req, res) => {
       true,
     ]);
 
-    let end = new Date();
+    const end = new Date();
     console.log('end - /psd/:path', end - start, 'ms');
 
     return res.json({ layers: oldLayers, psdObj });
   }
 
-  fs.rmdirSync(outputPath, { recursive: true });
+  try {
+    fs.rmSync(outputPath, { recursive: true });
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log('file or directory does not exist');
+    }
+  }
 
   fs.mkdirSync(outputPath, { recursive: true });
 
@@ -79,7 +86,7 @@ router.get('/:path', async (req, res) => {
       '-coalesce',
       '-resize',
       '900x',
-      outputPath + '/' + file.name + '.png',
+      path.join(outputPath, file.name + '.png'),
     ];
 
     imagemagick.convert(args, function (err, stdout, stderr) {
@@ -109,7 +116,7 @@ router.get('/:path', async (req, res) => {
     true,
   ]);
 
-  let end = new Date();
+  const end = new Date();
   console.log('end - /psd/:path', end - start, 'ms');
 
   res.json({ layers, psdObj });
