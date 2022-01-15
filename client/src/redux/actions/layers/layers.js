@@ -30,7 +30,7 @@ const CLEAR_LAYERS = () => {
 
 const DOWNLOAD_LAYERS = (path) => async (dispatch) => {
   let response = await fetch(
-    new URL('psd/' + path, process.env.REACT_APP_SERVER_PATH)
+    new URL('psd/' + path + '/layers', process.env.REACT_APP_SERVER_PATH)
   );
   let data = await response.json();
 

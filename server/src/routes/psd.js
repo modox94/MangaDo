@@ -8,9 +8,9 @@ const Mark = require('../models/mark.modele');
 
 const router = express.Router();
 
-router.get('/:path', async (req, res) => {
+router.get('/:path/layers', async (req, res) => {
   const start = new Date();
-  console.log('start - /psd/:path', start);
+  console.log('start - /psd/:path/layers', start);
 
   let psdObj = await Psd.findOne({ url: req.params.path }).populate('marks');
   if (!psdObj) {
@@ -62,7 +62,7 @@ router.get('/:path', async (req, res) => {
     ]);
 
     const end = new Date();
-    console.log('end - /psd/:path', end - start, 'ms');
+    console.log('end - /psd/:path/layers', end - start, 'ms');
 
     return res.json({ layers: oldLayers, psdObj });
   }
@@ -117,7 +117,7 @@ router.get('/:path', async (req, res) => {
   ]);
 
   const end = new Date();
-  console.log('end - /psd/:path', end - start, 'ms');
+  console.log('end - /psd/:path/layers', end - start, 'ms');
 
   res.json({ layers, psdObj });
 });
