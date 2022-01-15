@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Draggable from 'react-draggable';
+import PropTypes from 'prop-types';
 import ModalSpinner from '../../ModalSpinner';
 import * as URL_ACTIONS from '../../../redux/actions/url/url';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
@@ -99,6 +100,11 @@ const ImagesContainer = ({ setModalActive, setCurentOpenId }) => {
       )}
     </>
   );
+};
+
+ImagesContainer.propTypes = {
+  setModalActive: PropTypes.func,
+  setCurentOpenId: PropTypes.func,
 };
 
 export default ImagesContainer;

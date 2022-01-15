@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styles from './style.module.css';
 
-export default ({ name, preUrl }) => {
+const Folder = ({ name, preUrl }) => {
   return preUrl ? (
     <Link className={styles.folder} to={`/catalog/${preUrl}|${name}`}>
       <div>{name}</div>
@@ -13,3 +14,10 @@ export default ({ name, preUrl }) => {
     </Link>
   );
 };
+
+Folder.propTypes = {
+  name: PropTypes.string,
+  preUrl: PropTypes.string,
+};
+
+export default Folder;

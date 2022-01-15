@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import NavItem from '../NavItem';
-
 import styles from './style.module.css';
 import stylesNavItem from '../NavItem/style.module.css';
 
-export default ({ params, fileName }) => {
+const NavMap = ({ params, fileName }) => {
   let names = '';
   if (params) {
     names = params?.lastIndexOf('|') === -1 ? [params] : params.split('|');
@@ -34,3 +34,10 @@ export default ({ params, fileName }) => {
     </div>
   );
 };
+
+NavMap.propTypes = {
+  params: PropTypes.array,
+  fileName: PropTypes.string,
+};
+
+export default NavMap;

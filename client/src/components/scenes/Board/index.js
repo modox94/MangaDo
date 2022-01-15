@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ModalSpinner from '../../ModalSpinner';
 import Folder from '../Folder';
 import File from '../File';
 import NavMap from '../NavMap';
-
 import styles from './style.module.css';
 
-import { useSelector } from 'react-redux';
-
-export default () => {
+const Board = () => {
   const ws = useSelector((state) => state.websocket);
 
   const { params } = useParams();
@@ -61,3 +59,5 @@ export default () => {
     </>
   );
 };
+
+export default Board;

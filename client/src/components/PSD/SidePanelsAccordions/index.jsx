@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
+import PropTypes from 'prop-types';
 import iconEye from '../../../icons/eye.png';
 import iconEyeClose from '../../../icons/eyeclose.png';
 import iconDelete from '../../../icons/delete.png';
@@ -32,7 +32,7 @@ const SidePanelsAccordions = ({
             onChange={inputTitle}
             value={inputTitleValue}
           ></textarea>
-          <button  type='submit' className={styles.buttonAdd}>
+          <button type='submit' className={styles.buttonAdd}>
             Добавить
           </button>
         </form>
@@ -46,7 +46,11 @@ const SidePanelsAccordions = ({
                   <img
                     onClick={handlerVisible}
                     id={mark.id}
-                    style={{ width: '14px', verticalAlign: 'middle', cursor: 'pointer'}}
+                    style={{
+                      width: '14px',
+                      verticalAlign: 'middle',
+                      cursor: 'pointer',
+                    }}
                     src={iconEye}
                     alt=''
                   />
@@ -76,7 +80,11 @@ const SidePanelsAccordions = ({
                 <img
                   onClick={handlerDelete}
                   id={mark.id}
-                  style={{ width: '14px', verticalAlign: 'middle', cursor: 'pointer' }}
+                  style={{
+                    width: '14px',
+                    verticalAlign: 'middle',
+                    cursor: 'pointer',
+                  }}
                   src={iconDelete}
                   alt=''
                 />
@@ -87,6 +95,20 @@ const SidePanelsAccordions = ({
       })}
     </details>
   );
+};
+
+SidePanelsAccordions.propTypes = {
+  inputTitle: PropTypes.func,
+  inputTitleValue: PropTypes.string,
+  type: PropTypes.string,
+  handlerAddMark: PropTypes.func,
+  markArr: PropTypes.array,
+  handlerVisible: PropTypes.func,
+  setModalActive: PropTypes.func,
+  setCurentOpenId: PropTypes.func,
+  handlerDelete: PropTypes.func,
+  color: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default SidePanelsAccordions;

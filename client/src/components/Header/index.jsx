@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as ACTIONS_TYPES from '../../redux/action-types';
 import { useSelector } from 'react-redux';
+
 const Header = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -43,4 +44,5 @@ const Header = () => {
     </header>
   );
 };
+
 export default Header;

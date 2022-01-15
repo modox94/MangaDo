@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as ACTIONS_TYPES from '../../redux/action-types';
 
-export default () => {
+const RegistrationForm = () => {
   const [err, setErr] = useState();
   const inputName = useRef();
   const inputInvite = useRef();
@@ -92,3 +92,5 @@ export default () => {
     </div>
   );
 };
+
+export default RegistrationForm;

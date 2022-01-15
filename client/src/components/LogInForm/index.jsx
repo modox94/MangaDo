@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as ACTIONS_TYPES from '../../redux/action-types';
 import styles from './style.module.css';
-export default () => {
+
+const LogInForm = () => {
   const inputName = useRef();
   const inputPsw = useRef();
 
@@ -44,7 +45,7 @@ export default () => {
     }
   };
 
-  const demo = async (e) => {
+  const demo = async () => {
     let user = {
       name: 'demo',
       psw: 'demo',
@@ -111,3 +112,5 @@ export default () => {
     </div>
   );
 };
+
+export default LogInForm;

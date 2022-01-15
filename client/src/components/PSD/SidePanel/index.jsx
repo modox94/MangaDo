@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Linkify from 'react-linkify';
 import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 import Modal from '../Modal';
 import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
 import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
@@ -312,6 +313,13 @@ const SidePanel = ({
       </Modal>
     </div>
   );
+};
+
+SidePanel.propTypes = {
+  setModalActive: PropTypes.func,
+  setCurentOpenId: PropTypes.func,
+  curentOpenId: PropTypes.number,
+  modalActive: PropTypes.bool,
 };
 
 export default SidePanel;

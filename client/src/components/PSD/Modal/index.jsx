@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from './style.module.css';
+import PropTypes from 'prop-types';
 import closeModalIcon from '../../../icons/close.png';
+import styles from './style.module.css';
 
 const Modal = ({ active, setActive, children }) => {
   return (
@@ -31,6 +32,12 @@ const Modal = ({ active, setActive, children }) => {
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  active: PropTypes.bool,
+  setActive: PropTypes.func,
+  children: PropTypes.any,
 };
 
 export default Modal;
