@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import NavMap from '../../scenes/NavMap';
 import ImagesContainer from '../ImagesContainer';
 import SidePanel from '../SidePanel';
-
 import styles from './style.module.css';
 
 const PSD = () => {
