@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "eslint": "^8.6.0",
-    "eslint-plugin-react": "^7.28.0"
+    "eslint-plugin-react": "^7.28.0",
+    "mini-css-extract-plugin": "2.4.5"
   }
 }
