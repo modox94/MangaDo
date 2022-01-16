@@ -9,34 +9,33 @@ router.get('/', getCatalog);
 router.get('/:path', getCatalog);
 
 async function getCatalog(req, res) {
-  let start, end;
-  start = new Date();
+  const start = new Date();
   console.log('calalog/ - start');
 
-  let additionalPath = req.params.path ? req.params.path.split('|') : [];
-
-  let inputPath = path.join(process.env.YANDEX_ROOT, ...additionalPath);
-  let outputPath = path.join(
+  const additionalPath = req.params.path?.split('|') || [];
+  const inputPath = [process.env.YANDEX_ROOT, ...additionalPath];
+  const outputPath = [
     path.resolve('./'),
     'public',
     'preview',
-    ...additionalPath
-  );
+    ...additionalPath,
+  ];
 
-  let dir = fs.readdirSync(inputPath);
+  const dir = fs.readdirSync(path.join(...inputPath));
+  const files = {};
+  const folders = [];
 
-  let files = {};
-  let folders = [];
-
-  for (let element of dir) {
-    let elementParse = path.parse(element);
+  for (const element of dir) {
+    const elementParse = path.parse(element);
 
     if (elementParse.ext === '.psd') {
       files[elementParse.name] = {
-        preview:
-          path.join('static', 'preview', ...additionalPath, elementParse.name) +
-          '.jpg' +
-          `?time=${Date.now()}`,
+        preview: path.join(
+          'static',
+          'preview',
+          ...additionalPath,
+          elementParse.name + '.jpg' + `?time=${Date.now()}`
+        ),
         url:
           '/psd/' +
           (additionalPath.length ? additionalPath.join('|') + '|' : '') +
@@ -48,15 +47,18 @@ async function getCatalog(req, res) {
   }
 
   if (Object.keys(files).length) {
-    fs.mkdirSync(outputPath, { recursive: true });
+    fs.mkdirSync(path.join(...outputPath), { recursive: true });
 
     await Promise.all(
       Object.keys(files).map((file) => {
         let inputStat, outputStat;
         try {
-          inputStat = fs.statSync(path.join(inputPath, file) + '.psd').mtimeMs;
-          outputStat = fs.statSync(path.join(outputPath, file) + '.jpg')
-            .mtimeMs;
+          inputStat = fs.statSync(
+            path.join(...inputPath, file + '.psd')
+          ).mtimeMs;
+          outputStat = fs.statSync(
+            path.join(...outputPath, file + '.jpg')
+          ).mtimeMs;
         } catch (err) {
           if (err.code === 'ENOENT') {
             console.log('file or directory does not exist');
@@ -67,13 +69,13 @@ async function getCatalog(req, res) {
           if (inputStat < outputStat) {
             return;
           } else {
-            fs.unlinkSync(path.join(outputPath, file) + '.jpg');
+            fs.unlinkSync(path.join(...outputPath, file + '.jpg'));
           }
         }
 
-        return new Promise((resolve, reject) => {
-          let args = [
-            path.join(inputPath, file) + '.psd[0]',
+        return new Promise((resolve) => {
+          const args = [
+            path.join(...inputPath, file + '.psd[0]'),
             '-background',
             'white',
             '-flatten',
@@ -81,19 +83,21 @@ async function getCatalog(req, res) {
             'x400',
             '-quality',
             '90',
-            path.join(outputPath, file) + '.jpg',
+            path.join(...outputPath, file + '.jpg'),
           ];
 
-          imagemagick.convert(args, function (err, stdout, stderr) {
+          imagemagick.convert(args, function (err) {
             console.log('write ', new Date() - start, 'ms');
-            if (err) console.log(err);
+            if (err) {
+              console.log(err);
+            }
             resolve();
           });
         });
       })
     );
   }
-  end = new Date();
+  const end = new Date();
   console.log('calalog/ - end', end - start, 'ms');
 
   res.json({ folders, files });

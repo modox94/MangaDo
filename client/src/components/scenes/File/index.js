@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import './style.module.css';
 
-export default ({ data, name }) => {
+const File = ({ data, name }) => {
   return (
     <figure>
       <Link to={data.url}>
@@ -16,3 +16,10 @@ export default ({ data, name }) => {
     </figure>
   );
 };
+
+File.propTypes = {
+  data: PropTypes.object,
+  name: PropTypes.string,
+};
+
+export default File;

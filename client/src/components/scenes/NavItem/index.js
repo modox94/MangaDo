@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import styles from './style.module.css';
 
-export default ({ name, url }) => {
+const NavItem = ({ name, url }) => {
   return (
     <span className={styles.link}>
       <Link to={`/catalog/${url}`}>
@@ -12,3 +12,10 @@ export default ({ name, url }) => {
     </span>
   );
 };
+
+NavItem.propTypes = {
+  name: PropTypes.string,
+  url: PropTypes.string,
+};
+
+export default NavItem;

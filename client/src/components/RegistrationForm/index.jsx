@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import styles from './style.module.css';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as ACTIONS_TYPES from '../../redux/action-types';
 
-export default () => {
+const RegistrationForm = () => {
   const [err, setErr] = useState();
   const inputName = useRef();
   const inputInvite = useRef();
@@ -12,7 +12,7 @@ export default () => {
 
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const registration = async (e) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ export default () => {
         type: ACTIONS_TYPES.USER_LOGIN,
         payload: result,
       });
-      history.push('/catalog');
+      navigate('/catalog');
     } else {
       const err = await response.json();
 
@@ -92,3 +92,5 @@ export default () => {
     </div>
   );
 };
+
+export default RegistrationForm;
