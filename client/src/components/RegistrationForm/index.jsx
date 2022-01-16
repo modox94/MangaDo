@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styles from './style.module.css';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as ACTIONS_TYPES from '../../redux/action-types';
 
 const RegistrationForm = () => {
@@ -12,7 +12,7 @@ const RegistrationForm = () => {
 
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const registration = async (e) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ const RegistrationForm = () => {
         type: ACTIONS_TYPES.USER_LOGIN,
         payload: result,
       });
-      history.push('/catalog');
+      navigate('/catalog');
     } else {
       const err = await response.json();
 

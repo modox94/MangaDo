@@ -36,7 +36,7 @@ const NavMap = ({ params, fileName }) => {
 };
 
 NavMap.propTypes = {
-  params: PropTypes.array,
+  params: PropTypes.string,
   fileName: PropTypes.string,
 };
 

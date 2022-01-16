@@ -1,17 +1,17 @@
 import React from 'react';
 import styles from './style.module.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as ACTIONS_TYPES from '../../redux/action-types';
 import { useSelector } from 'react-redux';
 
 const Header = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const logout = () => {
     dispatch({ type: ACTIONS_TYPES.USER_LOGOUT });
-    history.push('/signIn');
+    navigate('/signIn');
   };
   const user = useSelector((store) => store.user.name);
   return (

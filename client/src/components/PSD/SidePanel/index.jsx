@@ -318,7 +318,7 @@ const SidePanel = ({
 SidePanel.propTypes = {
   setModalActive: PropTypes.func,
   setCurentOpenId: PropTypes.func,
-  curentOpenId: PropTypes.number,
+  curentOpenId: PropTypes.string,
   modalActive: PropTypes.bool,
 };
 

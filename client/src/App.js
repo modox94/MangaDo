@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import * as WEBSOCKET_ACTIONS from './redux/actions/websocket/websocket';
 
 import './App.css';
@@ -43,29 +43,40 @@ function App() {
     <Router>
       <main>
         <Header />
-        <Switch>
-          <Route exact path='/'>
-            {/* <MainPage /> */}
-          </Route>
-          <Route exact path='/signIn'>
-            <LogInForm />
-          </Route>
-          <Route exact path='/signUp'>
-            <RegistrationForm />
-          </Route>
+        <Routes>
+          {/* <Route exact path='/' element={<MainPage />} /> */}
+          <Route exact path='/' element={null} />
+          <Route exact path='/signIn' element={<LogInForm />} />
+          <Route exact path='/signUp' element={<RegistrationForm />} />
 
-          <PrivateRoute exact path='/psd/:path'>
-            <PSD />
-          </PrivateRoute>
-
-          <PrivateRoute exact path='/catalog'>
-            <Board />
-          </PrivateRoute>
-
-          <PrivateRoute exact path='/catalog/:params'>
-            <Board />
-          </PrivateRoute>
-        </Switch>
+          <Route
+            exact
+            path='/psd/:path'
+            element={
+              <PrivateRoute>
+                <PSD />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path='/catalog'
+            element={
+              <PrivateRoute>
+                <Board />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path='/catalog/:params'
+            element={
+              <PrivateRoute>
+                <Board />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
       </main>
     </Router>
   );

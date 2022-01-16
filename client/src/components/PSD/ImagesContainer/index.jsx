@@ -34,6 +34,7 @@ const ImagesContainer = ({ setModalActive, setCurentOpenId }) => {
     if (path) {
       dispatch(URL_ACTIONS.RECORD_PSD_URL(path));
       dispatch(LAYERS_ACTIONS.DOWNLOAD_LAYERS(path));
+      // TODO: заменить загрузку слоев на загрузку большого изображения
     }
 
     return () => {

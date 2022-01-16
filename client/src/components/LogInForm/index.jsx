@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as ACTIONS_TYPES from '../../redux/action-types';
 import styles from './style.module.css';
 
@@ -10,7 +10,7 @@ const LogInForm = () => {
 
   const dispatch = useDispatch();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [err, setErr] = useState();
 
@@ -37,7 +37,7 @@ const LogInForm = () => {
         type: ACTIONS_TYPES.USER_LOGIN,
         payload: result,
       });
-      history.push('/catalog');
+      navigate('/catalog');
     } else {
       const err = await response.json();
 
@@ -67,7 +67,7 @@ const LogInForm = () => {
         type: ACTIONS_TYPES.USER_LOGIN,
         payload: result,
       });
-      history.push('/catalog');
+      navigate('/catalog');
     } else {
       const err = await response.json();
 
