@@ -5,6 +5,7 @@ const layersReducer = (state = [], action) => {
 
   switch (action.type) {
     case ACTIONS_TYPES.RECORD_LAYERS:
+    case ACTIONS_TYPES.RECORD_COMPLETE:
       return action.payload;
 
     case ACTIONS_TYPES.CHANGE_VISIBLE_LAYER:

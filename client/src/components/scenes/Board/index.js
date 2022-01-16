@@ -18,45 +18,35 @@ const Board = () => {
   useEffect(() => {
     setSpinner(false);
     (async () => {
-      let response;
-      if (params) {
-        response = await fetch(
-          new URL('catalog/' + params, process.env.REACT_APP_SERVER_PATH)
-        );
-      } else
-        response = await fetch(
-          new URL('catalog/', process.env.REACT_APP_SERVER_PATH)
-        );
-
+      const response = await fetch(
+        new URL('catalog/' + (params || ''), process.env.REACT_APP_SERVER_PATH)
+      );
       const result = await response.json();
-      setData(result);
 
+      setData(result);
       setSpinner(true);
     })();
+    // TODO: пеписать в редакс получение превьюшек
   }, [params]);
 
-  return (
+  return spinner && ws ? (
     <>
-      {spinner && ws ? (
-        <>
-          <NavMap params={params} />
-          <div className={styles.board}>
-            {Object.keys(data.files).length
-              ? Object.keys(data.files).map((key) => (
-                  <File key={key} data={data.files[key]} name={key} />
-                ))
-              : null}
-            {data.folders.length
-              ? data.folders.map((el) => (
-                  <Folder key={el} name={el} preUrl={params} />
-                ))
-              : null}
-          </div>
-        </>
-      ) : (
-        <ModalSpinner />
-      )}
+      <NavMap params={params} />
+      <div className={styles.board}>
+        {Object.keys(data.files).length
+          ? Object.keys(data.files).map((key) => (
+              <File key={key} data={data.files[key]} name={key} />
+            ))
+          : null}
+        {data.folders.length
+          ? data.folders.map((el) => (
+              <Folder key={el} name={el} preUrl={params} />
+            ))
+          : null}
+      </div>
     </>
+  ) : (
+    <ModalSpinner />
   );
 };
 

@@ -73,7 +73,7 @@ async function getCatalog(req, res) {
           }
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           const args = [
             path.join(...inputPath, file + '.psd[0]'),
             '-background',
@@ -86,7 +86,7 @@ async function getCatalog(req, res) {
             path.join(...outputPath, file + '.jpg'),
           ];
 
-          imagemagick.convert(args, function (err, stdout, stderr) {
+          imagemagick.convert(args, function (err) {
             console.log('write ', new Date() - start, 'ms');
             if (err) {
               console.log(err);
