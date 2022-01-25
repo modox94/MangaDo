@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import NavItem from '../NavItem';
-import styles from './style.module.css';
 import stylesNavItem from '../NavItem/style.module.css';
+import styles from './style.module.css';
 
 const NavMap = ({ params, fileName }) => {
   let names = '';
@@ -13,7 +13,7 @@ const NavMap = ({ params, fileName }) => {
 
   return (
     <div className={styles.navbar}>
-      <NavItem name='/catalog' url={''} />
+      <NavItem name="/catalog" url="" />
       {names &&
         names.map((name, index) => (
           <NavItem
@@ -25,7 +25,7 @@ const NavMap = ({ params, fileName }) => {
       <span className={stylesNavItem.link}>
         <Link
           to={
-            '/psd/' + (params && fileName ? params + '|' + fileName : fileName)
+            `/psd/${  params && fileName ? `${params  }|${  fileName}` : fileName}`
           }
         >
           <div>{fileName}</div>

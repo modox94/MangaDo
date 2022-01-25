@@ -20,6 +20,6 @@ nav {
   border-bottom: 2px solid transparent;
   transition: all 0.3s ease 0.1s;
 }
-.link:hover{
+.link:hover {
   border-bottom: 2px solid #343a40;
 }

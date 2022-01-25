@@ -1,18 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import avaA from '../../images/alex.webp';
+import alllogos from '../../images/alllogos.webp';
+import avaC from '../../images/const.webp';
 import chatAni1 from '../../images/ezgif-3-02ca5a422a98.webp';
 import chatAni2 from '../../images/ezgif-3-433ba8eae823.webp';
 import chatAni3 from '../../images/ezgif-3-485ee7948c13.webp';
 import chatAni4 from '../../images/ezgif-3-ba0e1c04505a.webp';
-import chatAni5 from '../../images/ezgif-3-c9fc0a60e073.webp';
 import chatAni6 from '../../images/ezgif-3-c2825510fa69.webp';
-import present1 from '../../images/present1.webp';
-import alllogos from '../../images/alllogos.webp';
-
+import chatAni5 from '../../images/ezgif-3-c9fc0a60e073.webp';
 import avaN from '../../images/nikita.webp';
-import avaA from '../../images/alex.webp';
-import avaC from '../../images/const.webp';
-
+import present1 from '../../images/present1.webp';
 import styles from './style.module.css';
 
 const MainPage = () => {
@@ -39,7 +37,7 @@ const MainPage = () => {
         виртуальных меток.
       </p>
       <div className={styles.container}>
-        <img src={present1} alt='' />
+        <img src={present1} alt="" />
       </div>
       <h1 className={styles.title}>
         2. Проблема позиционирования редакторских правок и их обсуждения.
@@ -53,9 +51,9 @@ const MainPage = () => {
         собственный чат.
       </p>
       <div className={styles.chat}>
-        {chatArr.map((chatAni, index) => {
-          return <img key={index} src={chatAni} alt='' />;
-        })}
+        {chatArr.map((chatAni, index) => (
+          <img key={index} src={chatAni} alt="" />
+        ))}
       </div>
       <h1 className={styles.title}>
         3. Отслеживание состояния документа без использования Photoshop.
@@ -78,37 +76,37 @@ const MainPage = () => {
       </p>
       <h1 className={styles.title}>Использованные технологии:</h1>
       <div className={styles.container}>
-        <img src={alllogos} alt='' />
+        <img src={alllogos} alt="" />
       </div>
       <h1 className={styles.title}>
         Вы можете войти на сайт в режиме &quot;только для чтения&quot; для
         оценки функционала на примере реальных проектов.
         <br />
         Перейдите на страницу{' '}
-        <Link className={styles.link} to='/signIn'>
+        <Link className={styles.link} to="/signIn">
           ВОЙТИ
         </Link>{' '}
         и нажмите кнопку &quot;Демонстрация&quot;.
       </h1>
       <h1 className={styles.title}>Над проектом работали:</h1>
       <div className={styles.chat}>
-        <a className={styles.link} href='https://github.com/jrdAlexandr'>
+        <a className={styles.link} href="https://github.com/jrdAlexandr">
           <figure>
-            <img src={avaA} alt='ava' />
+            <img src={avaA} alt="ava" />
             <figcaption>Александр Шкляев</figcaption>
           </figure>
         </a>
 
-        <a className={styles.link} href='https://github.com/constantinoPL'>
+        <a className={styles.link} href="https://github.com/constantinoPL">
           <figure>
-            <img src={avaC} alt='ava' />
+            <img src={avaC} alt="ava" />
             <figcaption>Константин Плахетко</figcaption>
           </figure>
         </a>
 
-        <a className={styles.link} href='https://github.com/modox94'>
+        <a className={styles.link} href="https://github.com/modox94">
           <figure>
-            <img src={avaN} alt='ava' />
+            <img src={avaN} alt="ava" />
             <figcaption>Никита Новоселов</figcaption>
           </figure>
         </a>

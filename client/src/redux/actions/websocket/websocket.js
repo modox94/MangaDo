@@ -1,25 +1,20 @@
 import * as ACTIONS_TYPES from '../../action-types';
 import * as MARK_ACTIONS from '../mark/mark';
 
-const RECORD_WEBSOCKET = (websocket) => {
-  return {
+const RECORD_WEBSOCKET = (websocket) => ({
     type: ACTIONS_TYPES.RECORD_WEBSOCKET,
     payload: websocket,
-  };
-};
+  });
 
-const WS_ADD_MARK = (url, mark) => {
-  return JSON.stringify({
+const WS_ADD_MARK = (url, mark) => JSON.stringify({
     type: ACTIONS_TYPES.WS_ADD_MARK,
     payload: {
       url,
       mark,
     },
   });
-};
 
-const WS_ADD_MESSAGE_MARK = (url, id, message) => {
-  return JSON.stringify({
+const WS_ADD_MESSAGE_MARK = (url, id, message) => JSON.stringify({
     type: ACTIONS_TYPES.WS_ADD_MESSAGE_MARK,
     payload: {
       url,
@@ -27,10 +22,8 @@ const WS_ADD_MESSAGE_MARK = (url, id, message) => {
       message,
     },
   });
-};
 
-const WS_CHANGE_COORDS_MARK = (url, id, position) => {
-  return JSON.stringify({
+const WS_CHANGE_COORDS_MARK = (url, id, position) => JSON.stringify({
     type: ACTIONS_TYPES.WS_CHANGE_COORDS_MARK,
     payload: {
       url,
@@ -38,10 +31,8 @@ const WS_CHANGE_COORDS_MARK = (url, id, position) => {
       position,
     },
   });
-};
 
-const WS_CHANGE_VISIBLE_MARK = (url, id, visible) => {
-  return JSON.stringify({
+const WS_CHANGE_VISIBLE_MARK = (url, id, visible) => JSON.stringify({
     type: ACTIONS_TYPES.WS_CHANGE_VISIBLE_MARK,
     payload: {
       url,
@@ -49,20 +40,16 @@ const WS_CHANGE_VISIBLE_MARK = (url, id, visible) => {
       visible,
     },
   });
-};
 
-const WS_DELETE_MARK = (url, id) => {
-  return JSON.stringify({
+const WS_DELETE_MARK = (url, id) => JSON.stringify({
     type: ACTIONS_TYPES.WS_DELETE_MARK,
     payload: {
       url,
       id,
     },
   });
-};
 
-const WS_DELETE_MESSAGE_MARK = (url, idMark, idMessage) => {
-  return JSON.stringify({
+const WS_DELETE_MESSAGE_MARK = (url, idMark, idMessage) => JSON.stringify({
     type: ACTIONS_TYPES.WS_DELETE_MESSAGE_MARK,
     payload: {
       url,
@@ -70,7 +57,6 @@ const WS_DELETE_MESSAGE_MARK = (url, idMark, idMessage) => {
       idMessage,
     },
   });
-};
 
 const WS_DISPATCH = (data) => async (dispatch, state) => {
   if (data.payload.url === state().url) {
@@ -106,7 +92,7 @@ const WS_DISPATCH = (data) => async (dispatch, state) => {
         );
 
       default:
-        return;
+        
     }
   }
 };

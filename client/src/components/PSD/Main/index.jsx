@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import NavMap from '../../scenes/NavMap';
-import ImagesContainer from '../ImagesContainer';
-import SidePanel from '../SidePanel';
-import styles from './style.module.css';
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import NavMap from '../../scenes/NavMap'
+import ImagesContainer from '../ImagesContainer'
+import SidePanel from '../SidePanel'
+import styles from './style.module.css'
 
 const PSD = () => {
-  const [modalActive, setModalActive] = useState();
-  const [curentOpenId, setCurentOpenId] = useState('');
-  const { path } = useParams();
-  const pathArr = path.split('|');
-  const params = pathArr.slice(0, -1).join('|');
-  const fileName = pathArr[pathArr.length - 1];
+  const [modalActive, setModalActive] = useState()
+  const [curentOpenId, setCurentOpenId] = useState('')
+  const { path } = useParams()
+  const pathArr = path.split('|')
+  const params = pathArr.slice(0, -1).join('|')
+  const fileName = pathArr[pathArr.length - 1]
 
   return (
     <>
@@ -29,7 +29,7 @@ const PSD = () => {
         />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default PSD;
+export default PSD

@@ -1,15 +1,15 @@
+import './App.css';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import * as WEBSOCKET_ACTIONS from './redux/actions/websocket/websocket';
-
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import BreadcrumbTrail from './components/BreadcrumbTrail';
 import Header from './components/Header';
-import Board from './components/scenes/Board';
-import PSD from './components/PSD/Main';
-import RegistrationForm from './components/RegistrationForm/index';
 import LogInForm from './components/LogInForm/index';
 import PrivateRoute from './components/PrivateRoute';
+import PSD from './components/PSD/Main';
+import RegistrationForm from './components/RegistrationForm/index';
+import Board from './components/scenes/Board';
+import * as WEBSOCKET_ACTIONS from './redux/actions/websocket/websocket';
 // import MainPage from './components/MainPage';
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
   const [wsStatus, setWsStatus] = useState(0);
 
   useEffect(() => {
-    let ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_PATH);
+    const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_PATH);
     ws.onopen = () => {
       console.log('ws opened');
       dispatch(WEBSOCKET_ACTIONS.RECORD_WEBSOCKET(ws));
@@ -29,7 +29,7 @@ function App() {
       setWsStatus(wsStatus + 1);
     };
 
-    ws.onmessage = function (event) {
+    ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       dispatch(WEBSOCKET_ACTIONS.WS_DISPATCH(data));
     };
@@ -37,21 +37,22 @@ function App() {
     return () => {
       ws.close();
     };
-  }, [wsStatus]);
+  }, [dispatch, wsStatus]);
 
   return (
     <Router>
       <main>
         <Header />
+        <BreadcrumbTrail />
         <Routes>
           {/* <Route exact path='/' element={<MainPage />} /> */}
-          <Route exact path='/' element={null} />
-          <Route exact path='/signIn' element={<LogInForm />} />
-          <Route exact path='/signUp' element={<RegistrationForm />} />
+          <Route exact path="/" element={null} />
+          <Route exact path="/signIn" element={<LogInForm />} />
+          <Route exact path="/signUp" element={<RegistrationForm />} />
 
           <Route
             exact
-            path='/psd/:path'
+            path="/psd/:path"
             element={
               <PrivateRoute>
                 <PSD />
@@ -60,7 +61,7 @@ function App() {
           />
           <Route
             exact
-            path='/catalog'
+            path="/catalog"
             element={
               <PrivateRoute>
                 <Board />
@@ -69,7 +70,7 @@ function App() {
           />
           <Route
             exact
-            path='/catalog/:params'
+            path="/catalog/:params"
             element={
               <PrivateRoute>
                 <Board />

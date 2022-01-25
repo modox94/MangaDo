@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ModalSpinner from '../../ModalSpinner';
-import Folder from '../Folder';
 import File from '../File';
+import Folder from '../Folder';
 import NavMap from '../NavMap';
 import styles from './style.module.css';
 
@@ -19,7 +19,7 @@ const Board = () => {
     setSpinner(false);
     (async () => {
       const response = await fetch(
-        new URL('catalog/' + (params || ''), process.env.REACT_APP_SERVER_PATH)
+        new URL(`catalog/${  params || ''}`, process.env.REACT_APP_SERVER_PATH)
       );
       const result = await response.json();
 

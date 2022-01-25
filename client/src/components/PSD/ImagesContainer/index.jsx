@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Draggable from 'react-draggable';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Draggable from 'react-draggable';
-import PropTypes from 'prop-types';
-import ModalSpinner from '../../ModalSpinner';
-import * as URL_ACTIONS from '../../../redux/actions/url/url';
-import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
 import {
   // DOWNLOAD_LAYERS,
   DOWNLOAD_COMPLETE,
   CLEAR_LAYERS,
 } from '../../../redux/actions/layers/layers';
+import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
+import * as URL_ACTIONS from '../../../redux/actions/url/url';
 import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
-
+import ModalSpinner from '../../ModalSpinner';
 import styles from './style.module.css';
 
 const ImagesContainer = ({ setModalActive, setCurentOpenId }) => {
@@ -58,7 +57,7 @@ const ImagesContainer = ({ setModalActive, setCurentOpenId }) => {
             src={process.env.REACT_APP_SERVER_PATH + image[0]}
             style={image[1] ? {} : { visibility: 'hidden' }}
             className={styles.images}
-            alt='pic'
+            alt="pic"
           ></img>
         );
       })}
@@ -66,7 +65,7 @@ const ImagesContainer = ({ setModalActive, setCurentOpenId }) => {
       {markArr.map((mark) => {
         return (
           <Draggable
-            bounds='img'
+            bounds="img"
             key={mark.id}
             {...(user.role === 'admin' ||
             (user.role === 'worker' && user.name === mark.creator)

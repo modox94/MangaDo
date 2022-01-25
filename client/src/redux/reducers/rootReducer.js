@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import marksReducer from './marksReducer/marksReducer';
-import websocketReducer from './websocketReducer/websocketReducer';
-import userReducer from './userReducer/userReducer';
-import urlReducer from './urlReducer/urlReducer';
 import layersReducer from './layersReducer/layersReducer';
+import marksReducer from './marksReducer/marksReducer';
+import urlReducer from './urlReducer/urlReducer';
+import userReducer from './userReducer/userReducer';
+import websocketReducer from './websocketReducer/websocketReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,

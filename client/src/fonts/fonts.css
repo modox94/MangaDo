@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'BrushType';
+  src: local('BrushType'), url(./brushtype-normal.woff) format('woff');
+  font-family: 'Blogger-Sans';
+  src: local('Blogger-Sans'), url(./Blogger-Sans.woff) format('woff');
+}

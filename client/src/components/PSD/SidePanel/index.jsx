@@ -1,17 +1,17 @@
 import React, { useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Linkify from 'react-linkify';
-import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
-import Modal from '../Modal';
-import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
-import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
-import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
-import styles from './style.module.css';
+import Linkify from 'react-linkify';
+import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import iconDelete from '../../../icons/delete.png';
 import iconEye from '../../../icons/eye.png';
 import iconEyeClose from '../../../icons/eyeclose.png';
+import * as LAYERS_ACTIONS from '../../../redux/actions/layers/layers';
+import * as MARK_ACTIONS from '../../../redux/actions/mark/mark';
+import * as WS_ACTIONS from '../../../redux/actions/websocket/websocket';
+import Modal from '../Modal';
 import SidePanelsAccordions from '../SidePanelsAccordions';
+import styles from './style.module.css';
 
 const SidePanel = ({
   setModalActive,
@@ -52,7 +52,7 @@ const SidePanel = ({
   const handlerAddMark = (e, markType, markTitle) => {
     e.preventDefault();
     if (!markTitle.trim()) return;
-    let newMark = {
+    const newMark = {
       id: uuidv4(),
       type: markType,
       position: {
@@ -92,7 +92,7 @@ const SidePanel = ({
   const handlerAddMessage = (e) => {
     e.preventDefault();
     if (!curentMessage.trim()) return;
-    let newMessage = {
+    const newMessage = {
       user: user.name,
       data: Date.now(),
       value: curentMessage.trim(),
@@ -127,7 +127,7 @@ const SidePanel = ({
     dispatch(MARK_ACTIONS.CHANGE_VISIBLE_MARK(e.target.id));
 
     if (ws) {
-      let mark = markArr.find(function (mark) {
+      const mark = markArr.find((mark) => {
         if (mark.id === e.target.id) return true;
         return false;
       });
@@ -156,11 +156,11 @@ const SidePanel = ({
   return (
     <div className={styles.sideContainer}>
       <SidePanelsAccordions
-        color='#dc3545'
-        title='ПЕРЕВОД'
+        color="#dc3545"
+        title="ПЕРЕВОД"
         inputTitle={handlerTitleTranslate}
         inputTitleValue={translateMarkTitle}
-        type={'translate'}
+        type="translate"
         handlerAddMark={handlerAddMark}
         markArr={translateMarkArr}
         handlerVisible={handlerVisible}
@@ -170,11 +170,11 @@ const SidePanel = ({
       />
 
       <SidePanelsAccordions
-        color='#007bff'
-        title='ОФОРМЛЕНИЕ'
+        color="#007bff"
+        title="ОФОРМЛЕНИЕ"
         inputTitle={handlerTitleDecor}
         inputTitleValue={decorteMarkTitle}
-        type={'decor'}
+        type="decor"
         handlerAddMark={handlerAddMark}
         markArr={decorMarkArr}
         handlerVisible={handlerVisible}
@@ -184,11 +184,11 @@ const SidePanel = ({
       />
 
       <SidePanelsAccordions
-        color='#28a745'
-        title='РЕДАКТУРА'
+        color="#28a745"
+        title="РЕДАКТУРА"
         inputTitle={handlerTitleEdit}
         inputTitleValue={editMarkTitle}
-        type={'edit'}
+        type="edit"
         handlerAddMark={handlerAddMark}
         markArr={editMarkArr}
         handlerVisible={handlerVisible}
@@ -217,93 +217,89 @@ const SidePanel = ({
                 align: 'left',
                 cursor: 'pointer',
               }}
-              alt='iconEye'
+              alt="iconEye"
               {...(visibleAllLayer ? { src: iconEye } : { src: iconEyeClose })}
             />
           </button>
           СЛОИ
         </summary>
 
-        {layers.map((empty, index, layers) => {
+        {layers.map((empty, index, layers) => (
           // тут произошел обратный перебор массива
-          return (
-            <div
-              key={layers[layers.length - 1 - index][0]}
-              className={styles.task}
-            >
-              <button>
-                <img
-                  onClick={handlerVisibleLayer}
-                  id={layers[layers.length - 1 - index][0]}
-                  style={{
-                    width: '14px',
-                    verticalAlign: 'middle',
-                    cursor: 'pointer',
-                  }}
-                  alt='iconEye'
-                  {...(layers[layers.length - 1 - index][1]
-                    ? { src: iconEye }
-                    : { src: iconEyeClose })}
-                />
-              </button>
-              <p>{`Слой ${layers.length - 1 - index}`}</p>
-            </div>
-          );
-        })}
+          <div
+            key={layers[layers.length - 1 - index][0]}
+            className={styles.task}
+          >
+            <button>
+              <img
+                onClick={handlerVisibleLayer}
+                id={layers[layers.length - 1 - index][0]}
+                style={{
+                  width: '14px',
+                  verticalAlign: 'middle',
+                  cursor: 'pointer',
+                }}
+                alt="iconEye"
+                {...(layers[layers.length - 1 - index][1]
+                  ? { src: iconEye }
+                  : { src: iconEyeClose })}
+              />
+            </button>
+            <p>{`Слой ${layers.length - 1 - index}`}</p>
+          </div>
+        ))}
       </details>
 
       <Modal active={modalActive} setActive={setModalActive}>
         <div className={styles.messageContainer}>
           {markArr
             .find((el) => el.id === curentOpenId)
-            ?.messages.map((message, index) => {
-              return (
-                <div className={styles.messageModal} key={message.data}>
-                  <p>
-                    <span className={styles.userSpan}>{message.user}</span>
-                    <span
-                      style={{ color: '#6c757d' }}
-                      className={styles.timeSpan}
-                    >
-                      {new Date(message.data).toLocaleDateString()}
-                    </span>
-                  </p>
-
-                  <span className={styles.messageSpan}>
-                    <Linkify>{message.value}</Linkify>
+            ?.messages.map((message, index) => (
+              <div className={styles.messageModal} key={message.data}>
+                <p>
+                  <span className={styles.userSpan}>{message.user}</span>
+                  <span
+                    style={{ color: '#6c757d' }}
+                    className={styles.timeSpan}
+                  >
+                    {new Date(message.data).toLocaleDateString()}
                   </span>
-                  <div className={styles.deleteMessageBtn}>
-                    {index > 0 && user.name === message.user ? (
-                      <button>
-                        <img
-                          onClick={handlerDeleteMessage}
-                          id={message.data}
-                          style={{
-                            width: '14px',
-                            verticalAlign: 'middle',
-                            cursor: 'pointer',
-                          }}
-                          src={iconDelete}
-                          alt='del'
-                        />
-                      </button>
-                    ) : null}
-                  </div>
+                </p>
+
+                <span className={styles.messageSpan}>
+                  <Linkify>{message.value}</Linkify>
+                </span>
+                <div className={styles.deleteMessageBtn}>
+                  {index > 0 && user.name === message.user ? (
+                    <button>
+                      <img
+                        onClick={handlerDeleteMessage}
+                        id={message.data}
+                        style={{
+                          width: '14px',
+                          verticalAlign: 'middle',
+                          cursor: 'pointer',
+                        }}
+                        src={iconDelete}
+                        alt="del"
+                      />
+                    </button>
+                  ) : null}
                 </div>
-              );
-            })}
+              </div>
+            ))}
         </div>
         {user.role === 'admin' || user.role === 'worker' ? (
           <div className={styles.modalInput}>
-            <form onSubmit={handlerAddMessage} action=''>
+            <form onSubmit={handlerAddMessage} action="">
               <textarea
                 onKeyPress={hendlerSubmit}
                 required
                 style={{ resize: 'none' }}
-                rows='4'
+                rows="4"
                 onChange={handlerCurentMessage}
                 value={curentMessage}
-              ></textarea>
+              />
               <button ref={submitRef} className={styles.buttonAdd}>
                 Добавить
               </button>
