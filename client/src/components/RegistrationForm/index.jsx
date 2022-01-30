@@ -40,9 +40,9 @@ const RegistrationForm = () => {
       });
       navigate('/catalog');
     } else {
-      const err = await response.json();
+      const error = await response.json();
 
-      setErr(err.message);
+      setErr(error.message);
     }
   };
 
@@ -53,7 +53,7 @@ const RegistrationForm = () => {
       <p>Пожалуйста, заполните эту форму, чтобы создать учетную запись.</p>
 
       <form className={styles.formcontainer} onSubmit={registration}>
-        <label htmlFor="invite">
+        <label>
           <b>Приглашение</b>
         </label>
         <input
@@ -62,18 +62,17 @@ const RegistrationForm = () => {
           placeholder="Введите приглашение"
           required
         />
-        <label htmlFor="name">
+        <label>
           <b>Имя</b>
         </label>
         <input
           type="text"
           ref={inputName}
           placeholder="Введите ваше имя"
-          name="name"
           required
         />
 
-        <label htmlFor="psw">
+        <label>
           <b>Пароль</b>
         </label>
         <input

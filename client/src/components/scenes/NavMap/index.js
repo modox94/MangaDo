@@ -23,11 +23,7 @@ const NavMap = ({ params, fileName }) => {
           />
         ))}
       <span className={stylesNavItem.link}>
-        <Link
-          to={
-            `/psd/${  params && fileName ? `${params  }|${  fileName}` : fileName}`
-          }
-        >
+        <Link to={`/psd/${params ? `${params}|` : ''}${fileName}`}>
           <div>{fileName}</div>
         </Link>
       </span>

@@ -1,12 +1,11 @@
-const express = require('express');
+/* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
+const express = require('express');
 const imagemagick = require('imagemagick');
+const { DOT } = require('../constants');
 
 const router = express.Router();
-
-router.get('/', getCatalog);
-router.get('/:path', getCatalog);
 
 async function getCatalog(req, res) {
   const start = new Date();
@@ -21,25 +20,33 @@ async function getCatalog(req, res) {
     ...additionalPath,
   ];
 
-  const dir = fs.readdirSync(path.join(...inputPath));
+  let dir = {};
+  try {
+    dir = fs.readdirSync(path.join(...inputPath));
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      console.log('file or directory does not exist');
+      res.status(404).json({ error: 'ENOENT: no such file or directory' });
+      return;
+    }
+  }
   const files = {};
   const folders = [];
 
   for (const element of dir) {
     const elementParse = path.parse(element);
 
-    if (elementParse.ext === '.psd') {
+    if (elementParse.ext === DOT.PSD) {
       files[elementParse.name] = {
         preview: path.join(
           'static',
           'preview',
           ...additionalPath,
-          elementParse.name + '.jpg' + `?time=${Date.now()}`
+          `${elementParse.name}${DOT.JPG}?time=${Date.now()}`
         ),
-        url:
-          '/psd/' +
-          (additionalPath.length ? additionalPath.join('|') + '|' : '') +
-          element,
+        url: `/psd/${
+          additionalPath.length ? `${additionalPath.join('|')}|` : ''
+        }${element}`,
       };
     } else if (elementParse.ext === '' && element !== '.DS_Store') {
       folders.push(element);
@@ -51,31 +58,31 @@ async function getCatalog(req, res) {
 
     await Promise.all(
       Object.keys(files).map((file) => {
-        let inputStat, outputStat;
+        let inputStat;
+        let outputStat;
         try {
           inputStat = fs.statSync(
-            path.join(...inputPath, file + '.psd')
+            path.join(...inputPath, `${file}${DOT.PSD}`)
           ).mtimeMs;
           outputStat = fs.statSync(
-            path.join(...outputPath, file + '.jpg')
+            path.join(...outputPath, `${file}${DOT.JPG}`)
           ).mtimeMs;
-        } catch (err) {
-          if (err.code === 'ENOENT') {
+        } catch (error) {
+          if (error.code === 'ENOENT') {
             console.log('file or directory does not exist');
           }
         }
 
         if (inputStat && outputStat) {
           if (inputStat < outputStat) {
-            return;
-          } else {
-            fs.unlinkSync(path.join(...outputPath, file + '.jpg'));
+            return null;
           }
+          fs.unlinkSync(path.join(...outputPath, `${file}${DOT.JPG}`));
         }
 
         return new Promise((resolve) => {
           const args = [
-            path.join(...inputPath, file + '.psd[0]'),
+            path.join(...inputPath, `${file}${DOT.PSD}[0]`),
             '-background',
             'white',
             '-flatten',
@@ -83,10 +90,10 @@ async function getCatalog(req, res) {
             'x400',
             '-quality',
             '90',
-            path.join(...outputPath, file + '.jpg'),
+            path.join(...outputPath, `${file}${DOT.JPG}`),
           ];
 
-          imagemagick.convert(args, function (err) {
+          imagemagick.convert(args, (err) => {
             console.log('write ', new Date() - start, 'ms');
             if (err) {
               console.log(err);
@@ -102,5 +109,8 @@ async function getCatalog(req, res) {
 
   res.json({ folders, files });
 }
+
+router.get('/', getCatalog);
+router.get('/:path', getCatalog);
 
 module.exports = router;

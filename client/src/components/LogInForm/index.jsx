@@ -16,7 +16,7 @@ const LogInForm = () => {
 
   const login = async (e) => {
     e.preventDefault();
-    let user = {
+    const user = {
       name: inputName.current.value,
       psw: inputPsw.current.value,
     };
@@ -39,14 +39,14 @@ const LogInForm = () => {
       });
       navigate('/catalog');
     } else {
-      const err = await response.json();
+      const error = await response.json();
 
-      setErr(err.message);
+      setErr(error.message);
     }
   };
 
   const demo = async () => {
-    let user = {
+    const user = {
       name: 'demo',
       psw: 'demo',
     };
@@ -69,9 +69,9 @@ const LogInForm = () => {
       });
       navigate('/catalog');
     } else {
-      const err = await response.json();
+      const error = await response.json();
 
-      setErr(err.message);
+      setErr(error.message);
     }
   };
 

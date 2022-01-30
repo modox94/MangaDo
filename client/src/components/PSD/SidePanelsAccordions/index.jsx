@@ -39,11 +39,10 @@ const SidePanelsAccordions = ({
       ) : null}
       {markArr.map((mark) => (
         <div key={mark.id} className={styles.task}>
-          {user.role === 'admin' || user.role === 'worker' ? (
-            <button>
+          {(user.role === 'admin' || user.role === 'worker') && (
+            <button type="button" onClick={handlerVisible}>
               {mark.visible ? (
                 <img
-                  onClick={handlerVisible}
                   id={mark.id}
                   style={{
                     width: '14px',
@@ -55,7 +54,6 @@ const SidePanelsAccordions = ({
                 />
               ) : (
                 <img
-                  onClick={handlerVisible}
                   id={mark.id}
                   style={{ width: '14px', verticalAlign: 'middle' }}
                   src={iconEyeClose}
@@ -63,7 +61,7 @@ const SidePanelsAccordions = ({
                 />
               )}
             </button>
-          ) : null}
+          )}
           <p
             onClick={() => {
               setModalActive(true);
@@ -74,21 +72,20 @@ const SidePanelsAccordions = ({
           </p>
 
           {user.role === 'admin' ||
-          (user.role === 'worker' && user.name === mark.creator) ? (
-            <button>
-              <img
-                onClick={handlerDelete}
-                id={mark.id}
-                style={{
-                  width: '14px',
-                  verticalAlign: 'middle',
-                  cursor: 'pointer',
-                }}
-                src={iconDelete}
-                alt=""
-              />
-            </button>
-          ) : null}
+            (user.role === 'worker' && user.name === mark.creator && (
+              <button type="button" onClick={handlerDelete}>
+                <img
+                  id={mark.id}
+                  style={{
+                    width: '14px',
+                    verticalAlign: 'middle',
+                    cursor: 'pointer',
+                  }}
+                  src={iconDelete}
+                  alt=""
+                />
+              </button>
+            ))}
         </div>
       ))}
     </details>

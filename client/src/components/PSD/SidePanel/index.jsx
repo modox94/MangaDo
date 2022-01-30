@@ -127,8 +127,8 @@ const SidePanel = ({
     dispatch(MARK_ACTIONS.CHANGE_VISIBLE_MARK(e.target.id));
 
     if (ws) {
-      const mark = markArr.find((mark) => {
-        if (mark.id === e.target.id) return true;
+      const mark = markArr.find((markEl) => {
+        if (markEl.id === e.target.id) return true;
         return false;
       });
 
@@ -207,6 +207,7 @@ const SidePanel = ({
           }}
         >
           <button
+            type="button"
             style={{ position: 'absolute', left: 0 }}
             onClick={handlerVisibleAllLayer}
           >
@@ -218,34 +219,34 @@ const SidePanel = ({
                 cursor: 'pointer',
               }}
               alt="iconEye"
-              {...(visibleAllLayer ? { src: iconEye } : { src: iconEyeClose })}
+              src={visibleAllLayer ? iconEye : iconEyeClose}
             />
           </button>
           СЛОИ
         </summary>
 
-        {layers.map((empty, index, layers) => (
-          // тут произошел обратный перебор массива
+        {layers.map((empty, index, layersArr) => (
           <div
-            key={layers[layers.length - 1 - index][0]}
+            key={layersArr[layersArr.length - 1 - index][0]}
             className={styles.task}
           >
-            <button>
+            <button type="button" onClick={handlerVisibleLayer}>
               <img
-                onClick={handlerVisibleLayer}
-                id={layers[layers.length - 1 - index][0]}
+                id={layersArr[layersArr.length - 1 - index][0]}
                 style={{
                   width: '14px',
                   verticalAlign: 'middle',
                   cursor: 'pointer',
                 }}
                 alt="iconEye"
-                {...(layers[layers.length - 1 - index][1]
-                  ? { src: iconEye }
-                  : { src: iconEyeClose })}
+                src={
+                  layersArr[layersArr.length - 1 - index][1]
+                    ? iconEye
+                    : iconEyeClose
+                }
               />
             </button>
-            <p>{`Слой ${layers.length - 1 - index}`}</p>
+            <p>{`Слой ${layersArr.length - 1 - index}`}</p>
           </div>
         ))}
       </details>
@@ -270,10 +271,9 @@ const SidePanel = ({
                   <Linkify>{message.value}</Linkify>
                 </span>
                 <div className={styles.deleteMessageBtn}>
-                  {index > 0 && user.name === message.user ? (
-                    <button>
+                  {index > 0 && user.name === message.user && (
+                    <button type="button" onClick={handlerDeleteMessage}>
                       <img
-                        onClick={handlerDeleteMessage}
                         id={message.data}
                         style={{
                           width: '14px',
@@ -284,12 +284,12 @@ const SidePanel = ({
                         alt="del"
                       />
                     </button>
-                  ) : null}
+                  )}
                 </div>
               </div>
             ))}
         </div>
-        {user.role === 'admin' || user.role === 'worker' ? (
+        {(user.role === 'admin' || user.role === 'worker') && (
           <div className={styles.modalInput}>
             <form onSubmit={handlerAddMessage} action="">
               <textarea
@@ -300,12 +300,16 @@ const SidePanel = ({
                 onChange={handlerCurentMessage}
                 value={curentMessage}
               />
-              <button ref={submitRef} className={styles.buttonAdd}>
+              <button
+                type="button"
+                ref={submitRef}
+                className={styles.buttonAdd}
+              >
                 Добавить
               </button>
             </form>
           </div>
-        ) : null}
+        )}
       </Modal>
     </div>
   );

@@ -11,6 +11,14 @@ nav {
   height: 100%;
 }
 
+.linkButton {
+  background-color: transparent;
+  cursor: pointer;
+  display: inline;
+  border: none;
+  padding: 0;
+}
+
 .link {
   text-transform: uppercase;
   text-decoration: none;

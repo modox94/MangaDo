@@ -1,5 +1,7 @@
 import * as ACTIONS_TYPES from '../../action-types';
-import * as MARK_ACTIONS from '../mark/mark';
+import { ERROR_KEYS } from '../../const';
+import { RECORD_ERROR, CLEAR_ERROR } from '../errors';
+import { RECORD_MARKS } from '../mark/mark';
 
 export const RECORD_LAYERS = (layers) => ({
   type: ACTIONS_TYPES.RECORD_LAYERS,
@@ -33,7 +35,7 @@ export const DOWNLOAD_LAYERS = (path) => async (dispatch) => {
 
   dispatch(RECORD_LAYERS(data.layers));
 
-  dispatch(MARK_ACTIONS.RECORD_MARKS(data.psdObj.marks));
+  dispatch(RECORD_MARKS(data.psdObj.marks));
 };
 
 export const DOWNLOAD_COMPLETE = (path) => async (dispatch) => {
@@ -42,7 +44,12 @@ export const DOWNLOAD_COMPLETE = (path) => async (dispatch) => {
   );
   const data = await response.json();
 
-  dispatch(RECORD_COMPLETE(data.complete));
+  if (data.error) {
+    dispatch(RECORD_ERROR({ key: ERROR_KEYS.PSD, message: data.error }));
+    return;
+  }
 
-  dispatch(MARK_ACTIONS.RECORD_MARKS(data.psdObj.marks));
+  dispatch(CLEAR_ERROR({ key: ERROR_KEYS.PSD }));
+  dispatch(RECORD_COMPLETE(data.complete));
+  dispatch(RECORD_MARKS(data.psdObj.marks));
 };

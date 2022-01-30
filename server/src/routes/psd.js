@@ -1,13 +1,12 @@
-const express = require('express');
+/* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
+const express = require('express');
 const imagemagick = require('imagemagick');
+const { DOT } = require('../constants');
 const Psd = require('../models/psd.modele');
 
 const router = express.Router();
-
-router.get('/:path', getCompletePsd);
-router.get('/:path/layers', getLayersPsd);
 
 async function getPsdObj(url) {
   let psdObj = await Psd.findOne({ url }).populate('marks');
@@ -36,15 +35,26 @@ async function getCompletePsd(req, res) {
     ...additionalPath
   );
 
-  let oldComplete, inputStat, outputStat;
-  const regular = new RegExp(`^${file.name}-(\\d+)\\.png`);
+  let inputStat;
+  let oldComplete;
+  let outputStat;
+  const regular = new RegExp(`^${file.name}-(\\d+)${DOT.PNG}`);
+
+  try {
+    inputStat = fs.statSync(inputPath).mtimeMs;
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      console.log('file or directory does not exist');
+      res.status(404).json({ error: 'ENOENT: no such file or directory' });
+      return;
+    }
+  }
 
   try {
     oldComplete = fs.readdirSync(outputPath);
-    inputStat = fs.statSync(inputPath).mtimeMs;
     outputStat = fs.statSync(path.join(outputPath, oldComplete[0])).mtimeMs;
-  } catch (err) {
-    if (err.code === 'ENOENT') {
+  } catch (error) {
+    if (error.code === 'ENOENT') {
       console.log('file or directory does not exist');
     }
   }
@@ -53,9 +63,8 @@ async function getCompletePsd(req, res) {
     oldComplete.sort((a, b) => {
       if (Number(a.replace(regular, '$1')) > Number(b.replace(regular, '$1'))) {
         return 1;
-      } else {
-        return -1;
       }
+      return -1;
     });
 
     oldComplete = oldComplete.map((element) => [
@@ -63,7 +72,7 @@ async function getCompletePsd(req, res) {
         'static',
         'complete',
         ...additionalPath,
-        element + `?time=${Date.now()}`
+        `${element}?time=${Date.now()}`
       ),
       true,
     ]);
@@ -71,13 +80,14 @@ async function getCompletePsd(req, res) {
     const end = new Date();
     console.log('end - /psd/:path', end - start, 'ms');
 
-    return res.json({ complete: oldComplete, psdObj });
+    res.json({ complete: oldComplete, psdObj });
+    return;
   }
 
   try {
     fs.rmSync(outputPath, { recursive: true });
-  } catch (err) {
-    if (err.code === 'ENOENT') {
+  } catch (error) {
+    if (error.code === 'ENOENT') {
       console.log('file or directory does not exist');
     }
   }
@@ -85,19 +95,21 @@ async function getCompletePsd(req, res) {
   fs.mkdirSync(outputPath, { recursive: true });
 
   await new Promise((resolve) => {
-    let args = [
-      inputPath + '[0]',
+    const args = [
+      `${inputPath}[0]`,
       '-background',
       'white',
       '-flatten',
       '-resize',
       '900x',
-      path.join(outputPath, file.name + '.png'),
+      path.join(outputPath, `${file.name}${DOT.PNG}`),
     ];
 
-    imagemagick.convert(args, function (err) {
+    imagemagick.convert(args, (error) => {
       console.log('write ', new Date());
-      if (err) console.log(err);
+      if (error) {
+        console.log(error);
+      }
       resolve();
     });
   });
@@ -107,9 +119,8 @@ async function getCompletePsd(req, res) {
   complete.sort((a, b) => {
     if (Number(a.replace(regular, '$1')) > Number(b.replace(regular, '$1'))) {
       return 1;
-    } else {
-      return -1;
     }
+    return -1;
   });
 
   complete = complete.map((element) => [
@@ -117,7 +128,7 @@ async function getCompletePsd(req, res) {
       'static',
       'complete',
       ...additionalPath,
-      element + `?time=${Date.now()}`
+      `${element}?time=${Date.now()}`
     ),
     true,
   ]);
@@ -145,15 +156,17 @@ async function getLayersPsd(req, res) {
     ...additionalPath
   );
 
-  let oldLayers, inputStat, outputStat;
-  const regular = new RegExp(`^${file.name}-(\\d+)\\.png`);
+  let oldLayers;
+  let inputStat;
+  let outputStat;
+  const regular = new RegExp(`^${file.name}-(\\d+)${DOT.PNG}`);
 
   try {
     oldLayers = fs.readdirSync(outputPath);
     inputStat = fs.statSync(inputPath).mtimeMs;
     outputStat = fs.statSync(path.join(outputPath, oldLayers[0])).mtimeMs;
-  } catch (err) {
-    if (err.code === 'ENOENT') {
+  } catch (error) {
+    if (error.code === 'ENOENT') {
       console.log('file or directory does not exist');
     }
   }
@@ -162,9 +175,8 @@ async function getLayersPsd(req, res) {
     oldLayers.sort((a, b) => {
       if (Number(a.replace(regular, '$1')) > Number(b.replace(regular, '$1'))) {
         return 1;
-      } else {
-        return -1;
       }
+      return -1;
     });
 
     oldLayers = oldLayers.map((element) => [
@@ -172,7 +184,7 @@ async function getLayersPsd(req, res) {
         'static',
         'layers',
         ...additionalPath,
-        element + `?time=${Date.now()}`
+        `${element}?time=${Date.now()}`
       ),
       true,
     ]);
@@ -180,13 +192,14 @@ async function getLayersPsd(req, res) {
     const end = new Date();
     console.log('end - /psd/:path/layers', end - start, 'ms');
 
-    return res.json({ layers: oldLayers, psdObj });
+    res.json({ layers: oldLayers, psdObj });
+    return;
   }
 
   try {
     fs.rmSync(outputPath, { recursive: true });
-  } catch (err) {
-    if (err.code === 'ENOENT') {
+  } catch (error) {
+    if (error.code === 'ENOENT') {
       console.log('file or directory does not exist');
     }
   }
@@ -194,7 +207,7 @@ async function getLayersPsd(req, res) {
   fs.mkdirSync(outputPath, { recursive: true });
 
   await new Promise((resolve) => {
-    let args = [
+    const args = [
       inputPath,
       '-set',
       'dispose',
@@ -202,12 +215,14 @@ async function getLayersPsd(req, res) {
       '-coalesce',
       '-resize',
       '900x',
-      path.join(outputPath, file.name + '.png'),
+      path.join(outputPath, `${file.name}${DOT.PNG}`),
     ];
 
-    imagemagick.convert(args, function (err) {
+    imagemagick.convert(args, (error) => {
       console.log('write ', new Date());
-      if (err) console.log(err);
+      if (error) {
+        console.log(error);
+      }
       resolve();
     });
   });
@@ -217,9 +232,8 @@ async function getLayersPsd(req, res) {
   layers.sort((a, b) => {
     if (Number(a.replace(regular, '$1')) > Number(b.replace(regular, '$1'))) {
       return 1;
-    } else {
-      return -1;
     }
+    return -1;
   });
 
   layers = layers.map((element) => [
@@ -227,7 +241,7 @@ async function getLayersPsd(req, res) {
       'static',
       'layers',
       ...additionalPath,
-      element + `?time=${Date.now()}`
+      `${element}?time=${Date.now()}`
     ),
     true,
   ]);
@@ -237,5 +251,8 @@ async function getLayersPsd(req, res) {
 
   res.json({ layers, psdObj });
 }
+
+router.get('/:path', getCompletePsd);
+router.get('/:path/layers', getLayersPsd);
 
 module.exports = router;
