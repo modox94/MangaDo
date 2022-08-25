@@ -39,13 +39,11 @@ const translateReducer = (state = [], action) => {
         if (mark.id === action.payload.idMark) {
           return {
             ...mark,
-            messages: mark.messages.filter((message) => {
-              return String(message.data) !== action.payload.idMessage;
-            }),
+            messages: mark.messages.filter((message) => String(message.data) !== action.payload.idMessage),
           };
-        } else {
+        } 
           return mark;
-        }
+        
       });
 
     case ACTIONS_TYPES.CLEAR_MARKS:

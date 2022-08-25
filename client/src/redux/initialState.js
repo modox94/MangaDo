@@ -9,6 +9,7 @@ const initialState = () => {
     url: '',
     marks: [],
     layers: [],
+    errors: {},
   };
 
   return initialValue;

@@ -1,12 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const PrivateRoute = ({ children }) => {
+  const location = useLocation();
   const user = useSelector((store) => store.user.name);
 
-  return user ? children : <Navigate to='/signIn' state={{ from: location }} />;
+  return user ? children : <Navigate to="/signIn" state={{ from: location }} />;
 };
 
 PrivateRoute.propTypes = {

@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import marksReducer from './marksReducer/marksReducer';
-import websocketReducer from './websocketReducer/websocketReducer';
-import userReducer from './userReducer/userReducer';
-import urlReducer from './urlReducer/urlReducer';
+import errorsReducer from './errorsReducer';
 import layersReducer from './layersReducer/layersReducer';
+import marksReducer from './marksReducer/marksReducer';
+import urlReducer from './urlReducer/urlReducer';
+import userReducer from './userReducer/userReducer';
+import websocketReducer from './websocketReducer/websocketReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   marks: marksReducer,
   websocket: websocketReducer,
   layers: layersReducer,
+  errors: errorsReducer,
 });
 
 export default rootReducer;
@@ -28,4 +30,9 @@ export default rootReducer;
 //       true,
 //     ],
 //   ],
+//   psdErrors: {
+//     someKey1: errorMessage1,
+//     someKey2: errorMessage2,
+//     someKey3: errorMessage3,
+//   },
 // };

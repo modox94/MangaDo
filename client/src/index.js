@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App';
-import './index.css';
+import './fonts/fonts.css';
 import store from './redux/store';
 import * as serviceWorker from './serviceWorker';
 import './translate';

@@ -16,7 +16,7 @@ const LogInForm = () => {
 
   const login = async (e) => {
     e.preventDefault();
-    let user = {
+    const user = {
       name: inputName.current.value,
       psw: inputPsw.current.value,
     };
@@ -39,14 +39,14 @@ const LogInForm = () => {
       });
       navigate('/catalog');
     } else {
-      const err = await response.json();
+      const error = await response.json();
 
-      setErr(err.message);
+      setErr(error.message);
     }
   };
 
   const demo = async () => {
-    let user = {
+    const user = {
       name: 'demo',
       psw: 'demo',
     };
@@ -69,9 +69,9 @@ const LogInForm = () => {
       });
       navigate('/catalog');
     } else {
-      const err = await response.json();
+      const error = await response.json();
 
-      setErr(err.message);
+      setErr(error.message);
     }
   };
 
@@ -82,30 +82,30 @@ const LogInForm = () => {
       <p>Пожалуйста, заполните эту форму, чтобы войти.</p>
 
       <form className={styles.formcontainer} onSubmit={login}>
-        <label htmlFor='name'>
+        <label htmlFor="name">
           <b>Имя</b>
         </label>
         <input
-          type='text'
+          type="text"
           ref={inputName}
-          placeholder='Введите своё имя'
+          placeholder="Введите своё имя"
           required
         />
 
-        <label htmlFor='psw'>
+        <label htmlFor="psw">
           <b>Пароль</b>
         </label>
         <input
-          type='password'
+          type="password"
           ref={inputPsw}
-          placeholder='Введите пароль'
+          placeholder="Введите пароль"
           required
         />
         {err && <p className={styles.err}>{err}</p>}
-        <button type='submit' className='registerbtn'>
+        <button type="submit" className="registerbtn">
           Войти
         </button>
-        <button onClick={demo} type='button' className='registerbtn'>
+        <button onClick={demo} type="button" className="registerbtn">
           Демонстрация
         </button>
       </form>

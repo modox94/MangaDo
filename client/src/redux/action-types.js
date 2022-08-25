@@ -26,3 +26,6 @@ export const WS_DELETE_MESSAGE_MARK = 'WS_DELETE_MESSAGE_MARK';
 
 export const USER_LOGIN = 'USER_LOGIN';
 export const USER_LOGOUT = 'USER_LOGOUT';
+
+export const RECORD_ERROR = 'RECORD_ERROR';
+export const CLEAR_ERROR = 'CLEAR_ERROR';
