@@ -8,12 +8,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import BreadcrumbTrail from './components/BreadcrumbTrail';
 import Header from './components/Header';
 import LogInForm from './components/LogInForm/index';
+// import MainPage from './components/MainPage';
 import PrivateRoute from './components/PrivateRoute';
 import PSD from './components/PSD/Main';
 import RegistrationForm from './components/RegistrationForm/index';
 import Board from './components/scenes/Board';
 import * as WEBSOCKET_ACTIONS from './redux/actions/websocket/websocket';
-// import MainPage from './components/MainPage';
 import { getLanguageMUI } from './utils/commonUtils';
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
           <Header />
           <BreadcrumbTrail />
           <Routes>
-            {/* <Route exact path='/' element={<MainPage />} /> */}
+            {/* <Route exact path="/" element={<MainPage />} /> */}
             <Route exact path="/" element={null} />
             <Route exact path="/signIn" element={<LogInForm />} />
             <Route exact path="/signUp" element={<RegistrationForm />} />

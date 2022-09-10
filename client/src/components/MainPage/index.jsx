@@ -51,8 +51,8 @@ const MainPage = () => {
         собственный чат.
       </p>
       <div className={styles.chat}>
-        {chatArr.map((chatAni, index) => (
-          <img key={index} src={chatAni} alt="" />
+        {chatArr.map((chatAni) => (
+          <img key={chatAni} src={chatAni} alt="" />
         ))}
       </div>
       <h1 className={styles.title}>

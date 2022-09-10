@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -53,29 +54,32 @@ const RegistrationForm = () => {
       <p>Пожалуйста, заполните эту форму, чтобы создать учетную запись.</p>
 
       <form className={styles.formcontainer} onSubmit={registration}>
-        <label>
+        <label htmlFor="invite">
           <b>Приглашение</b>
         </label>
         <input
+          id="invite"
           type="text"
           ref={inputInvite}
           placeholder="Введите приглашение"
           required
         />
-        <label>
+        <label htmlFor="nameReg">
           <b>Имя</b>
         </label>
         <input
+          id="nameReg"
           type="text"
           ref={inputName}
           placeholder="Введите ваше имя"
           required
         />
 
-        <label>
+        <label htmlFor="pswReg">
           <b>Пароль</b>
         </label>
         <input
+          id="pswReg"
           type="password"
           ref={inputPsw}
           placeholder="Введите пароль"

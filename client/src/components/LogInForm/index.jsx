@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -86,6 +87,7 @@ const LogInForm = () => {
           <b>Имя</b>
         </label>
         <input
+          id="name"
           type="text"
           ref={inputName}
           placeholder="Введите своё имя"
@@ -96,6 +98,7 @@ const LogInForm = () => {
           <b>Пароль</b>
         </label>
         <input
+          id="psw"
           type="password"
           ref={inputPsw}
           placeholder="Введите пароль"

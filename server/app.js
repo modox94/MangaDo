@@ -1,12 +1,13 @@
 require('dotenv').config();
+const path = require('path');
+const cors = require('cors');
 const express = require('express');
 const WebSocket = require('ws');
-const cors = require('cors');
-const dbConnect = require('./dbConnect.js');
+const dbConnect = require('./dbConnect');
+const websocketRequest = require('./src/helpers/websocketRequest');
 const catalogRouter = require('./src/routes/catalog');
 const psdRouter = require('./src/routes/psd');
 const userRouter = require('./src/routes/userRouter');
-const websocketRequest = require('./src/helpers/websocketRequest');
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -17,7 +18,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/static', express.static('public'));
+const buildPath = '../client/build';
+app.use(express.static(path.join(__dirname, buildPath)));
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, buildPath, 'index.html'))
+);
 
 app.use('/catalog', catalogRouter);
 app.use('/psd', psdRouter);
@@ -31,11 +36,11 @@ const WebSocketServer = new WebSocket.Server({
   server: expressServer,
 });
 
-WebSocketServer.on('connection', function connection(ws) {
-  ws.on('message', function incoming(data) {
+WebSocketServer.on('connection', (ws) => {
+  ws.on('message', (data) => {
     websocketRequest(JSON.parse(data));
 
-    WebSocketServer.clients.forEach(function each(client) {
+    WebSocketServer.clients.forEach((client) => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(data);
       }
