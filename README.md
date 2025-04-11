@@ -1,84 +1,90 @@
-# [MangaDo](https://mangado.site/)
+# 🚧 UNDER CONSTRUCTION
 
-## [Видеопрезентация проекта](https://youtu.be/5hNBXkrXIX0?t=573)
+# [MangaDo](https://mangado.onrender.com/)
 
-Перед вами сервис, созданный для координации работы команды переводчиков манги (комиксов). В процессе работы участники команды сталкиваются с рядом организационных проблем и наш сервис готов их решить.
+## [Project Video Presentation](https://youtu.be/5hNBXkrXIX0?t=573)
 
-## Проблемы, которые мы решаем:
+This is a service created to coordinate the work of a manga (comics) translation team. During the workflow, team members face a number of organizational issues — and our service is here to solve them.
 
-1. Проблема позиционирования перевода отностилельно оригинала.
-   > В связи со спецификой материала первой возникает проблема позиционирования. На каждой странице любой манги находится множество небольших фрагментов текста, а также звуков, которые нужно перевести. Очень часто переводчику неудобно работать в сложных и громоздких приложениях, вроде Photoshop'а, чтобы явно указать соответствие между оригиналом и переводом. Мы решаем эту проблему путем проставления виртуальных меток.
-2. Проблема позиционирования редакторских правок и их обсуждения.
-   > Аналогичная проблема возникает при работе редактора, которая отягощается тем, что каждая правка требует также обсуждения. Как правило такие обсуждения проходят в мессенджерах и в проекте длинной больше 3 страниц превращаются в настоящий "кошмар". Наш проект решает и эту проблему за счет того, что у каждой виртуальной метки есть свой собственный чат.
-3. Отслеживание состояния документа без использования Photoshop.
-   > Следующая важная задача, которую мы решаем — синхронизация актуальной версии рабочих файлов между участниками команды и имитация функционала слоев Photoshop'а онлайн. Все рабочие файлы команды хранятся в облачном хранилище Яндекс.Диск. Наш сервис также подключен к этому хранилищу и всегда оперирует файлами со всеми актуальными изменениями. При открытии файла на сайте пользователь видит весь набор слоев, аналогичный оригиналу. Также реализовано включение и отключение видимости каждого слоя по отдельности. Эти функции необходимы для упрощения работы участников команды, которые по тем или иным причинам (не хватает ресурсов компьютера или установлена неподходящая ОС) не пользуются Photoshop'ом. Таким образом любой участник команды может увидеть актуальное состояние проекта на любом устройтве и проконтролировать порядок и содержание слоев .psd файла без необходимости запуска сложных и требовательных приложений.
+## Problems We Solve:
 
-## Вы можете войти на сайт в режиме "только для чтения" для оценки функционала на примере реальных проектов. <br /> Перейдите на страницу [ВОЙТИ](https://mangado.site/signIn) и нажмите кнопку "Демонстрация".
+1. **Problem of positioning the translation relative to the original.**  
+   > Due to the nature of the material, positioning is the first challenge. Each manga page contains many small text fragments and sound effects that need translation. It's often inconvenient for translators to work in complex, bulky apps like Photoshop just to indicate the correspondence between the original and the translation. We solve this problem with virtual markers.
 
-#### Список технологий, которые использовались при разработке:
+2. **Problem of positioning editorial edits and their discussions.**  
+   > A similar issue arises for editors, made worse by the need for discussions around each edit. Typically, these conversations happen in messengers, and for projects longer than 3 pages, this becomes a nightmare. Our service solves this by giving each virtual marker its own dedicated chat.
 
-- Node.js
-- React
-- Redux
-- React Router
-- WebSocket
-- ImageMagick
-- Яндекс.Диск
-- MongoDB
-- ExpressJS
-- PM2
-- nginx
-- JWT tokens
-- bcrypt
+3. **Tracking the document’s status without using Photoshop.**  
+   > Another important task we solve is synchronizing the latest versions of working files among team members and mimicking Photoshop’s layer functionality online. All team files are stored in Yandex.Disk cloud storage. Our service connects to this storage and always operates with up-to-date files. When opening a file on the site, users see the full set of layers, just like in the original. Each layer’s visibility can be toggled individually. This functionality simplifies work for team members who, for various reasons (e.g. low system resources or an unsupported OS), can’t use Photoshop. Thus, any team member can view the current state of the project on any device and control the order and content of .psd file layers without launching heavy and demanding software.
 
-#### Для запуска проекта необходимо:
+## You can access the site in "read-only" mode to evaluate its functionality using real projects.  
+Go to the [SIGN IN](https://mangado.onrender.com/signIn) page and click the "Demo" button.
 
-1. установить [Node.js](https://nodejs.org/en/download/) (не ниже 14 версии)
-2. установить [ImageMagick](https://imagemagick.org/script/download.php)
-3. установить [Яндекс.Диск](https://disk.yandex.ru/download)
-4. создать онлайн базу данных [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+#### Technologies used during development:
 
-#### Порядок запуска:
+- Node.js  
+- React  
+- Redux  
+- React Router  
+- WebSocket  
+- ImageMagick  
+- Yandex.Disk  
+- MongoDB  
+- ExpressJS  
+- PM2  
+- nginx  
+- JWT tokens  
+- bcrypt  
 
-1. открыть в терминале каталог server и набрать команду `npm install`
-2. скопировать файл .env.example, переименовать его в .env и дописать отсутствующие (и заменить существующие) поля:
-   > PORT= *порт на котором будет запущен сервер* <br/>
-   > YANDEX_ROOT= *полный путь к целевой папке на Яндекс.Диск* <br/>
-   > DB_NAME= *имя базы данных Atlas* <br/>
-   > DB_LOGIN= *логин для подключения к базе данных Atlas* <br/>
-   > DB_PASS= *пароль для подключения к базе данных Atlas* <br/>
-   > jwtToken= *секретная число-буквенная комбинация* <br/>
-   > jwtRefreshToken= *секретная число-буквенная комбинация* <br/>
-   > tokenLife= *время жизни обычного токена* <br/>
-   > refreshTokenLife= *время жизни refresh-токена* <br/>
-   > INVITE_ADMIN= *инвайт для регистрации в качестве администратора* <br/>
-   > INVITE_WORKER= *инвайт для регистрации в качестве рядового работника* <br/>
-   > INVITE_DON= *инвайт для регистрации в качестве спонсора (только для чтения)* <br/>
-3. набрать в терминале `npm start`
-4. открыть новую копию терминала, перейти в папку client и набрать команду `npm install`
-5. скопировать файл .env.example, переименовать его в .env и при необходимости заменить существующие поля:
-   > REACT_APP_SERVER_PATH= *адрес сервера* <br/>
-   > REACT_APP_WEBSOCKET_PATH= *адрес сервера вебсокетов* <br/>
-6. набрать команду `npm start`
+#### To launch the project, you need to:
 
-### Распределение задач:
+1. Install [Node.js](https://nodejs.org/en/download/) (version 14 or higher)  
+2. Install [ImageMagick](https://imagemagick.org/script/download.php)  
+3. Install [Yandex.Disk](https://disk.yandex.ru/download)  
+4. Create an online database on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 
-| Александр | Константин | Никита |
+#### Launch Order:
+
+1. Open the `server` directory in a terminal and run `npm install`  
+2. Copy the `.env.example` file, rename it to `.env`, and fill in the missing (or replace existing) fields:
+   > PORT= *port on which the server will run*  
+   > YANDEX_ROOT= *full path to the target folder on Yandex.Disk*  
+   > DB_NAME= *Atlas database name*  
+   > DB_LOGIN= *login for the Atlas database*  
+   > DB_PASS= *password for the Atlas database*  
+   > jwtToken= *secret alphanumeric combination*  
+   > jwtRefreshToken= *secret alphanumeric combination*  
+   > tokenLife= *lifetime of the regular token*  
+   > refreshTokenLife= *lifetime of the refresh token*  
+   > INVITE_ADMIN= *invite code to register as admin*  
+   > INVITE_WORKER= *invite code to register as a regular worker*  
+   > INVITE_DON= *invite code to register as a sponsor (read-only)*  
+
+3. Run `npm start` in the terminal  
+4. Open a new terminal window, navigate to the `client` folder, and run `npm install`  
+5. Copy the `.env.example` file, rename it to `.env`, and if needed, replace the existing fields:
+   > REACT_APP_SERVER_PATH= *server address*  
+   > REACT_APP_WEBSOCKET_PATH= *WebSocket server address*  
+
+6. Run `npm start`
+
+### Task Distribution:
+
+| Alexander | Konstantin | Nikita |
 | :---: | :---: | :---: |
-| оформление сайта | авторизация пользователей | обработка `.psd` файлов |
-| "перетаскиваемые" метки | "файловая система" на сайте | синхронизация файлов |
-| чаты у меток | "хлебные крошки" | сохранение меток в БД |
-| наложение слоев |  | настройка вебсокетов |
+| site design | user authentication | `.psd` file handling |
+| draggable markers | site "file system" | file synchronization |
+| chats for markers | breadcrumbs | saving markers to DB |
+| layer overlay |  | WebSocket setup |
 
+### Planned Features:
 
-### В планах:
-
-- [x] Кликабельные ссылки в чате
-- [ ] Перенастроить сохранение слоев в .webp
-- [ ] Получать оригинальные названия слоев
-- [ ] Организовать "прослушивание" каталога chokidar'ом
-- [ ] Добавить отдельное состояние "завершенности" каждой метки
-- [ ] Добавить кнопку "скопировать в буфер" к сообщению
-- [ ] Добавить оповещение о непрочитанных сообщениях
-- [ ] Добавить подсветку меток
-- [ ] Унифицировать метод передачи данных
+- [x] Clickable links in chat  
+- [ ] Reconfigure layer saving in `.webp` format  
+- [ ] Retrieve original layer names  
+- [ ] Use Chokidar to monitor folder changes  
+- [ ] Add a separate "completion" status for each marker  
+- [ ] Add "copy to clipboard" button for messages  
+- [ ] Add unread message notifications  
+- [ ] Add marker highlighting  
+- [ ] Unify the method of data transfer  
